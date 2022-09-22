@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/user_details.dart';
 
 class RecordProgressPage extends StatefulWidget {
   const RecordProgressPage({Key? key}) : super(key: key);
@@ -37,7 +38,6 @@ class _RecordProgressPageState extends State<RecordProgressPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
                     width: 150,
-                    height: 200,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)
@@ -55,33 +55,77 @@ class _RecordProgressPageState extends State<RecordProgressPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  color: Colors.limeAccent
+                              GestureDetector(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.yellow.shade300,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    SizedBox(height: 3,),
+                                    Text("Did not", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                    SizedBox(height: 2,),
+                                    Text("complete", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                                  ],
                                 ),
+                                onTap: (){},
                               ),
-                              Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: Colors.limeAccent
+                              GestureDetector(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.lime.shade400,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    SizedBox(height: 3,),
+                                    Text("parially", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                    SizedBox(height: 2,),
+                                    Text("completed", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                                  ],
                                 ),
+                                onTap: (){},
                               ),
-                              Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: Colors.limeAccent
+                              GestureDetector(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.green.shade300,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    SizedBox(height: 3,),
+                                    Text("Completed", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                  ],
                                 ),
+                                onTap: (){},
                               ),
-                              Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: Colors.limeAccent
+                              GestureDetector(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    SizedBox(height: 3,),
+                                    Text("Over ate", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                  ],
                                 ),
+                                onTap: (){},
                               ),
                             ],
                           )
