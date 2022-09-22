@@ -1,14 +1,12 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:my_diet_guide/screens/record_progress_page.dart';
-import 'package:my_diet_guide/screens/update_user_details.dart';
-import 'package:my_diet_guide/screens/user_dashboard.dart';
-import 'package:my_diet_guide/screens/user_details.dart';
+import 'package:my_diet_guide/screens/check_bmi.dart';
+import 'package:my_diet_guide/screens/signup.dart';
+import 'package:my_diet_guide/screens/view_diet.dart';
+import 'package:my_diet_guide/screens/view_diet_details.dart';
 
 void main() {
-  //runApp(const MyApp());
-  // For testing
-  runApp(DevicePreview(builder: (context) => MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -18,11 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SafeArea(child: RecordProgressPage()),
+      home: DietDetails(),
+      routes: {
+        '/diet_details': (context) => DietDetails(),
+        '/view_diet_details' : (context) => ViewDietPlan(),
+        '/check_bmi' : (context) => CheckBMI(),
+        '/sign_up' : (context) => SignUp()
+      },
     );
   }
 }
