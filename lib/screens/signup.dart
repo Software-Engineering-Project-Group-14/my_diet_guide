@@ -13,7 +13,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.indigo[800],
-        title: const Text('Check BMI',),
+        title: const Text('Sign Up',),
       ),
 
       body: SafeArea(

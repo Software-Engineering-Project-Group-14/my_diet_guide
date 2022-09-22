@@ -134,6 +134,225 @@ class _RecordProgressPageState extends State<RecordProgressPage> {
                     ),
                   ),
                 ),
+
+
+              SizedBox(height: 30,),
+
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  width: 150,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Text("Lunch", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22), textAlign: TextAlign.left,),
+                        SizedBox(height: 10,),
+                        Text("Meal : blah blah ", style: TextStyle(fontSize: 16), textAlign: TextAlign.left,),
+                        SizedBox(height: 10,),
+                        Text("Record Progress : ", style: TextStyle(fontSize: 16), textAlign: TextAlign.left,),
+                        SizedBox(height: 10,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.yellow.shade300,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  SizedBox(height: 3,),
+                                  Text("Did not", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 2,),
+                                  Text("complete", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                                ],
+                              ),
+                              onTap: (){},
+                            ),
+                            GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.lime.shade400,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  SizedBox(height: 3,),
+                                  Text("parially", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 2,),
+                                  Text("completed", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                                ],
+                              ),
+                              onTap: (){},
+                            ),
+                            GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green.shade300,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  SizedBox(height: 3,),
+                                  Text("Completed", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                ],
+                              ),
+                              onTap: (){},
+                            ),
+                            GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  SizedBox(height: 3,),
+                                  Text("Over ate", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                ],
+                              ),
+                              onTap: (){},
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+
+
+              SizedBox(height: 30,),
+
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  width: 150,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Text("Dinner", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22), textAlign: TextAlign.left,),
+                        SizedBox(height: 10,),
+                        Text("Meal : blah blah ", style: TextStyle(fontSize: 16), textAlign: TextAlign.left,),
+                        SizedBox(height: 10,),
+                        Text("Record Progress : ", style: TextStyle(fontSize: 16), textAlign: TextAlign.left,),
+                        SizedBox(height: 10,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.yellow.shade300,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  SizedBox(height: 3,),
+                                  Text("Did not", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 2,),
+                                  Text("complete", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                                ],
+                              ),
+                              onTap: (){},
+                            ),
+                            GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.lime.shade400,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  SizedBox(height: 3,),
+                                  Text("parially", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 2,),
+                                  Text("completed", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),)
+                                ],
+                              ),
+                              onTap: (){},
+                            ),
+                            GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green.shade300,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  SizedBox(height: 3,),
+                                  Text("Completed", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                ],
+                              ),
+                              onTap: (){},
+                            ),
+                            GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  SizedBox(height: 3,),
+                                  Text("Over ate", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),),
+                                ],
+                              ),
+                              onTap: (){},
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+
+
+              SizedBox(height: 50,),
+
+
+
+
             ],
           ),
     );

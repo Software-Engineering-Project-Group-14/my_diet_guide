@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/change_plan.dart';
+import 'package:my_diet_guide/screens/rate.dart';
+import 'package:my_diet_guide/screens/record_progress_page.dart';
+import 'package:my_diet_guide/screens/update_user_details.dart';
+import 'package:my_diet_guide/screens/view_diet.dart';
+
+import 'check_bmi.dart';
 
 class UserDashboard extends StatefulWidget {
   const UserDashboard({Key? key}) : super(key: key);
@@ -44,11 +51,19 @@ class _UserDashboardState extends State<UserDashboard> {
             SizedBox(
               height: 30,
             ),
+
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_){
+                          return ViewDietPlan();
+                        }
+                    ));
+                  },
                   child: Container(
                     height: 150,
                     width: 150,
@@ -78,8 +93,16 @@ class _UserDashboardState extends State<UserDashboard> {
                     ),
                   ),
                 ),
+
+
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_){
+                          return RecordProgressPage();
+                        }
+                    ));
+                  },
                   child: Container(
                     height: 150,
                     width: 150,
@@ -117,14 +140,25 @@ class _UserDashboardState extends State<UserDashboard> {
                 ),
               ],
             ),
+
+
+
             SizedBox(
               height: 40,
             ),
+
+
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_){
+                          return UpdateUserDetailsPage();
+                        }
+                    ));},
                   child: Container(
                     height: 150,
                     width: 150,
@@ -154,8 +188,16 @@ class _UserDashboardState extends State<UserDashboard> {
                     ),
                   ),
                 ),
+
+
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_){
+                          return ChangePlan();
+                        }
+                    ));
+                  },
                   child: Container(
                     height: 150,
                     width: 150,
@@ -193,14 +235,26 @@ class _UserDashboardState extends State<UserDashboard> {
                 ),
               ],
             ),
+
+
+
             SizedBox(
               height: 40,
             ),
+
+
+
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_){
+                          return Rate();
+                        }
+                    ));},
                   child: Container(
                     height: 150,
                     width: 150,
@@ -233,8 +287,15 @@ class _UserDashboardState extends State<UserDashboard> {
                     ),
                   ),
                 ),
+
+
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_){
+                          return CheckBMI();
+                        }
+                    ));},
                   child: Container(
                     height: 150,
                     width: 150,
