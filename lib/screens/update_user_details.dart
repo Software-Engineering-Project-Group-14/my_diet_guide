@@ -1,39 +1,53 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
-class UserDetails extends StatefulWidget {
-  const UserDetails({Key? key}) : super(key: key);
+class UpdateUserDetailsPage extends StatefulWidget {
+  const UpdateUserDetailsPage({Key? key}) : super(key: key);
 
   @override
-  State<UserDetails> createState() => _UserDetailsState();
+  State<UpdateUserDetailsPage> createState() => _UpdateUserDetailsPageState();
 }
 
-class _UserDetailsState extends State<UserDetails> {
+class _UpdateUserDetailsPageState extends State<UpdateUserDetailsPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  late String weight;
-  late String height;
-  late String targetWeight;
+  // TextEditingController weight = TextEditingController();
+  // TextEditingController height = TextEditingController();
+  // TextEditingController targetWeight = TextEditingController();
+
+  late String new_weight;
+  late String new_height;
+  late String new_targetWeight;
+  String? new_dietaryPreference;
+  String? new_intensity;
+  String? new_activeness;
 
   final dietary_preferences = ['Vegetarian', 'Classical', 'Chinese', 'Low carb'];
-  String? dietaryPreference;
 
   final active_types = ['Not very active', 'Moderately active', 'Active'];
-  String? activeness;
 
   final intensities = ['Easy', 'Standard', 'Difficult'];
-  String? intensity;
 
   DropdownMenuItem<String> buildMenuItem(String dp) =>
-    DropdownMenuItem(
-      value: dp,
-      child: Text(dp, style: TextStyle(fontSize: 17),),
-    );
+      DropdownMenuItem(
+        value: dp,
+        child: Text(dp, style: TextStyle(fontSize: 17),),
+      );
 
   @override
   Widget build(BuildContext context) {
+
+    // weight.text = '70';
+    // height.text = '155';
+    // targetWeight.text = '60';
+    // String? dietaryPreference = 'Vegetarian';
+    // String? intensity = 'Medium';
+    // String? activeness = 'Active';
+
+    //new_weight = weight.text;
+    //new_height = height.text;
+    //new_targetWeight = targetWeight.text;
+
     return Scaffold(
       backgroundColor: Colors.green.shade100,
       body: SingleChildScrollView(
@@ -44,12 +58,12 @@ class _UserDetailsState extends State<UserDetails> {
             children: [
               SizedBox(height: 40,),
 
-              Text("User Details",
+              Text("Update User Details",
                   style: TextStyle(
                       fontSize: 32, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left),
 
-              SizedBox(height: 30,),
+              SizedBox(height: 40,),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -59,6 +73,7 @@ class _UserDetailsState extends State<UserDetails> {
 
                     Flexible(
                       child: TextFormField(
+                        //controller: weight,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(10),
@@ -77,7 +92,7 @@ class _UserDetailsState extends State<UserDetails> {
                           return UserDetailValidator.validateWeight(text!);
                         },
                         onSaved: (text){
-                          weight = text!;
+                          new_weight = text!;
                         },
                       ),
                     ),
@@ -95,6 +110,7 @@ class _UserDetailsState extends State<UserDetails> {
 
                     Flexible(
                       child: TextFormField(
+                        //controller: height,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(10),
@@ -113,7 +129,7 @@ class _UserDetailsState extends State<UserDetails> {
                           return UserDetailValidator.validateHeight(text!);
                         },
                         onSaved: (text){
-                          height = text!;
+                          new_height = text!;
                         },
                       ),
                     ),
@@ -131,6 +147,7 @@ class _UserDetailsState extends State<UserDetails> {
 
                     Flexible(
                       child: TextFormField(
+                        //controller: targetWeight,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(10),
@@ -149,7 +166,7 @@ class _UserDetailsState extends State<UserDetails> {
                           return UserDetailValidator.validateTargetWeight(text!);
                         },
                         onSaved: (text){
-                          targetWeight = text!;
+                          new_targetWeight = text!;
                         },
                       ),
                     ),
@@ -172,15 +189,14 @@ class _UserDetailsState extends State<UserDetails> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             iconSize: 32,
-                            value: dietaryPreference,
+                            value: new_dietaryPreference,
                             items: dietary_preferences.map(buildMenuItem).toList(),
                             onChanged: (value) => setState(() {
-                              this.dietaryPreference=value;
+                              this.new_dietaryPreference=value;
                             }),
                             isExpanded: true,
                             borderRadius: BorderRadius.circular(25),
                             dropdownColor: Colors.grey.shade200,
-
                           ),
                         ),
                       ),
@@ -204,10 +220,10 @@ class _UserDetailsState extends State<UserDetails> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             iconSize: 32,
-                            value: activeness,
+                            value: new_activeness,
                             items: active_types.map(buildMenuItem).toList(),
                             onChanged: (value) => setState(() {
-                              this.activeness=value;
+                              this.new_activeness=value;
                             }),
                             isExpanded: true,
                             borderRadius: BorderRadius.circular(25),
@@ -235,10 +251,10 @@ class _UserDetailsState extends State<UserDetails> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             iconSize: 32,
-                            value: intensity,
+                            value: new_intensity,
                             items: intensities.map(buildMenuItem).toList(),
                             onChanged: (value) => setState(() {
-                              this.intensity=value;
+                              this.new_intensity=value;
                             }),
                             isExpanded: true,
                             borderRadius: BorderRadius.circular(25),
@@ -254,45 +270,30 @@ class _UserDetailsState extends State<UserDetails> {
               SizedBox(height: 40,),
 
               Container(
-                height: 50,
-                width: 130,
-                child: ElevatedButton(
-                  onPressed: (){
-                    if(_formKey.currentState!.validate()){      //check if validate
-                      _formKey.currentState!.save();              // save the inputs
-                      //print(weight + height + targetWeight + dietaryPreference! + activeness! + intensity!);
-                    }
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.green.shade300),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25)
-                    )),
-                  ),
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black87,
+                  height: 50,
+                  width: 130,
+                  child: ElevatedButton(
+                    onPressed: (){
+                      if(_formKey.currentState!.validate()){      //check if validate
+                        _formKey.currentState!.save();              // save the inputs
+                        //print(weight + height + targetWeight + dietaryPreference! + activeness! + intensity!);
+                      }
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.green.shade300),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25)
+                      )),
                     ),
-                  ),
-                )
+                    child: Text(
+                      'Update',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  )
               ),
-
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Image(
-                    image: AssetImage('assets/images/user details/join-us.png'),
-                    fit: BoxFit.cover,
-                    width: 80,
-                    height: 80,
-                  ),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 20))
-                ],
-              )
-
 
             ],
           ),
@@ -301,7 +302,6 @@ class _UserDetailsState extends State<UserDetails> {
     );
   }
 }
-
 
 
 class UserDetailValidator{

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/record_progress_page.dart';
+import 'package:my_diet_guide/screens/update_user_details.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/user_details.dart';
 
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SafeArea(child: UserDetails()),
+      home: SafeArea(child: RecordProgressPage()),
     );
   }
 }
