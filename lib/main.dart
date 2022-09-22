@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/user_details.dart';
-import 'package:my_diet_guide/screens/user_details2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SafeArea(child: UserDetails2()),
+      home: SafeArea(child: UserDetails()),
     );
   }
 }
