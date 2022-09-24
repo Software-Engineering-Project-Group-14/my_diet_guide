@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_diet_guide/models/Plan.dart';
+import 'package:my_diet_guide/screens/elements/plan_card.dart';
 
 class ChangePlan extends StatefulWidget {
   const ChangePlan({Key? key}) : super(key: key);
@@ -10,13 +12,15 @@ class ChangePlan extends StatefulWidget {
 
 class _ChangePlanState extends State<ChangePlan> {
 
-  final _recommededPlans = [
-    "Recommended plan 1",
-    "Recommended plan 2",
-    "Recommended plan 3",
-    "Recommended plan 4",
-    "Recommended plan 5",
+  //Get from database
+  List<Plan> recommendedPlans = <Plan>[
+    Plan("Super plan", "A very good plan", "veg.png", "Hard", "Frequent"),
+    Plan("Super plan", "A very good plan", "meat.png", "Easy", "Frequent"),
+    Plan("Super plan", "A very good plan", "fruit.png", "Hard", "Rare"),
+    Plan("Super plan", "A very good plan", "veg.png", "Medium", "Frequent"),
   ];
+
+  Plan currentPlan = Plan("Current Plan", "Nice one", "veg.png", "easy", "Average");
 
   @override
   Widget build(BuildContext context) {
@@ -25,89 +29,31 @@ class _ChangePlanState extends State<ChangePlan> {
 
         backgroundColor: Colors.green.shade100,
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(25.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.blueGrey
-                      )
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "You current plan: ",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 20
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Plan 1",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 20
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Current plan",
+                          style: GoogleFonts.poppins(
+                              fontSize: 20
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.deepPurpleAccent,
-                                border: Border.all(
-                                    color: Colors.black
-                                ),
-                              ),
-                              child: GestureDetector(
-                                onTap: (){
-                                  setState(() {
-
-                                  });
-
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Text(
-                                        "Change Plan",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 15
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: PlanCard(plan:currentPlan))
+                      ],
+                    )
+                  ],
                 ),
               ),
               Column(
@@ -115,26 +61,27 @@ class _ChangePlanState extends State<ChangePlan> {
                   Row(
                     children: [
                       Text(
-                        "Other recommended plans for you",
+                        "Other recommended plans",
                         style: GoogleFonts.poppins(
-                          fontSize: 18,
+                          fontSize: 22,
                         ),
                       )
                     ],
                   ),
-                  ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(8),
-                      itemCount: _recommededPlans.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Text(
-                          _recommededPlans[index],
-                          style: GoogleFonts.poppins(
-                              fontSize: 15
-                          ),
-                        );
-                      }
+                  SingleChildScrollView(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(8),
+                        itemCount: recommendedPlans.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                              child: PlanCard(
+                                  plan: recommendedPlans[index]
+                              )
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) => const Divider(),
+                      )
                   ),
                 ],
               )
