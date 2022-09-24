@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "946107548040",
+    "project_id": "my-diet-guide-14",
+    "storage_bucket": "my-diet-guide-14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946107548040:android:dd03aea3530fcabeedba3d",
+        "android_client_info": {
+          "package_name": "com.example.my_diet_guide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946107548040-gepnht4r4rl01n705kk174juj1cnmovs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG6hB8dbhSyv4wnMM08rPCGVX-ttX8tNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946107548040-gepnht4r4rl01n705kk174juj1cnmovs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
