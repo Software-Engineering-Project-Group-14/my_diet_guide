@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/Plan.dart';
-import 'package:my_diet_guide/screens/elements/plan_card.dart';
+import 'package:my_diet_guide/widgets/plan_card.dart';
 
 class ChangePlan extends StatefulWidget {
   const ChangePlan({Key? key}) : super(key: key);

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/change_plan.dart';
 import 'package:my_diet_guide/screens/rate.dart';
@@ -15,9 +16,21 @@ class UserDashboard extends StatefulWidget {
 }
 
 class _UserDashboardState extends State<UserDashboard> {
+
+  final dietUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          leading: MaterialButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+            color: Colors.deepPurple,
+            child: Text('sign out'),
+          ),
+        ),
         backgroundColor: Colors.green.shade100,
         body: ListView(
           scrollDirection: Axis.vertical,
