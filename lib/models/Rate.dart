@@ -23,11 +23,8 @@ class RateModel{
     }
   }
 
-  //Factory constructor
-  // Get firebase document snapshot, convert it to Rate object and returns
-  factory RateModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot, SnapshotOptions? options,) {
-    final data = snapshot.data();
-    return RateModel(data?['rate'], data?['user_id'], data?['review']);
+  static Stream<QuerySnapshot> getRateStream(){
+    return FirebaseFirestore.instance.collection('rate').snapshots();
   }
 
 
