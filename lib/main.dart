@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
 import 'package:my_diet_guide/screens/login.dart';
+import 'package:my_diet_guide/screens/rate.dart';
 import 'package:my_diet_guide/screens/signup.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/view_diet.dart';
@@ -20,8 +21,8 @@ Future<void> main() async {
         projectId: "my-diet-guide-14",
       )
   );
-  //runApp(DevicePreview(builder: (context)=>MyApp()));
-  runApp(const MyApp());
+  runApp(DevicePreview(builder: (context)=>MyApp()));
+  //runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
           if(snapshot.hasData){
             return UserDashboard();
           }else{
+            //return Login();
             return Login();
           }
         },

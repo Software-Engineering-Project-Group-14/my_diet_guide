@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../models/Rate.dart';
 
 class Rate extends StatefulWidget{
   const Rate({super.key});
@@ -13,14 +17,22 @@ class Rate extends StatefulWidget{
 class _RateState extends State<Rate> {
 
   double starValue = 3.5;
+  String feedbackText = '';
+  final _formKey = GlobalKey<FormState>();
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: SafeArea(
-        child: Center(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Rate MyDietGuide'
+          ),
+        ),
+        backgroundColor: Colors.grey[300],
+        body: Center(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
@@ -106,6 +118,83 @@ class _RateState extends State<Rate> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Form(
+                    key: _formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            showCursor: true,
+                            maxLines: 10,
+                            decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: Colors.white)
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.deepPurple),
+                                    borderRadius: BorderRadius.circular(12)
+                                ),
+                                hintText: 'Your feedback here (optional)',
+                                fillColor: Colors.grey[200],
+                                filled: true
+                              ),
+                              onChanged: (val) {
+                                setState(() => feedbackText = val);
+                              },
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.deepPurple,
+                                    fixedSize: Size(300, 50)
+                                ),
+                                child: Text(
+                                    'Submit',
+                                    style: GoogleFonts.aBeeZee(
+                                        fontSize: 20,
+                                        color: Colors.black
+                                    )
+                                ),
+                                onPressed: () async {
+                                  //print(starValue);
+                                  //print(feedbackText);
+                                  if(FirebaseAuth.instance.currentUser != null || _formKey.currentState!.validate()){
+                                    RateModel rateObject = RateModel(
+                                        starValue, FirebaseAuth.instance.currentUser!.uid, feedbackText,
+                                    );
+                                    bool result = await rateObject.addRateToFirestore();
+                                    if(result){
+                                      showDialog(
+                                        context: context,
+                                        builder: (context){
+                                          return const AlertDialog(
+                                            content: Text(
+                                                'Your review added.'
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }else{
+                                      setState(() {
+                                        error = 'Could not add review. Please try again.';
+                                      });
+                                    }
+                                  }
+                                }
+                            ),
+                          ),
+                          SizedBox(height: 12.0),
+                          Text(
+                            error,
+                            style: TextStyle(color: Colors.red, fontSize: 14.0),
+                          )
+                        ],
+                      ),
                   ),
                 ),
               ],
