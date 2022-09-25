@@ -22,7 +22,7 @@ class _RateState extends State<Rate> {
   final _formKey = GlobalKey<FormState>();
   String error = '';
 
-  final Stream<QuerySnapshot> _rateStream = FirebaseFirestore.instance.collection('rate').snapshots();
+  final Stream<QuerySnapshot> _rateStream = RateModel.getRateStream();
 
   @override
   Widget build(BuildContext context) {
