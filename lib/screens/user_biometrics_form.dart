@@ -77,6 +77,8 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
     String userId = FirebaseAuth.instance.currentUser!.uid;
 
+    // print("user id : ${userId}\nfirst name : ${widget.firstName}\nlast name : ${widget.lastName}\nemail : ${widget.email}\nbirthday: ${widget.bday}");
+
     addUserDetails(userId, widget.firstName, widget.lastName, widget.email, widget.bday);
     
     addUserBiometrics(
@@ -97,7 +99,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
 
   Future addUserDetails(String userId, String firstName, String lastName, String email, String bday) async {
-    final userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
+    final userDoc = FirebaseFirestore.instance.collection('user').doc(userId);
 
     final json = {
       'first name': firstName,
@@ -120,7 +122,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
       'weight': weight,
       'height': height,
       'target weight': targetWeight,
-      'dietaryPreference': dietaryPreference,
+      'dietary preference': dietaryPreference,
       'activeness': activeness,
       'intensity': intensity
     };
