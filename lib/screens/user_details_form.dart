@@ -25,7 +25,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
   final _lastNameController = TextEditingController();
   final _ageController = TextEditingController();
 
-  late String bday;
+  String? bday = null;
 
   final genders = ['Male', 'Female'];
   String? gender;
@@ -72,7 +72,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
           firstName: firstName,
           lastName: lastName,
           age: age,
-          bday: bday,
+          bday: bday!,
           gender: gender!
         )
     ));
@@ -98,10 +98,15 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                   SizedBox(height: 40,),
 
 
-                  Text("User Details",
-                      style: TextStyle(
-                          fontSize: 32, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left),
+                  Text(
+                    "User Details",
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                    ),
+                    textAlign: TextAlign.left
+                  ),
 
 
                   SizedBox(height: 30,),

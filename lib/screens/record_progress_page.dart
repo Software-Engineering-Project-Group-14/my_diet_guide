@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_diet_guide/screens/user_details.dart';
+import 'package:my_diet_guide/screens/user_details_form.dart';
 
 class RecordProgressPage extends StatefulWidget {
   const RecordProgressPage({Key? key}) : super(key: key);

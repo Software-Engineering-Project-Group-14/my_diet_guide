@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
 import 'package:my_diet_guide/screens/login.dart';
 import 'package:my_diet_guide/screens/rate.dart';
@@ -9,7 +10,8 @@ import 'package:my_diet_guide/screens/signup.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/view_diet.dart';
 import 'package:my_diet_guide/screens/view_diet_details.dart';
-import 'package:my_diet_guide/screens/view_uis.dart';
+
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +35,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: "My Diet Guide",
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+      ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot){
