@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/screens/user_biometrics_form.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
+import 'package:my_diet_guide/widgets/dropdown_01.dart';
+import 'package:my_diet_guide/widgets/text_box_01.dart';
+
+import '../widgets/text_box_02.dart';
 
 
 class UserDetailsForm extends StatefulWidget {
@@ -34,16 +39,22 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
   DropdownMenuItem<String> buildMenuItem(String dp) =>
     DropdownMenuItem(
       value: dp,
-      child: Text(dp, style: TextStyle(fontSize: 17),),
+      child: Text(dp, style: TextStyle(fontSize: 19, color: Colors.white),),
     );
 
 
 
   Widget showBirthday(String? bday){
     if(bday==null){
-      return Text("Birthday", style: TextStyle(color: Colors.black54), textAlign: TextAlign.start,);
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Text("Birthday", style: TextStyle(color: Colors.white, fontSize: 19), textAlign: TextAlign.start,),
+      );
     } else {
-      return Text(bday, style: TextStyle(color: Colors.black54), textAlign: TextAlign.start,);
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Text(bday, style: TextStyle(color: Colors.white, fontSize: 19), textAlign: TextAlign.start,),
+      );
     }
   }
 
@@ -95,7 +106,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 40,),
+                  SizedBox(height: 80,),
 
 
                   Text(
@@ -109,96 +120,103 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                   ),
 
 
-                  SizedBox(height: 30,),
+                  SizedBox(height: 40,),
 
 
 
                   // first name textfield
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: TextField(
-                      keyboardType: TextInputType.name,
-                      controller: _firstNameController,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        hintText: 'First Name',
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  //   child: TextField(
+                  //     keyboardType: TextInputType.name,
+                  //     controller: _firstNameController,
+                  //     decoration: InputDecoration(
+                  //       enabledBorder: OutlineInputBorder(
+                  //         borderSide: BorderSide(color: Colors.white),
+                  //         borderRadius: BorderRadius.circular(12),
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //         borderSide: BorderSide(color: Colors.deepPurple),
+                  //         borderRadius: BorderRadius.circular(12),
+                  //       ),
+                  //       hintText: 'First Name',
+                  //       fillColor: Colors.grey.shade200,
+                  //       filled: true,
+                  //     ),
+                  //   ),
+                  // ),
+
+
+                  TextBox02(controller: _firstNameController, hint: "First Name", keyboardType: TextInputType.name),
 
 
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 30,),
 
 
 
                   // last name textfield
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: TextField(
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        hintText: 'Last Name',
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  //   child: TextField(
+                  //     keyboardType: TextInputType.name,
+                  //     decoration: InputDecoration(
+                  //       enabledBorder: OutlineInputBorder(
+                  //         borderSide: BorderSide(color: Colors.white),
+                  //         borderRadius: BorderRadius.circular(12),
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //         borderSide: BorderSide(color: Colors.deepPurple),
+                  //         borderRadius: BorderRadius.circular(12),
+                  //       ),
+                  //       hintText: 'Last Name',
+                  //       fillColor: Colors.grey.shade200,
+                  //       filled: true,
+                  //     ),
+                  //   ),
+                  // ),
+
+                  TextBox02(controller: _lastNameController, hint: "Last Name", keyboardType: TextInputType.name),
 
 
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 30,),
 
 
 
                   // age textfield
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      controller: _ageController,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        hintText: 'Age',
-                        fillColor: Colors.grey.shade200,
-                        filled: true,
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  //   child: TextField(
+                  //     keyboardType: TextInputType.number,
+                  //     controller: _ageController,
+                  //     decoration: InputDecoration(
+                  //       enabledBorder: OutlineInputBorder(
+                  //         borderSide: BorderSide(color: Colors.white),
+                  //         borderRadius: BorderRadius.circular(12),
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //         borderSide: BorderSide(color: Colors.deepPurple),
+                  //         borderRadius: BorderRadius.circular(12),
+                  //       ),
+                  //       hintText: 'Age',
+                  //       fillColor: Colors.grey.shade200,
+                  //       filled: true,
+                  //     ),
+                  //   ),
+                  // ),
+
+                  TextBox02(controller: _ageController, hint: "Age", keyboardType: TextInputType.number),
 
 
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 30,),
 
 
 
                   // birthday textfield
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: GestureDetector(
                       onTap: () async {
                         DateTime? datetime = await showDatePicker(
@@ -216,16 +234,14 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                       },
                       child: Container(
                           height: 55,
-                          width: 365,
-                          child: Container(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-                              child: showBirthday(bday),
-                            ),
-                          ),
+                          width: 332,
                           decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(12)
+                              color: Colors.grey.shade600.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(16)
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                            child: showBirthday(bday),
                           )
                       ),
                     ),
@@ -234,46 +250,54 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
 
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 30,),
 
 
 
 
-                  //dropdown
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    height: 55,
-                    width: 362,
-                    decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.circular(12)),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButtonFormField<String>(
-                        hint: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Dietary Preference"),
+                  // gender dropdown
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      decoration: BoxDecoration(color: Colors.grey.shade600.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButtonFormField<String>(
+                          hint: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Gender",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 19,
+                              ),
+                            ),
+                          ),
+                          iconSize: 32,
+                          iconEnabledColor: Colors.white,
+                          value: gender,
+                          items: genders.map(buildMenuItem).toList(),
+                          validator: (value){
+                            if(value==null){
+                              return 'Select a field';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) => setState(() {
+                            gender=value!;
+                          }),
+                          isExpanded: true,
+                          borderRadius: BorderRadius.circular(16),
+                          dropdownColor: Colors.grey.shade600.withOpacity(0.6),
+
                         ),
-                        iconSize: 32,
-                        value: gender,
-                        items: genders.map(buildMenuItem).toList(),
-                        validator: (value){
-                          if(value==null){
-                            return 'Select a field';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) => setState(() {
-                          gender=value!;
-                        }),
-                        isExpanded: true,
-                        borderRadius: BorderRadius.circular(12),
-                        dropdownColor: Colors.grey.shade200,
-
                       ),
                     ),
                   ),
 
 
 
-                  SizedBox(height: 40,),
+                  SizedBox(height: 50,),
 
 
 
@@ -290,7 +314,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                         ),
                         child: const Center(
                           child: Text(
-                            'Submit',
+                            'Next',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight:FontWeight.bold,

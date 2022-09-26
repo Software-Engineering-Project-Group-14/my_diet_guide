@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
+import 'package:my_diet_guide/widgets/text_box_02.dart';
 import '../widgets/background_image.dart';
 
 class UserBiometricsForm extends StatefulWidget {
@@ -55,7 +56,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
   DropdownMenuItem<String> buildMenuItem(String dp) =>
       DropdownMenuItem(
         value: dp,
-        child: Text(dp, style: TextStyle(fontSize: 17),),
+        child: Text(dp, style: TextStyle(fontSize: 19, color: Colors.white),),
       );
 
 
@@ -148,63 +149,70 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
                     Text("User Details",
                         style: TextStyle(
-                            fontSize: 32, fontWeight: FontWeight.bold),
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                        ),
                         textAlign: TextAlign.left),
+
+
+                    SizedBox(height: 40,),
+
+
+
+                    //weight textfield
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    //   child: TextField(
+                    //     keyboardType: TextInputType.number,
+                    //     controller: _weightController,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.white),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.deepPurple),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       hintText: 'Weight (kg)',
+                    //       fillColor: Colors.grey.shade200,
+                    //       filled: true,
+                    //     ),
+                    //   ),
+                    // ),
+
+                    TextBox02(controller: _weightController, hint: "Weight", keyboardType: TextInputType.number),
+
 
 
                     SizedBox(height: 30,),
 
 
 
-                    //weight textfield
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        controller: _weightController,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.deepPurple),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: 'Weight (kg)',
-                          fillColor: Colors.grey.shade200,
-                          filled: true,
-                        ),
-                      ),
-                    ),
-
-
-
-                    SizedBox(height: 20,),
-
-
-
                     //height textfield
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        controller: _heightController,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.deepPurple),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: 'Height (cm)',
-                          fillColor: Colors.grey.shade200,
-                          filled: true,
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    //   child: TextField(
+                    //     keyboardType: TextInputType.number,
+                    //     controller: _heightController,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.white),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.deepPurple),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       hintText: 'Height (cm)',
+                    //       fillColor: Colors.grey.shade200,
+                    //       filled: true,
+                    //     ),
+                    //   ),
+                    // ),
+                    
+                    TextBox02(controller: _heightController, hint: "Height", keyboardType: TextInputType.number),
 
 
 
@@ -213,145 +221,171 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
 
                     //target weight textfield
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    //   child: TextField(
+                    //     keyboardType: TextInputType.number,
+                    //     controller: _targetWeightController,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.white),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.deepPurple),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       hintText: 'Target Weight (kg)',
+                    //       fillColor: Colors.grey.shade200,
+                    //       filled: true,
+                    //     ),
+                    //   ),
+                    // ),
+
+                    TextBox02(controller: _targetWeightController, hint: "Target Weight", keyboardType: TextInputType.number),
+
+
+
+
+                    SizedBox(height: 30,),
+
+
+
+
+                    // dietary preference dropdown
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        controller: _targetWeightController,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(12),
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        decoration: BoxDecoration(color: Colors.grey.shade600.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField<String>(
+                            hint: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Dietary Preference",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
+                                ),
+                              ),
+                            ),
+                            iconSize: 32,
+                            iconEnabledColor: Colors.white,
+                            value: dietaryPreference,
+                            items: dietary_preferences.map(buildMenuItem).toList(),
+                            validator: (value){
+                              if(value==null){
+                                return 'Select a field';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) => setState(() {
+                              dietaryPreference=value!;
+                            }),
+                            isExpanded: true,
+                            borderRadius: BorderRadius.circular(16),
+                            dropdownColor: Colors.grey.shade600.withOpacity(0.6),
+
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.deepPurple),
-                            borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+
+
+                    SizedBox(height: 30,),
+
+
+
+                    // activeness dropdown
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        decoration: BoxDecoration(color: Colors.grey.shade600.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField<String>(
+                            hint: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Activeness",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
+                                ),
+                              ),
+                            ),
+                            iconSize: 32,
+                            iconEnabledColor: Colors.white,
+                            value: activeness,
+                            items: active_types.map(buildMenuItem).toList(),
+                            validator: (value){
+                              if(value==null){
+                                return 'Select a field';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) => setState(() {
+                              activeness=value!;
+                            }),
+                            isExpanded: true,
+                            borderRadius: BorderRadius.circular(16),
+                            dropdownColor: Colors.grey.shade600.withOpacity(0.6),
+
                           ),
-                          hintText: 'Target Weight (kg)',
-                          fillColor: Colors.grey.shade200,
-                          filled: true,
                         ),
                       ),
                     ),
 
 
 
-
-                    SizedBox(height: 20,),
-
+                    SizedBox(height: 30,),
 
 
 
-                    //dropdown
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      height: 55,
-                      width: 362,
-                      decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.circular(12)),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButtonFormField<String>(
-                          hint: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Dietary Preference"),
+                    // intensity dropdown
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        decoration: BoxDecoration(color: Colors.grey.shade600.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField<String>(
+                            hint: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Diet Plan Intensity",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
+                                ),
+                              ),
+                            ),
+                            iconSize: 32,
+                            iconEnabledColor: Colors.white,
+                            value: intensity,
+                            items: intensities.map(buildMenuItem).toList(),
+                            validator: (value){
+                              if(value==null){
+                                return 'Select a field';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) => setState(() {
+                              intensity=value!;
+                            }),
+                            isExpanded: true,
+                            borderRadius: BorderRadius.circular(16),
+                            dropdownColor: Colors.grey.shade600.withOpacity(0.6),
+
                           ),
-                          iconSize: 32,
-                          value: dietaryPreference,
-                          items: dietary_preferences.map(buildMenuItem).toList(),
-                          validator: (value){
-                            if(value==null){
-                              return 'Select a field';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) => setState(() {
-                            dietaryPreference=value!;
-                          }),
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(12),
-                          dropdownColor: Colors.grey.shade200,
-
-                        ),
-                      ),
-                    ),
-
-
-                    SizedBox(height: 20,),
-
-
-
-                    //dropdown
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      height: 55,
-                      width: 362,
-                      decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.circular(12)),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButtonFormField<String>(
-                          hint: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Activeness"),
-                          ),
-                          iconSize: 32,
-                          value: activeness,
-                          items: active_types.map(buildMenuItem).toList(),
-                          validator: (value){
-                            if(value==null){
-                              return 'Select a field';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) => setState(() {
-                            activeness=value!;
-                          }),
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(12),
-                          dropdownColor: Colors.grey.shade200,
-
                         ),
                       ),
                     ),
 
 
 
-                    SizedBox(height: 20,),
-
-
-
-                    //dropdown
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      height: 55,
-                      width: 362,
-                      decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.circular(12)),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButtonFormField<String>(
-                          hint: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Diet Plan Intensity"),
-                          ),
-                          iconSize: 32,
-                          value: intensity,
-                          items: intensities.map(buildMenuItem).toList(),
-                          validator: (value){
-                            if(value==null){
-                              return 'Select a field';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) => setState(() {
-                            intensity=value!;
-                          }),
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(12),
-                          dropdownColor: Colors.grey.shade200,
-
-                        ),
-                      ),
-                    ),
-
-
-
-                    SizedBox(height: 40,),
+                    SizedBox(height: 50,),
 
 
 
