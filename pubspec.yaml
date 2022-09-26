@@ -69,6 +69,7 @@ flutter:
     - assets/images/user details/
     #  - assets/images/view diet/
     - assets/images/diet_plan/
+    - assets/images/wallpapers/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
