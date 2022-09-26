@@ -113,6 +113,10 @@ class _LoginState extends State<Login> {
                                     ),
                                     keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
+                                      errorStyle: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.red[1000]
+                                      ),
                                       contentPadding: EdgeInsets.symmetric(vertical: 20),
                                       border: InputBorder.none,
                                       hintText: 'Email',
@@ -168,6 +172,10 @@ class _LoginState extends State<Login> {
                                       keyboardType: TextInputType.text,
                                       obscureText: true,
                                       decoration: InputDecoration(
+                                        errorStyle: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.red[1000]
+                                        ),
                                         contentPadding: EdgeInsets.symmetric(vertical: 20),
                                         border: InputBorder.none,
                                         hintText: 'Password',
@@ -325,10 +333,13 @@ class _LoginState extends State<Login> {
                     SizedBox(height: 12.0),
 
 
-                    Text(
-                      _error,
-                      style: TextStyle(color: Colors.red, fontSize: 14.0),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        _error,
+                        style: TextStyle(color: Colors.red, fontSize: 20.0),
 
+                      ),
                     ),
 
                     const SizedBox(height: 0),

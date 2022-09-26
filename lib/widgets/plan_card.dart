@@ -5,9 +5,9 @@ import '../models/Plan.dart';
 
 class PlanCard extends StatefulWidget {
 
-  Plan plan;
+  DietPlanModel dietPlanModel;
 
-  PlanCard({Key? key, required this.plan}) : super(key: key);
+  PlanCard({Key? key, required this.dietPlanModel}) : super(key: key);
 
   @override
   State<PlanCard> createState() => _PlanCardState();
@@ -20,7 +20,7 @@ class _PlanCardState extends State<PlanCard> {
 
   @override
   void initState() {
-    this.plan = widget.plan;
+    this.plan = widget.dietPlanModel;
     super.initState();
   }
 
@@ -81,3 +81,4 @@ class _PlanCardState extends State<PlanCard> {
   }
 
 }
+

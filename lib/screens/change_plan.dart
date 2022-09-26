@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/Plan.dart';
@@ -12,15 +13,28 @@ class ChangePlan extends StatefulWidget {
 
 class _ChangePlanState extends State<ChangePlan> {
 
-  //Get from database
-  List<Plan> recommendedPlans = <Plan>[
-    Plan("Super plan", "A very good plan", "veg.png", "Hard", "Frequent"),
-    Plan("Super plan", "A very good plan", "meat.png", "Easy", "Frequent"),
-    Plan("Super plan", "A very good plan", "fruit.png", "Hard", "Rare"),
-    Plan("Super plan", "A very good plan", "veg.png", "Medium", "Frequent"),
-  ];
 
-  Plan currentPlan = Plan("Current Plan", "Nice one", "veg.png", "easy", "Average");
+  late Stream<QuerySnapshot> recommendedplanStream;
+  DietPlanModel currentPlan = DietPlanModel(
+      name: "Plan1",
+      desc: "aaaaaa",
+      dietary_preference: "meat",
+      gender: "male",
+      intensity: "hard",
+      activeness: "active",
+      age_group: "26-45",
+      breakfast_id: "d",
+      lunch_id: "3",
+      dinner_id: "4"
+  );
+
+
+  @override
+  void initState() {
+    recommendedplanStream = DietPlanModel.getPlanStream(currentPlan.dietary_preference, currentPlan.age_group);
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +64,7 @@ class _ChangePlanState extends State<ChangePlan> {
                     ),
                     Row(
                       children: [
-                        Expanded(child: PlanCard(plan:currentPlan))
+                        Expanded(child: PlanCard(dietPlanModel:currentPlan))
                       ],
                     )
                   ],
@@ -68,21 +82,31 @@ class _ChangePlanState extends State<ChangePlan> {
                       )
                     ],
                   ),
-                  SingleChildScrollView(
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(8),
-                        itemCount: recommendedPlans.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                              child: PlanCard(
-                                  plan: recommendedPlans[index]
-                              )
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) => const Divider(),
-                      )
+                  StreamBuilder<QuerySnapshot>(
+                    stream: recommendedplanStream,
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+
+                      if (snapshot.hasError) {
+                        return const Text('Something went wrong');
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text('Loading');
+                      }
+                      // print("aaaaa");
+                      List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, currentPlan.intensity, currentPlan.activeness, currentPlan.age_group);
+                      //print("bbbbb");
+                      //print(l);
+                      //print(snapshot.data!.docs);
+                      return Column(
+                        children: l.map((DietPlanModel planModel){
+                          //  print(planModel);
+                          return PlanCard(dietPlanModel: planModel);
+                        }).toList().cast(),
+                      );
+                    },
+
                   ),
+
                 ],
               )
             ],
