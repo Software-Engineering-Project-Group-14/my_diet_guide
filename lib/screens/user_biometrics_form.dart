@@ -102,6 +102,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
     final userDoc = FirebaseFirestore.instance.collection('user').doc(userId);
 
     final json = {
+      'user_id': userId,
       'first name': firstName,
       'last name': lastName,
       'email': email,
@@ -117,6 +118,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
     final userBiometricsDoc = FirebaseFirestore.instance.collection('user biometrics').doc(userId);
 
     final json = {
+      'user_id': userId,
       'age': age,
       'gender': gender,
       'weight': weight,
