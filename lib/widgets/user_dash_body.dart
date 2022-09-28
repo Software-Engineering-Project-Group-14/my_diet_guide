@@ -1,10 +1,14 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/record_progress_screen.dart';
+import 'package:my_diet_guide/widgets/today_meal_card.dart';
 import 'package:my_diet_guide/widgets/user_dash_header.dart';
 
 class UserDashBody extends StatelessWidget {
-  const UserDashBody({Key? key}) : super(key: key);
+
+  final String user_id;
+
+  const UserDashBody({Key? key, required this.user_id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +16,10 @@ class UserDashBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
+
           Header(size: size),
+
+
           Container(
             child: Stack(
               children: [
@@ -26,7 +33,11 @@ class UserDashBody extends StatelessWidget {
               ],
             ),
           ),
+
+
           SizedBox(height: 15,),
+
+
           ClipRRect(
             borderRadius: BorderRadius.circular(28),
             child: BackdropFilter(
@@ -49,82 +60,46 @@ class UserDashBody extends StatelessWidget {
                       child: Text("2022/09/27 - Tuesday", style: TextStyle(fontSize: 19, color: Colors.white,),),
                     ),
 
+                    Divider(color: Colors.white , thickness: 2, indent: 20, endIndent: 20,),
+
 
                     SizedBox(height: 20,),
 
 
+                    MealCard(title: "Breakfast", mealName: "Oatmeal with banana", imageLocation: 'assets/images/dishes/smoothie01.jpg', navigate: RecordProgressScreen(meal: 'Breakfast', dishImage: 'assets/images/dishes/smoothie01.jpg', dishName: 'Oatmeal with banana', user_id: user_id)),
 
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 125),
-                                child: Text("Breakfast", style: TextStyle(fontSize: 19, color: Colors.white),),
-                              ),
-                              SizedBox(height: 20,),
-                              Text("Meal : Oatmeal with banana", style: TextStyle(color: Colors.white, fontSize: 16),),
-                            ],
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image(
-                              image: AssetImage('assets/images/dishes/smoothie01.jpg'),
-                              fit: BoxFit.cover,
-                              width: 100,
-                              height: 100,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
 
+                    SizedBox(height: 15,),
+
+                    Divider(color: Colors.white , thickness: 2, indent: 20, endIndent: 20,),
+
+                    SizedBox(height: 15,),
+
+
+                    MealCard(title: "Lunch", mealName: "Oatmeal with banana", imageLocation: 'assets/images/dishes/smoothie01.jpg', navigate: RecordProgressScreen(meal: 'Lunch', dishImage: 'assets/images/dishes/smoothie01.jpg', dishName: 'Oatmeal with banana', user_id:user_id),),
+
+
+                    SizedBox(height: 15,),
+
+                    Divider(color: Colors.white , thickness: 2, indent: 20, endIndent: 20,),
+
+                    SizedBox(height: 15,),
+
+
+                    MealCard(title: "Dinner", mealName: "Oatmeal with banana", imageLocation: 'assets/images/dishes/smoothie01.jpg', navigate: RecordProgressScreen(meal: 'Dinner', dishImage: 'assets/images/dishes/smoothie01.jpg', dishName: 'Oatmeal with banana', user_id: user_id,),),
 
 
                     SizedBox(height: 30,),
-
-
-
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 125),
-                                child: Text("Breakfast", style: TextStyle(fontSize: 19, color: Colors.white),),
-                              ),
-                              SizedBox(height: 20,),
-                              Text("Meal : Oatmeal with banana", style: TextStyle(color: Colors.white, fontSize: 16),),
-                            ],
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image(
-                              image: AssetImage('assets/images/dishes/smoothie01.jpg'),
-                              fit: BoxFit.cover,
-                              width: 100,
-                              height: 100,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-
-
-
-                    SizedBox(height: 30,),
-
-
-
                   ],
                 ),
               ),
             ),
-          )
+          ),
+
+
+          SizedBox(height: 50,),
+
+
         ],
       ),
     );

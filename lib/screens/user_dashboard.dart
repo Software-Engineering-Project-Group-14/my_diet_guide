@@ -10,7 +10,6 @@ import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import 'package:my_diet_guide/widgets/bottom_bar.dart';
 import 'package:my_diet_guide/widgets/user_dash_body.dart';
-
 import '../widgets/side_bar.dart';
 import 'check_bmi.dart';
 
@@ -24,6 +23,8 @@ class UserDashboard extends StatefulWidget {
 class _UserDashboardState extends State<UserDashboard> {
 
   final dietUser = FirebaseAuth.instance.currentUser;
+
+  late String user_id = dietUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class _UserDashboardState extends State<UserDashboard> {
         body: Stack(
           children: [
             BlurredBackground(),
-            UserDashBody(),
+            UserDashBody(user_id: user_id),
           ],
         ),
 
@@ -368,7 +369,7 @@ class _UserDashboardState extends State<UserDashboard> {
         //     ),
         //   ],
         // ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomBar(user_id: user_id),
     );
   }
 }
