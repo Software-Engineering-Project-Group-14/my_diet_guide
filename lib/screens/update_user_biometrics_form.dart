@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/user_dashboard.dart';
+import 'package:my_diet_guide/screens/user_profile.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 
 import '../widgets/bottom_bar.dart';
@@ -79,6 +82,28 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
 
   Future updateProfile() async {
     String user_id = widget.user_id;
+
+    final userDoc = FirebaseFirestore.instance.collection('user').doc(user_id);
+
+    userDoc.update({
+      'first name': widget.firstName,
+      'last name': widget.lastName,
+      'birthday': widget.bday
+    });
+
+    final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(user_id);
+
+    userBioDoc.update({
+      'gender': widget.gender,
+      'weight': int.parse(_weightController.text.trim()),
+      'height': int.parse(_heightController.text.trim()),
+      'target weight': int.parse(_targetWeightController.text.trim()),
+      'dietary preference': dietaryPreference,
+      'activeness': activeness,
+      'intensity': intensity
+    });
+    
+    //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserDashboard()));
   }
 
 
