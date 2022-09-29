@@ -4,17 +4,17 @@ class RateModel{
 
   late double rate;
   late String review;
-  late String user_id;
+  late String? email;
 
-  RateModel(this.rate, this.user_id, this.review);
+  RateModel(this.rate, this.email, this.review);
 
   @override
   String toString(){
-    return "User id: $user_id,  Rate: $rate\n$review";
+    return "Email: $email,  Rate: $rate\n$review";
   }
 
   Future<bool> addRateToFirestore() async {
-    final data = {"rate":rate,"review":review,"user_id":user_id};
+    final data = {"rate":rate,"review":review,"email":email};
     try{
       DocumentReference<Map<String,dynamic>> result = await FirebaseFirestore.instance.collection('rate').add(data);
       return true;
