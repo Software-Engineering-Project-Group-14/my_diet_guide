@@ -39,7 +39,7 @@ class _RateCardState extends State<RateCard> {
           ListTile(
             leading: StarRatingBar(starValue: rateModel.rate,),
             title: Text(
-                "${rateModel.user_id}",
+                "${rateModel.email}",
                 style: TextStyle(color: Colors.green)),
             subtitle: Text(
               "${rateModel.review}",

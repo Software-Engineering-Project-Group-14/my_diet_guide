@@ -16,14 +16,6 @@ class UpdateBiometricsForm extends StatefulWidget {
   final String bday;
   final String gender;
 
-  final int weight;
-  final int height;
-  final int targetWeight;
-
-  final String dietaryPreference;
-  final String activeness;
-  final String intensity;
-
   const UpdateBiometricsForm({
     Key? key,
     required this.user_id,
@@ -31,12 +23,6 @@ class UpdateBiometricsForm extends StatefulWidget {
     required this.lastName,
     required this.bday,
     required this.gender,
-    required this.weight,
-    required this.height,
-    required this.targetWeight,
-    required this.dietaryPreference,
-    required this.activeness,
-    required this.intensity
   }) : super(key: key);
 
   @override
@@ -53,13 +39,13 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
 
 
   final dietary_preferences = ['Vegetarian', 'Classical', 'Chinese', 'Low carb'];
-  late String dietaryPreference;
+  String? dietaryPreference;
 
   final active_types = ['Not very active', 'Moderately active', 'Active'];
-  late String activeness;
+  String? activeness;
 
   final intensities = ['Easy', 'Standard', 'Difficult'];
-  late String intensity;
+  String? intensity;
 
 
 
@@ -103,22 +89,13 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
       'intensity': intensity
     });
     
-    //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserDashboard()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserDashboard()));
   }
 
 
 
   @override
   Widget build(BuildContext context) {
-
-    _weightController.text = widget.weight.toString();
-    _heightController.text = widget.height.toString();
-    _targetWeightController.text = widget.targetWeight.toString();
-
-    dietaryPreference = widget.dietaryPreference;
-    activeness = widget.activeness;
-    intensity = widget.intensity;
-
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
       appBar: AppBar(
