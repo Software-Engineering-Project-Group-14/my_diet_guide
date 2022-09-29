@@ -1,10 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/view_diet_details.dart';
 
 class ViewDietCard extends StatelessWidget {
   final String day;
-  const ViewDietCard({Key? key, required this.day}) : super(key: key);
+  final String user_id;
+  const ViewDietCard({Key? key, required this.day, required this.user_id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class ViewDietCard extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: GestureDetector(
           onTap: (){
-            Navigator.pushNamed(context, '/diet_details');
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDetails(user_id: user_id,)));
           },
           child: ClipRRect(
             child: BackdropFilter(
