@@ -37,11 +37,34 @@ class DietPlanModel{
     return "Plan Name: $name\nDietary Preference: $dietary_preference\nGender: $gender\nIntensity: $intensity\nActiveness: $activeness\nAge group: $age_group\n";
   }
 
-  static Stream<QuerySnapshot> getPlanStream(dietary_preference, age_group){
-    return FirebaseFirestore.instance.collection('diet_plan').where('dietary_preference', isEqualTo: dietary_preference).where("age_group", isEqualTo: age_group).snapshots();
+  static String getAgeGroup(int age){
+    if(age>=0 && age<=12){
+      return "0-12";
+    }else if (age>=13 && age<=18){
+      return "13-18";
+    }else if (age>=19 && age<=25){
+      return "19-25";
+    }else if (age>=26 && age<=45){
+      return "26-45";
+    }else if (age>=46 && age<=60){
+      return "46-60";
+    }else if (age>=61 && age<=75){
+      return "61-75";
+    }else if (age>=75){
+      return "More than 75";
+    }else{
+      return "";
+    }
   }
 
-  static List<DietPlanModel> getMostReccomendedPlans(AsyncSnapshot<QuerySnapshot> snapshot, intensity, activeness, age_group) {
+  static Stream<QuerySnapshot> getPlanStream(String dietary_preference,String age_group,String gender,String intensity,String activeness){
+    print(dietary_preference);
+    print(activeness);
+    print(gender);
+    return FirebaseFirestore.instance.collection('diet_plan').where('dietary_preference', isEqualTo: dietary_preference).where("age_group", isEqualTo: age_group).where("gender", isEqualTo: gender).snapshots();
+  }
+
+  static List<DietPlanModel> getMostReccomendedPlans(AsyncSnapshot<QuerySnapshot> snapshot,String age_group,String intensity,String activeness) {
     List<DietPlanModel> recommendedPlans = [];
     QuerySnapshot<Object?>? data = snapshot.data;
     //print(data!.docs.length);
@@ -65,18 +88,17 @@ class DietPlanModel{
     };
     int effValue = 1200;
     Map<String, int> intensityValues = {
-      "easy": 0,
-      "medium": effValue~/2,
-      "hard": effValue
+      "Easy": 0,
+      "Standard": effValue~/2,
+      "Difficult": effValue
     };
     Map<String, int> activenessValues = {
-      "very active": 0,
-      "active": effValue~/3,
-      "not very active": (2*effValue)~/3,
-      "rarely active": effValue
+      "Not very active": 0,
+      "Moderately active": effValue~/2,
+      "Active": effValue,
     };
     Map<String, int> ageGroupValues = {
-      "5-12":0,
+      "0-12":0,
       "13-18":effValue~/6,
       "19-25":effValue~/3,
       "26-45":effValue~/2,
