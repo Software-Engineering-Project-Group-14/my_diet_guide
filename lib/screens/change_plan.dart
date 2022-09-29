@@ -31,7 +31,7 @@ class _ChangePlanState extends State<ChangePlan> {
 
   @override
   void initState() {
-    recommendedplanStream = DietPlanModel.getPlanStream(currentPlan.dietary_preference, currentPlan.age_group);
+    recommendedplanStream = DietPlanModel.getPlanStream(currentPlan.dietary_preference, currentPlan.age_group, currentPlan.gender,currentPlan.intensity,currentPlan.activeness);
     super.initState();
   }
 
