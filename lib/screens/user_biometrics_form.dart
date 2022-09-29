@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/select_plan.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/text_box_02.dart';
+import '../models/UserBiometrics.dart';
 import '../widgets/background_image.dart';
 
 class UserBiometricsForm extends StatefulWidget {
@@ -93,8 +95,17 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
         intensity!
     );
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
-
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPlan(userBiometrics: UserBiometrics(
+        user_id: userId,
+        gender: widget.gender,
+        weight: int.parse(_weightController.text.trim()),
+        height: int.parse(_heightController.text.trim()),
+        targetWeight: int.parse(_targetWeightController.text.trim()),
+        dietaryPreference: dietaryPreference!,
+        activeness: activeness!,
+        intensity: intensity!,
+        age:widget.age
+    ))));
   }
 
 
