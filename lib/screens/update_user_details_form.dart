@@ -8,32 +8,10 @@ import '../widgets/text_box_02.dart';
 class UpdateDetailsForm extends StatefulWidget {
 
   final String user_id;
-  final String firstName;
-  final String lastName;
-  final String bday;
-  final String gender;
-
-  final int weight;
-  final int height;
-  final int targetWeight;
-
-  final String dietaryPreference;
-  final String activeness;
-  final String intensity;
 
   const UpdateDetailsForm({
     Key? key,
     required this.user_id,
-    required this.firstName,
-    required this.lastName,
-    required this.bday,
-    required this.weight,
-    required this.height,
-    required this.targetWeight,
-    required this.dietaryPreference,
-    required this.activeness,
-    required this.intensity,
-    required this.gender
   }) : super(key: key);
 
   @override
@@ -44,13 +22,13 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
 
-  late String bday;
+  String? bday;
 
   final genders = ['Male', 'Female'];
-  late String gender;
+  String? gender;
 
   DropdownMenuItem<String> buildMenuItem(String dp) =>
       DropdownMenuItem(
@@ -81,7 +59,6 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
     super.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
-    //_ageController.dispose();
   }
 
 
@@ -90,19 +67,13 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
     String firstName = _firstNameController.text.trim();
     String lastName = _lastNameController.text.trim();
 
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UpdateBiometricsForm(user_id: widget.user_id, firstName: firstName, lastName: lastName, bday: bday, gender: gender, weight: widget.weight, height: widget.height, targetWeight: widget.targetWeight, dietaryPreference: widget.dietaryPreference, activeness: widget.activeness, intensity: widget.intensity)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UpdateBiometricsForm(user_id: widget.user_id, firstName: firstName, lastName: lastName, bday: bday!, gender: gender!,)));
   }
 
 
 
   @override
   Widget build(BuildContext context) {
-
-    _firstNameController.text=widget.firstName;
-    _lastNameController.text = widget.lastName;
-
-    bday=widget.bday;
-    gender=widget.gender;
 
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
