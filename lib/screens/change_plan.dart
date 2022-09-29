@@ -22,14 +22,12 @@ class _ChangePlanState extends State<ChangePlan> {
 
   late Stream<QuerySnapshot> recommendedplanStream;
   DietPlanModel currentPlan = DietPlanModel(
-      name: "Plan1",
-      desc: "aaaaaa",
-      dietary_preference: "Classical",
-      gender: "male",
-      intensity: "hard",
-      activeness: "active",
+      dietary_preference: "Vegetarian",
+      gender: "Male",
+      intensity: "Easy",
+      activeness: "Active",
       age_group: "26-45",
-      breakfast_id: "d",
+      breakfast_id: "7",
       lunch_id: "3",
       dinner_id: "4"
   );
@@ -38,6 +36,7 @@ class _ChangePlanState extends State<ChangePlan> {
   @override
   void initState() {
     recommendedplanStream = DietPlanModel.getPlanStream(currentPlan.dietary_preference, currentPlan.age_group, currentPlan.gender,currentPlan.intensity,currentPlan.activeness);
+   // print(currentPlan);
     super.initState();
   }
 
@@ -54,105 +53,109 @@ class _ChangePlanState extends State<ChangePlan> {
             title: Text("Change my diet plan"),
             toolbarHeight: 100
           ),
-          body: Stack(
-            children: [
-              BlurredBackground(),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Current plan",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                  color: Colors.white
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Expanded(child: PlanCard(dietPlanModel:currentPlan))
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Row(
+          body: SingleChildScrollView(
+            child: Stack(
+              children: [
+                BlurredBackground(),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Column(
                           children: [
-                            Text(
-                              "Other recommended plans",
-                              style: GoogleFonts.poppins(
-                                fontSize: 22,
-                                color: Colors.white
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Current plan",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                    color: Colors.white
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(child: PlanCard(dietPlanModel:currentPlan))
+                              ],
                             )
                           ],
                         ),
-                        StreamBuilder<QuerySnapshot>(
-                          stream: recommendedplanStream,
-                          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-
-                            if (snapshot.hasError) {
-                              return const Text(
-                                  'Something went wrong',
-                                style: TextStyle(
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Other recommended plans",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 22,
                                   color: Colors.white
                                 ),
-                              );
-                            }
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return Text(
-                                  'Loading',
-                                style: TextStyle(
+                              )
+                            ],
+                          ),
+                          StreamBuilder<QuerySnapshot>(
+                            stream: recommendedplanStream,
+                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+
+                              if (snapshot.hasError) {
+                                return const Text(
+                                    'Something went wrong',
+                                  style: TextStyle(
                                     color: Colors.white
-                                ),
-                              );
-                            }
-                            List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, currentPlan.intensity, currentPlan.activeness, currentPlan.age_group);
-                            if(l.length == 0){
-                              return Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
-                                    child: Text(
-                                      "There are no available diet plans for your biometrics.",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 20
+                                  ),
+                                );
+                              }
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Text(
+                                    'Loading',
+                                  style: TextStyle(
+                                      color: Colors.white
+                                  ),
+                                );
+                              }
+
+                              List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot,currentPlan.age_group, currentPlan.intensity, currentPlan.activeness, );
+
+                              if(l.length == 0){
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
+                                      child: Text(
+                                        "There are no available diet plans for your biometrics.",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 20
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              );
-                            }else{
-                              return Column(
-                                children: l.map((DietPlanModel planModel){
-                                  //  print(planModel);
-                                  return PlanCard(dietPlanModel: planModel);
-                                }).toList().cast(),
-                              );
-                            }
-                          },
+                                    )
+                                  ],
+                                );
+                              }else{
+                                return Column(
+                                  children: l.map((DietPlanModel planModel){
+                                    //  print(planModel);
+                                    return PlanCard(dietPlanModel: planModel);
+                                  }).toList().cast(),
+                                );
+                              }
+                            },
 
-                        ),
+                          ),
 
-                      ],
-                    )
-                  ],
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ]
+              ]
+            ),
           ),
         bottomNavigationBar: BottomBar(user_id: user_id),
       ),
