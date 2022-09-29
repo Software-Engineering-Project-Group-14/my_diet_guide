@@ -38,7 +38,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
   final _targetWeightController = TextEditingController();
 
 
-  final dietary_preferences = ['Vegetarian', 'Classical', 'Chinese', 'Low carb'];
+  final dietary_preferences = ['Vegetarian', 'Energetic', 'Low carb'];
   String? dietaryPreference;
 
   final active_types = ['Not very active', 'Moderately active', 'Active'];
