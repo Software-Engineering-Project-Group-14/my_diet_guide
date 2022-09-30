@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/Plan.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
+import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
 
 import '../widgets/blurred_background_image.dart';
@@ -220,6 +221,9 @@ class _ChangePlanState extends State<ChangePlan> {
                                                         child: const Text('OK'),
                                                         onPressed: () {
                                                           Navigator.of(context).pop();
+                                                          if(success){
+                                                            Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
+                                                          }
                                                         },
                                                       ),
                                                     ],

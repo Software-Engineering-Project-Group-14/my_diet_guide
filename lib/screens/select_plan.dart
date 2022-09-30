@@ -82,6 +82,22 @@ class _SelectPlanState extends State<SelectPlan> {
                         );
                       }
                       List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, userAgeGroup, userIntensity, userActiveness);
+                      if(l.length == 0){
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
+                              child: Text(
+                                "There are no available diet plans for your biometrics.",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 20
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      }else{
                       return Column(
                         children: l.map((DietPlanModel planModel){
                           return GestureDetector(
@@ -130,6 +146,7 @@ class _SelectPlanState extends State<SelectPlan> {
                           );
                         }).toList().cast(),
                       );
+                      }
                     },
 
                   ),
