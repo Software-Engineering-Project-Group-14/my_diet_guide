@@ -147,6 +147,8 @@ class _CheckBMIState extends State<CheckBMI> {
 
                                 widget.result =bmiModel.calculateBMI() as double;
                                 print('result in front : ' + '${widget.result}');
+                               setState(() {
+                                });
                             },
                             child: Container(
                               padding: EdgeInsets.all(20),

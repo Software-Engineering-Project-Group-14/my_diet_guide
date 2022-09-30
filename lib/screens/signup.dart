@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/screens/user_details_form.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/palatte.dart';
@@ -103,29 +104,34 @@ class _SignUpState extends State<SignUp> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         width: 300,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: TextField(
-                              style: TextStyle(
-                                fontSize: 22,
-                                color: Colors.white,
+                        child: Center(
+                          child: TextField(
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.white,
+                            ),
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.red[1000]
                               ),
-                              controller: _emailController,
-                              decoration: InputDecoration(
-                                errorStyle: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.red[1000]
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 0),
-                                border: InputBorder.none,
-                                hintText: '   Email',
-                                hintStyle: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.white
-                                ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 20),
+                              border: InputBorder.none,
+                              hintText: 'Email',
+                              hintStyle: TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.white
                               ),
+                                prefixIcon: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Icon(
+                                    FontAwesomeIcons.solidEnvelope,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                )
                             ),
                           ),
                         ),
@@ -140,27 +146,33 @@ class _SignUpState extends State<SignUp> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         width: 300,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: TextField(
-                              style: TextStyle(
-                                fontSize: 22,
-                                color: Colors.white,
+                        child: Center(
+                          child: TextField(
+                            obscureText: true,
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.white,
+                            ),
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.red[1000]
                               ),
-                              controller: _passwordController,
-                              decoration: InputDecoration(
-                                errorStyle: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.red[1000]
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 0),
-                                border: InputBorder.none,
-                                hintText: '   Password',
-                                hintStyle: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.white
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 20),
+                              border: InputBorder.none,
+                              hintText: 'Password',
+                              hintStyle: TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.white
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Icon(
+                                  FontAwesomeIcons.lock,
+                                  color: Colors.white,
+                                  size: 30,
                                 ),
                               ),
                             ),
@@ -176,27 +188,33 @@ class _SignUpState extends State<SignUp> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         width: 300,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: TextField(
-                              style: TextStyle(
-                                fontSize: 22,
-                                color: Colors.white,
+                        child: Center(
+                          child: TextField(
+                            obscureText: true,
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.white,
+                            ),
+                            controller: _confirmPasswordController,
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.red[1000]
                               ),
-                              controller: _confirmPasswordController,
-                              decoration: InputDecoration(
-                                errorStyle: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.red[1000]
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 0),
-                                border: InputBorder.none,
-                                hintText: '   Confirm Password',
-                                hintStyle: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.white
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 20),
+                              border: InputBorder.none,
+                              hintText: 'Confirm Password',
+                              hintStyle: TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.white
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Icon(
+                                  FontAwesomeIcons.lock,
+                                  color: Colors.white,
+                                  size: 30,
                                 ),
                               ),
                             ),

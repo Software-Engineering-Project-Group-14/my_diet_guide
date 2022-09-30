@@ -53,8 +53,8 @@ class MyApp extends StatelessWidget {
         },
       ),
       routes: {
-        '/diet_details': (context) => DietDetails(),
-        '/view_diet_details' : (context) => ViewDietPlan(),
+        //'/diet_details': (context) => DietDetails(),
+        //'/view_diet_details' : (context) => ViewDietPlan(),
         '/check_bmi' : (context) => CheckBMI(),
         '/sign_up' : (context) => SignUp()
       },

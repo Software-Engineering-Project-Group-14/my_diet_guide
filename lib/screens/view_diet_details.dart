@@ -1,7 +1,15 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/record_progress_screen.dart';
+import 'package:my_diet_guide/widgets/blurred_background_image.dart';
+
+import '../widgets/bottom_bar.dart';
+import '../widgets/today_meal_card.dart';
 
 class DietDetails extends StatefulWidget {
-  const DietDetails({Key? key}) : super(key: key);
+  final String user_id;
+  const DietDetails({Key? key, required this.user_id}) : super(key: key);
 
   @override
   State<DietDetails> createState() => _DietDetailsState();
@@ -10,280 +18,100 @@ class DietDetails extends StatefulWidget {
 class _DietDetailsState extends State<DietDetails> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.indigo[800],
-        title: const Text('Diet Details',),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-            children: [
-
-              //Dinner
-              Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  elevation: 0,
-                  color: Colors.blueGrey[100],
-                  child:  SizedBox(
-                    width: 400,
-                    height: 150,
-                    child: Row(
+    String user_id = widget.user_id;
+    return Stack(
+      children:[
+        // BlurredBackground(),
+        Scaffold(
+          // extendBodyBehindAppBar: true,
+          // backgroundColor: Colors.transparent,
+          backgroundColor: Colors.teal.shade900,
+          appBar: AppBar(
+            backgroundColor: Colors.teal.shade900,
+            title: Text('Diet Details'),
+            elevation: 0,
+          ),
+        body: Stack(
+          children: [
+            BlurredBackground(),
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(height: 10,),
 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start  , //to remove the centering from the column
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                  child: Text('Breakfast',
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold
-                                    ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(28),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Container(
+                              width: 360,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: [Colors.white24, Colors.white10],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight
                                   ),
-                                ),
-                              ],
-                            ),
+                                  borderRadius: BorderRadius.circular(28),
+                                  border: Border.all(width: 2, color: Colors.white10)
+                              ),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15, right: 125),
+                                    child: Text("2022/09/27 - Tuesday", style: TextStyle(fontSize: 19, color: Colors.white,),),
+                                  ),
 
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                  child: Text('Meal : meal name',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                  child: Text('Description :',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                                  Divider(color: Colors.white , thickness: 2, indent: 20, endIndent: 20,),
 
-                          ],
+
+                                  SizedBox(height: 20,),
+
+
+                                  MealCard(title: "Breakfast", mealName: "Oatmeal with banana", imageLocation: 'assets/images/dishes/smoothie01.jpg', navigate: RecordProgressScreen(meal: 'Breakfast', dishImage: 'assets/images/dishes/smoothie01.jpg', dishName: 'Oatmeal with banana', user_id: user_id, description: '',)),
+
+
+                                  SizedBox(height: 15,),
+
+                                  Divider(color: Colors.white , thickness: 2, indent: 20, endIndent: 20,),
+
+                                  SizedBox(height: 15,),
+
+
+                                  MealCard(title: "Lunch", mealName: "Oatmeal with banana", imageLocation: 'assets/images/dishes/smoothie01.jpg', navigate: RecordProgressScreen(meal: 'Lunch', dishImage: 'assets/images/dishes/smoothie01.jpg', dishName: 'Oatmeal with banana', user_id:user_id, description: '',),),
+
+
+                                  SizedBox(height: 15,),
+
+                                  Divider(color: Colors.white , thickness: 2, indent: 20, endIndent: 20,),
+
+                                  SizedBox(height: 15,),
+
+
+                                  MealCard(title: "Dinner", mealName: "Oatmeal with banana", imageLocation: 'assets/images/dishes/smoothie01.jpg', navigate: RecordProgressScreen(meal: 'Dinner', dishImage: 'assets/images/dishes/smoothie01.jpg', dishName: 'Oatmeal with banana', user_id: user_id, description: '',),),
+
+
+                                  SizedBox(height: 30,),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                        SizedBox(
-                          width: 100,
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SizedBox(
-                                  width: 80,
-                                  height: 70,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    child: Image(
-                                        image: AssetImage('assets/images/view diet/2.jpg')),
-                                  )),
-                            )
-                          ],
-                        )
+
+
 
                       ],
-                    ),
                   ),
                 ),
               ),
-
-
-
-              //Lunch
-              Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  elevation: 0,
-                  color: Colors.blueGrey[100],
-                  child:  SizedBox(
-                    width: 400,
-                    height: 150,
-                    child: Row(
-                      children: [
-
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start  , //to remove the centering from the column
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                  child: Text('Lunch',
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                  child: Text('Meal : meal name',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                  child: Text('Description :',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                          ],
-                        ),
-                        SizedBox(
-                          width: 100,
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SizedBox(
-                                  width: 80,
-                                  height: 70,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    child: Image(
-                                        image: AssetImage('assets/images/view diet/1.jpg')),
-                                  )),
-                            )
-                          ],
-                        )
-
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-
-              //Dinner
-              Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  elevation: 0,
-                  color: Colors.blueGrey[100],
-                  child:  SizedBox(
-                    width: 400,
-                    height: 150,
-                    child: Row(
-                      children: [
-
-                        Column(
-                      crossAxisAlignment: CrossAxisAlignment.start  , //to remove the centering from the column
-                      children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                  child: Text('Dinner',
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                  child: Text('Meal : meal name',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                  child: Text('Description :',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                          ],
-                        ),
-                        SizedBox(
-                          width: 100,
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SizedBox(
-                                  width: 80,
-                                  height: 70,
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      child: Image(image: AssetImage('assets/images/view diet/3.jpg')))),
-                            )
-                          ],
-                        )
-
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-
-
-
-            ],
+            ),
+          ],
         ),
+          bottomNavigationBar: BottomBar(user_id: widget.user_id),
       ),
+      ]
     );
   }
 }

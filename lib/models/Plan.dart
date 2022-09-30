@@ -4,8 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class DietPlanModel{
-  late String name;
-  late String desc;
+  late String planId;
   late String img;
   late String dietary_preference;
   late String gender;
@@ -18,8 +17,7 @@ class DietPlanModel{
   double diffValue = 0;
 
   DietPlanModel({
-    required this.name,
-    required this.desc,
+    required this.planId,
     required this.dietary_preference,
     required this.gender,
     required this.intensity,
@@ -34,7 +32,7 @@ class DietPlanModel{
 
   @override
   String toString(){
-    return "Plan Name: $name\nDietary Preference: $dietary_preference\nGender: $gender\nIntensity: $intensity\nActiveness: $activeness\nAge group: $age_group\n";
+    return "Dietary Preference: $dietary_preference\nGender: $gender\nIntensity: $intensity\nActiveness: $activeness\nAge group: $age_group\n";
   }
 
   static String getAgeGroup(int age){
@@ -58,13 +56,14 @@ class DietPlanModel{
   }
 
   static Stream<QuerySnapshot> getPlanStream(String dietary_preference,String age_group,String gender,String intensity,String activeness){
-    print(dietary_preference);
-    print(activeness);
-    print(gender);
+   // print(dietary_preference);
+   // print(activeness);
+   // print(gender);
     return FirebaseFirestore.instance.collection('diet_plan').where('dietary_preference', isEqualTo: dietary_preference).where("age_group", isEqualTo: age_group).where("gender", isEqualTo: gender).snapshots();
   }
 
   static List<DietPlanModel> getMostReccomendedPlans(AsyncSnapshot<QuerySnapshot> snapshot,String age_group,String intensity,String activeness) {
+    //print(intensity);
     List<DietPlanModel> recommendedPlans = [];
     QuerySnapshot<Object?>? data = snapshot.data;
     //print(data!.docs.length);
@@ -72,8 +71,7 @@ class DietPlanModel{
       var cur = data.docs[i];
       // print(cur);
       DietPlanModel curPlan = DietPlanModel(
-          name: cur.get('name'),
-          desc: cur.get('desc'),
+          planId: cur.id,
           dietary_preference: cur.get('dietary_preference'),
           gender: cur.get('gender'),
           intensity: cur.get('intensity'),
@@ -106,7 +104,10 @@ class DietPlanModel{
       "61-75":(5*effValue)~/6,
       "More than 75":effValue
     };
-    //print("xxxxx");
+   // print("xxxxx");
+   // print(recommendedPlans.length);
+   // print("yyyy");
+   // print(intensity);
     for(int j=0; j<recommendedPlans.length; j++){
       DietPlanModel cur = recommendedPlans[j];
       cur.diffValue = sqrt(
@@ -114,7 +115,6 @@ class DietPlanModel{
               pow((activenessValues[activeness]!-activenessValues[cur.activeness]!),2)+
               pow((ageGroupValues[age_group]!-ageGroupValues[cur.age_group]!),2)
       );
-      // print(cur.diffValue);
     }
     // print("yyyy");
     recommendedPlans.sort((DietPlanModel a, DietPlanModel b){

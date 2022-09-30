@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/Plan.dart';
+
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
+
+import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
 
 import '../models/UserBiometrics.dart';
@@ -26,6 +29,7 @@ class _SelectPlanState extends State<SelectPlan> {
   late String userIntensity;
   late String userActiveness;
   late String userGender;
+  late String userId;
 
   @override
   void initState() {
@@ -34,6 +38,7 @@ class _SelectPlanState extends State<SelectPlan> {
     userIntensity = widget.userBiometrics.intensity;
     userActiveness = widget.userBiometrics.activeness;
     userGender = widget.userBiometrics.gender;
+    userId = widget.userBiometrics.user_id;
     print(userDietaryPreference);
     print(userAgeGroup);
     print(userIntensity);

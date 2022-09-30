@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/Plan.dart';
 
 class PlanCard extends StatefulWidget {
-
   DietPlanModel dietPlanModel;
 
   PlanCard({Key? key, required this.dietPlanModel}) : super(key: key);
@@ -13,9 +12,7 @@ class PlanCard extends StatefulWidget {
   State<PlanCard> createState() => _PlanCardState();
 }
 
-
 class _PlanCardState extends State<PlanCard> {
-
   var plan;
 
   @override
@@ -23,7 +20,6 @@ class _PlanCardState extends State<PlanCard> {
     this.plan = widget.dietPlanModel;
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +33,16 @@ class _PlanCardState extends State<PlanCard> {
           ListTile(
             leading: Container(
               child: Image(
-                image: AssetImage(
-                    'assets/images/diet_plan/'+plan.img),
+                image: AssetImage('assets/images/diet_plan/' + plan.img),
                 fit: BoxFit.cover,
                 //width: 110,
                 //height: 110,
               ),
             ),
-            title: Text("${plan.name}",
-                style: TextStyle(color: Colors.white)),
+            title: Text("Plan", style: TextStyle(color: Colors.green)),
             subtitle: Text(
-              "${plan.desc}",
-              style: TextStyle(color: Colors.white),
+              "Description",
+              style: TextStyle(color: Colors.orangeAccent),
             ),
           ),
           Padding(
@@ -57,19 +51,13 @@ class _PlanCardState extends State<PlanCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Intensity Level: '+plan.intensity,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13
-                  ),
+                  'Intensity Level: ' + plan.intensity,
+                  style: TextStyle(color: Colors.white, fontSize: 13),
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'For '+plan.activeness+' users',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13
-                  ),
+                  'For ' + plan.activeness + ' users',
+                  style: TextStyle(color: Colors.white, fontSize: 13),
                 )
               ],
             ),
@@ -77,8 +65,5 @@ class _PlanCardState extends State<PlanCard> {
         ],
       ),
     );
-
   }
-
 }
-
