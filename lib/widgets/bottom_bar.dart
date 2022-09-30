@@ -42,7 +42,7 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-             // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan(user_id: user_id,)));
             },
           ),
           IconButton(
