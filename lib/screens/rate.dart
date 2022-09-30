@@ -48,77 +48,78 @@ class _RateState extends State<Rate> {
             BlurredBackground(),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "How is your experience?",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                      color: Colors.white
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "How is your experience?",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 15,
+                                        color: Colors.white
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Spend a little bit of your time and,",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                      color: Colors.white
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "rate your experience.",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                      color: Colors.white
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  RatingBar(
-                                      initialRating: 0,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      ratingWidget: RatingWidget(
-                                          full: const Icon(Icons.star, color: Colors.orange),
-                                          half: const Icon(
-                                            Icons.star_half,
-                                            color: Colors.orange,
-                                          ),
-                                          empty: const Icon(
-                                            Icons.star_outline,
-                                            color: Colors.orange,
-                                          )),
-                                      onRatingUpdate: (value) {
-                                        setState(() {
-                                          starValue = value;
-                                        });
-                                      }),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Spend a little bit of your time and,",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 15,
+                                        color: Colors.white
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "rate your experience.",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 15,
+                                        color: Colors.white
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    RatingBar(
+                                        initialRating: 0,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        ratingWidget: RatingWidget(
+                                            full: const Icon(Icons.star, color: Colors.orange),
+                                            half: const Icon(
+                                              Icons.star_half,
+                                              color: Colors.orange,
+                                            ),
+                                            empty: const Icon(
+                                              Icons.star_outline,
+                                              color: Colors.orange,
+                                            )),
+                                        onRatingUpdate: (value) {
+                                          setState(() {
+                                            starValue = value;
+                                          });
+                                        }),
 
                                 ],
                               )
@@ -217,15 +218,18 @@ class _RateState extends State<Rate> {
                         );
                       }
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
+                        return Text(
+                          'Loading',
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
                         );
                       }
                       //return Text('');
                       return Column(
                         children: snapshot.data!.docs.map((DocumentSnapshot document){
                           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                          return RateCard(rateModel: RateModel(data['rate'],data['email'],data['review']));
+                          return RateCard(rateModel: RateModel(data['rate'].toDouble(),data['email'],data['review']));
                         }).toList().cast(),
                       );
                     },
@@ -234,6 +238,7 @@ class _RateState extends State<Rate> {
                 ],
               ),
             ),
+            )
           ]
         ),
         bottomNavigationBar: BottomBar(user_id: user_id),
