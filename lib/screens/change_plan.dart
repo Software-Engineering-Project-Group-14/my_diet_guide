@@ -9,6 +9,7 @@ import 'package:my_diet_guide/widgets/plan_card.dart';
 
 import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
+import '../widgets/side_bar.dart';
 
 class ChangePlan extends StatefulWidget {
   const ChangePlan({Key? key}) : super(key: key);
@@ -57,8 +58,9 @@ class _ChangePlanState extends State<ChangePlan> {
             backgroundColor: Colors.teal.shade900,
             elevation: 0,
             title: Text("Change my diet plan"),
-            toolbarHeight: 100
+            toolbarHeight: 80
         ),
+        drawer: NavigationDrawer(),
         body: SingleChildScrollView(
           child: Stack(
               children: [

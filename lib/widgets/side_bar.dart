@@ -63,11 +63,11 @@ class NavigationDrawer extends StatelessWidget {
           Wrap(
             runSpacing: 16,
             children: [
-              ListTile(
-                leading: Icon(Icons.calendar_month, size: 30, color: Colors.white,),
-                title: Text("Calender", style: TextStyle(fontSize: 19, color: Colors.white),),
-                onTap: (){},
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.calendar_month, size: 30, color: Colors.white,),
+              //   title: Text("Calender", style: TextStyle(fontSize: 19, color: Colors.white),),
+              //   onTap: (){},
+              // ),
               ListTile(
                 leading: Icon(Icons.notifications, size: 30, color: Colors.white,),
                 title: Text("Notifications", style: TextStyle(fontSize: 19, color: Colors.white,),),
@@ -94,13 +94,13 @@ class NavigationDrawer extends StatelessWidget {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Rate()));
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.reviews, size: 30, color: Colors.white,),
-                title: Text("View Ratings and Reviews", style: TextStyle(fontSize: 19, color: Colors.white,),),
-                onTap: (){
-
-                },
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.reviews, size: 30, color: Colors.white,),
+              //   title: Text("View Ratings and Reviews", style: TextStyle(fontSize: 19, color: Colors.white,),),
+              //   onTap: (){
+              //
+              //   },
+              // ),
               Divider(color: Colors.white , thickness: 2),
               ListTile(
                 leading: Icon(FontAwesomeIcons.arrowRightFromBracket, color: Colors.white,),
