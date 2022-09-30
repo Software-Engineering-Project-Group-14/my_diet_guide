@@ -22,6 +22,7 @@ class _ChangePlanState extends State<ChangePlan> {
 
   late Stream<QuerySnapshot> recommendedplanStream;
   DietPlanModel currentPlan = DietPlanModel(
+      planId: "10",
       dietary_preference: "Vegetarian",
       gender: "Male",
       intensity: "Easy",

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class DietPlanModel{
+  late String planId;
   late String img;
   late String dietary_preference;
   late String gender;
@@ -16,6 +17,7 @@ class DietPlanModel{
   double diffValue = 0;
 
   DietPlanModel({
+    required this.planId,
     required this.dietary_preference,
     required this.gender,
     required this.intensity,
@@ -69,6 +71,7 @@ class DietPlanModel{
       var cur = data.docs[i];
       // print(cur);
       DietPlanModel curPlan = DietPlanModel(
+          planId: cur.id,
           dietary_preference: cur.get('dietary_preference'),
           gender: cur.get('gender'),
           intensity: cur.get('intensity'),
@@ -107,18 +110,11 @@ class DietPlanModel{
    // print(intensity);
     for(int j=0; j<recommendedPlans.length; j++){
       DietPlanModel cur = recommendedPlans[j];
-      print("kkkkkk");
-      print(intensity);
-      print(cur.intensity);
-      print(intensityValues[intensity]!);
-      print(intensityValues[cur.intensity]!);
-      print("ffffffffff");
       cur.diffValue = sqrt(
           pow((intensityValues[intensity]!-intensityValues[cur.intensity]!),2)+
               pow((activenessValues[activeness]!-activenessValues[cur.activeness]!),2)+
               pow((ageGroupValues[age_group]!-ageGroupValues[cur.age_group]!),2)
       );
-       print(cur.diffValue);
     }
     // print("yyyy");
     recommendedPlans.sort((DietPlanModel a, DietPlanModel b){

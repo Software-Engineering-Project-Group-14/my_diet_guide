@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/Plan.dart';
+import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
 
 import '../models/UserBiometrics.dart';
@@ -25,6 +26,7 @@ class _SelectPlanState extends State<SelectPlan> {
   late String userIntensity;
   late String userActiveness;
   late String userGender;
+  late String userId;
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _SelectPlanState extends State<SelectPlan> {
     userIntensity = widget.userBiometrics.intensity;
     userActiveness = widget.userBiometrics.activeness;
     userGender = widget.userBiometrics.gender;
+    userId = widget.userBiometrics.user_id;
     print(userDietaryPreference);
     print(userAgeGroup);
     print(userIntensity);
@@ -79,7 +82,50 @@ class _SelectPlanState extends State<SelectPlan> {
                       List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, userAgeGroup, userIntensity, userActiveness);
                       return Column(
                         children: l.map((DietPlanModel planModel){
-                          return PlanCard(dietPlanModel: planModel);
+                          return GestureDetector(
+                              child: PlanCard(dietPlanModel: planModel),
+                            onTap: () async {
+                                bool success = true;
+                                String msg = "";
+                                try{
+                                  await FirebaseFirestore.instance.collection('user')
+                                      .doc(userId).set({
+                                    'current_plan':planModel.planId
+                                  }, SetOptions(merge: true));
+                                  msg = "Plan selected successfully.";
+                                }catch(error){
+                                  success = false;
+                                  msg = "An error occurred. Please try again.";
+                                }
+                                showDialog<void>(
+                                  context: context,
+                                  barrierDismissible: false, // user must tap button!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Plan Select'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: [
+                                            Text(msg),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('OK'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            if(success){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                            },
+                          );
                         }).toList().cast(),
                       );
                     },
