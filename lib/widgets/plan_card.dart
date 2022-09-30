@@ -39,7 +39,7 @@ class _PlanCardState extends State<PlanCard> {
                 //height: 110,
               ),
             ),
-            title: Text("Plan", style: TextStyle(color: Colors.green)),
+            title: Text("Plan ${plan.planId}", style: TextStyle(color: Colors.green)),
             subtitle: Text(
               "Description",
               style: TextStyle(color: Colors.orangeAccent),
