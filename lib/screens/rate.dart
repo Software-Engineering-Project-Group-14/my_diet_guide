@@ -229,7 +229,7 @@ class _RateState extends State<Rate> {
                       return Column(
                         children: snapshot.data!.docs.map((DocumentSnapshot document){
                           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                          return RateCard(rateModel: RateModel(data['rate'],data['email'],data['review']));
+                          return RateCard(rateModel: RateModel(data['rate'].toDouble(),data['email'],data['review']));
                         }).toList().cast(),
                       );
                     },
@@ -238,6 +238,7 @@ class _RateState extends State<Rate> {
                 ],
               ),
             ),
+            )
           ]
         ),
         bottomNavigationBar: BottomBar(user_id: user_id),
