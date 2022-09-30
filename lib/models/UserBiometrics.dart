@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UserBiometrics{
@@ -47,4 +48,22 @@ class UserBiometrics{
     intensity: json['intensity'],
       age: json['age']
   );
+
+  static Future<UserBiometrics> getUserBiometrics(String user_id)async{
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection("user biometrics").doc(user_id).get();
+    Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
+    print(data.toString());
+    return UserBiometrics(
+        user_id: user_id,
+        gender: data["gender"],
+        weight: data["weight"],
+        height: data["height"],
+        targetWeight: data["target weight"],
+        dietaryPreference: data["dietary preference"],
+        activeness: data["activeness"],
+        intensity: data["intensity"],
+        age: data["age"]
+    );
+  }
+
 }

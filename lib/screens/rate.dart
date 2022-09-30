@@ -121,122 +121,121 @@ class _RateState extends State<Rate> {
                                           });
                                         }),
 
-                                  ],
-                                )
-                              ],
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            showCursor: true,
+                            maxLines: 10,
+                            decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: Colors.white)
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.deepPurple),
+                                    borderRadius: BorderRadius.circular(12)
+                                ),
+                                hintText: 'Your feedback here (optional)',
+                                fillColor: Colors.grey[200],
+                                filled: true
+                            ),
+                            onChanged: (val) {
+                              setState(() => feedbackText = val);
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.deepPurple,
+                                    fixedSize: Size(300, 50)
+                                ),
+                                child: Text(
+                                    'Submit',
+                                    style: GoogleFonts.aBeeZee(
+                                        fontSize: 20,
+                                        color: Colors.black
+                                    )
+                                ),
+                                onPressed: () async {
+                                  //print(starValue);
+                                  //print(feedbackText);
+                                  if(FirebaseAuth.instance.currentUser != null || _formKey.currentState!.validate()){
+                                    RateModel rateObject = RateModel(
+                                      starValue, FirebaseAuth.instance.currentUser!.email, feedbackText,
+                                    );
+                                    bool result = await rateObject.addRateToFirestore();
+                                    if(result){
+                                      showDialog(
+                                        context: context,
+                                        builder: (context){
+                                          return const AlertDialog(
+                                            content: Text(
+                                                'Your review added.'
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }else{
+                                      setState(() {
+                                        error = 'Could not add review. Please try again.';
+                                      });
+                                    }
+                                  }
+                                }
                             ),
                           ),
+                          SizedBox(height: 12.0),
+                          Text(
+                            error,
+                            style: TextStyle(color: Colors.red, fontSize: 14.0),
+                          )
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              showCursor: true,
-                              maxLines: 10,
-                              decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide(color: Colors.white)
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.deepPurple),
-                                      borderRadius: BorderRadius.circular(12)
-                                  ),
-                                  hintText: 'Your feedback here (optional)',
-                                  fillColor: Colors.grey[200],
-                                  filled: true
-                              ),
-                              onChanged: (val) {
-                                setState(() => feedbackText = val);
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.deepPurple,
-                                      fixedSize: Size(300, 50)
-                                  ),
-                                  child: Text(
-                                      'Submit',
-                                      style: GoogleFonts.aBeeZee(
-                                          fontSize: 20,
-                                          color: Colors.black
-                                      )
-                                  ),
-                                  onPressed: () async {
-                                    //print(starValue);
-                                    //print(feedbackText);
-                                    if(FirebaseAuth.instance.currentUser != null || _formKey.currentState!.validate()){
-                                      RateModel rateObject = RateModel(
-                                        starValue, FirebaseAuth.instance.currentUser!.email, feedbackText,
-                                      );
-                                      bool result = await rateObject.addRateToFirestore();
-                                      if(result){
-                                        showDialog(
-                                          context: context,
-                                          builder: (context){
-                                            return const AlertDialog(
-                                              content: Text(
-                                                  'Your review added.'
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      }else{
-                                        setState(() {
-                                          error = 'Could not add review. Please try again.';
-                                        });
-                                      }
-                                    }
-                                  }
-                              ),
-                            ),
-                            SizedBox(height: 12.0),
-                            Text(
-                              error,
-                              style: TextStyle(color: Colors.red, fontSize: 14.0),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    StreamBuilder<QuerySnapshot>(
-                      stream: _rateStream,
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                        if (snapshot.hasError) {
-                          return const Text(
-                              'Something went wrong',
-                            style: TextStyle(
-                              color: Colors.white
-                            ),
-                          );
-                        }
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Text(
-                            'Loading',
-                            style: TextStyle(
-                              color: Colors.white
-                            ),
-                          );
-                        }
-                        //return Text('');
-                        return Column(
-                          children: snapshot.data!.docs.map((DocumentSnapshot document){
-                            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                            return RateCard(rateModel: RateModel(data['rate'].toDouble(),data['email'],data['review']));
-                          }).toList().cast(),
+                  ),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: _rateStream,
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                      if (snapshot.hasError) {
+                        return const Text(
+                            'Something went wrong',
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
                         );
-                      },
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text(
+                          'Loading',
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        );
+                      }
+                      //return Text('');
+                      return Column(
+                        children: snapshot.data!.docs.map((DocumentSnapshot document){
+                          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                          return RateCard(rateModel: RateModel(data['rate'],data['email'],data['review']));
+                        }).toList().cast(),
+                      );
+                    },
 
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ]

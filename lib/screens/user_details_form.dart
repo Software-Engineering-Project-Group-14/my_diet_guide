@@ -1,3 +1,4 @@
+import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/screens/user_biometrics_form.dart';
@@ -31,6 +32,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
   final _ageController = TextEditingController();
 
   String? bday = null;
+  int? age;
 
   final genders = ['Male', 'Female'];
   String? gender;
@@ -73,7 +75,6 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
   Future signUp() async {
     String firstName = _firstNameController.text.trim();
     String lastName = _lastNameController.text.trim();
-    int age = int.parse(_ageController.text.trim());
 
     Navigator.push(context, MaterialPageRoute(
       builder: (context) =>
@@ -82,7 +83,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
           password: widget.password,
           firstName: firstName,
           lastName: lastName,
-          age: age,
+          age: age!,
           bday: bday!,
           gender: gender!
         )
@@ -206,11 +207,11 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                   //   ),
                   // ),
 
-                  TextBox02(controller: _ageController, hint: "Age", keyboardType: TextInputType.number),
+                  //TextBox02(controller: _ageController, hint: "Age", keyboardType: TextInputType.number),
 
 
 
-                  SizedBox(height: 30,),
+                  //SizedBox(height: 30,),
 
 
 
@@ -227,6 +228,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                         );
                         if(datetime == null) return;
                         setState(() {
+                          age = AgeCalculator.age(datetime).years;
                           String month = datetime.month.toString().padLeft(2, '0');
                           String day = datetime.day.toString().padLeft(2, '0');
                           bday = '${datetime.year}/$month/$day';
