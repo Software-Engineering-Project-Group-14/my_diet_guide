@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:age_calculator/age_calculator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
@@ -95,6 +96,14 @@ class _UserProfileState extends State<UserProfile> {
     activeness= map['activeness'];
     intensity= map['intensity'];
 
+    int byear = int.parse(bday.substring(0,4));
+    int bmonth = int.parse(bday.substring(5,7));
+    int bdate = int.parse(bday.substring(8,10));
+
+    DateTime dob = DateTime(byear, bmonth, bdate);
+    age = AgeCalculator.age(dob).years;
+
+
     return Column(
       children: [
         SizedBox(height: 30,),
@@ -118,7 +127,7 @@ class _UserProfileState extends State<UserProfile> {
         Container(
           alignment: Alignment.topLeft,
           padding: EdgeInsets.only(left: 20, right: 20),
-          child: Text("Age : 23 years", style: TextStyle(fontSize: 19, color: Colors.white),),
+          child: Text("Age : $age years", style: TextStyle(fontSize: 19, color: Colors.white),),
         ),
 
         SizedBox(height: 20,),
@@ -143,6 +152,14 @@ class _UserProfileState extends State<UserProfile> {
           alignment: Alignment.topLeft,
           padding: EdgeInsets.only(left: 20, right: 20),
           child: Text("Height : $height cm", style: TextStyle(fontSize: 19, color: Colors.white),),
+        ),
+
+        SizedBox(height: 20,),
+
+        Container(
+          alignment: Alignment.topLeft,
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Text("Target Weight : $targetWeight kg", style: TextStyle(fontSize: 19, color: Colors.white),),
         ),
 
         SizedBox(height: 20,),

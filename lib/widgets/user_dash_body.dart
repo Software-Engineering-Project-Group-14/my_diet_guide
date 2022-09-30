@@ -42,7 +42,7 @@ class UserDashBody extends StatelessWidget {
 
     if(snapshot1.exists){
       dietplan_id = snapshot1.data()!['current_plan'];
-      print('dietplan_id : $dietplan_id');
+      //print('dietplan_id : $dietplan_id');
     }
 
     return dietplan_id;
@@ -61,12 +61,12 @@ class UserDashBody extends StatelessWidget {
       lunch_id = snapshot2.data()!['lunch_id'];
       dinner_id = snapshot2.data()!['dinner_id'];
     } else {
-      print('snapshot2 does not exist');
+      //print('snapshot2 does not exist');
     }
 
-    print('b id = $breakfast_id');
-    print('l id = $lunch_id');
-    print('d id = $dinner_id');
+    //print('b id = $breakfast_id');
+    //print('l id = $lunch_id');
+    //print('d id = $dinner_id');
 
     return {
       'breakfast_id' : breakfast_id,
@@ -102,8 +102,8 @@ class UserDashBody extends StatelessWidget {
       breakfast_dishId = breakfastSnapshot.data()!['sunday_dish_id'];
     }
 
-    print('today_day : $today_day');
-    print('breakfast dish id : $breakfast_dishId');
+    //print('today_day : $today_day');
+    //print('breakfast dish id : $breakfast_dishId');
 
     return breakfast_dishId;
   }
@@ -356,7 +356,7 @@ class UserDashBody extends StatelessWidget {
       String dishImage = dishSnapshot.data()!['dish_image'];
       String dishDescription = dishSnapshot.data()!['description'];
 
-      print('b dish: $dish_id, d image: $dishImage, d des: $dishDescription');
+      //print('b dish: $dish_id, d image: $dishImage, d des: $dishDescription');
 
       return {
         'dishName': dish_id,
@@ -364,7 +364,7 @@ class UserDashBody extends StatelessWidget {
         'dishDescription': dishDescription
       };
     }else {
-      print("dishSnapshot does not exist");
+      //print("dishSnapshot does not exist");
       return{};
     }
   }
