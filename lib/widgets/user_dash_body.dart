@@ -20,6 +20,8 @@ class UserDashBody extends StatelessWidget {
   late String dinner_id;
 
   late String breakfast_dishId;
+  late String lunch_dishId;
+  late String dinner_dishId;
 
   late String breakfast_dishName;
   late String breakfast_dishImage;
@@ -39,7 +41,7 @@ class UserDashBody extends StatelessWidget {
     final snapshot1 = await userDietDoc.get();
 
     if(snapshot1.exists){
-      dietplan_id = snapshot1.data()!['dietplan_id'];
+      dietplan_id = snapshot1.data()!['current_plan'];
       print('dietplan_id : $dietplan_id');
     }
 
@@ -129,7 +131,111 @@ class UserDashBody extends StatelessWidget {
   }
 
 
-  Widget buildMealCard(Map<String, dynamic> map){
+
+
+  Future<String> readLunchDishId(Map<String, dynamic> map) async {
+    lunch_id = map['lunch_id'];
+
+    final lunchDoc = FirebaseFirestore.instance.collection('lunch').doc(lunch_id);
+    final lunchSnapshot = await lunchDoc.get();
+
+
+    if(today_day=='Monday'){
+      lunch_dishId = lunchSnapshot.data()!['monday_dish_id'];
+    } else if(today_day=='Tuesday'){
+      lunch_dishId = lunchSnapshot.data()!['tuesday_dish_id'];
+    } else if(today_day=='Wednesday'){
+      lunch_dishId = lunchSnapshot.data()!['wednesday_dish_id'];
+    } else if(today_day=='Thursday'){
+      lunch_dishId = lunchSnapshot.data()!['thursday_dish_id'];
+    } else if(today_day=='Friday'){
+      lunch_dishId = lunchSnapshot.data()!['friday_dish_id'];
+    } else if(today_day=='Saturday'){
+      lunch_dishId = lunchSnapshot.data()!['saturday_dish_id'];
+    } else if(today_day=='Sunday'){
+      lunch_dishId = lunchSnapshot.data()!['sunday_dish_id'];
+    }
+
+    return lunch_dishId;
+  }
+
+
+
+
+  Future<String> readDinnerDishId(Map<String, dynamic> map) async {
+    dinner_id = map['dinner_id'];
+
+    final dinnerDoc = FirebaseFirestore.instance.collection('dinner').doc(dinner_id);
+    final dinnerSnapshot = await dinnerDoc.get();
+
+
+    if(today_day=='Monday'){
+      dinner_dishId = dinnerSnapshot.data()!['monday_dish_id'];
+    } else if(today_day=='Tuesday'){
+      dinner_dishId = dinnerSnapshot.data()!['tuesday_dish_id'];
+    } else if(today_day=='Wednesday'){
+      dinner_dishId = dinnerSnapshot.data()!['wednesday_dish_id'];
+    } else if(today_day=='Thursday'){
+      dinner_dishId = dinnerSnapshot.data()!['thursday_dish_id'];
+    } else if(today_day=='Friday'){
+      dinner_dishId = dinnerSnapshot.data()!['friday_dish_id'];
+    } else if(today_day=='Saturday'){
+      dinner_dishId = dinnerSnapshot.data()!['saturday_dish_id'];
+    } else if(today_day=='Sunday'){
+      dinner_dishId = dinnerSnapshot.data()!['sunday_dish_id'];
+    }
+
+    return dinner_dishId;
+  }
+
+
+
+
+
+  Widget buildLunch(Map<String, dynamic> map) {
+    return FutureBuilder<String>(
+        future: readLunchDishId(map),
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            final lunchDishId = snapshot.data;
+            return lunchDishId==null ? Center(child: Text("No User!"),) : buildLunchMealCard(lunchDishId!);
+          } else if (snapshot.hasError){
+            return Text('Something went wrong!');
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        }
+    );
+  }
+
+
+
+
+  Widget buildDinner(Map<String, dynamic> map) {
+    return FutureBuilder<String>(
+        future: readDinnerDishId(map),
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            final dinnerDishId = snapshot.data;
+            return dinnerDishId==null ? Center(child: Text("No User!"),) : buildDinnerMealCard(dinnerDishId!);
+          } else if (snapshot.hasError){
+            return Text('Something went wrong!');
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        }
+    );
+  }
+
+
+
+
+
+  Widget buildMealCardBreakfast(Map<String, dynamic> map){
     String dishName = map['dishName'];
     String dishImage = map['dishImage'];
     String dishDescription = map['dishDescription'];
@@ -144,13 +250,48 @@ class UserDashBody extends StatelessWidget {
   }
 
 
+
+
+  Widget buildMealCardLunch(Map<String, dynamic> map){
+    String dishName = map['dishName'];
+    String dishImage = map['dishImage'];
+    String dishDescription = map['dishDescription'];
+
+    return MealCard(
+        title: "Lunch",
+        mealName: dishName,
+        imageLocation: dishImage,
+        navigate: RecordProgressScreen(meal: 'Lunch', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription,)
+    );
+
+  }
+
+
+
+
+  Widget buildMealCardDinner(Map<String, dynamic> map){
+    String dishName = map['dishName'];
+    String dishImage = map['dishImage'];
+    String dishDescription = map['dishDescription'];
+
+    return MealCard(
+        title: "Dinner",
+        mealName: dishName,
+        imageLocation: dishImage,
+        navigate: RecordProgressScreen(meal: 'Dinner', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription,)
+    );
+
+  }
+
+
+
   Widget buildBreakfastMealCard(String dish_id){
     return FutureBuilder<Map<String,dynamic>>(
       future: readDish(dish_id),
         builder: (context, snapshot){
           if(snapshot.hasData){
             final breakfastDish = snapshot.data;
-            return breakfastDish==null ? Center(child: Text("No User!"),) : buildMealCard(breakfastDish!);
+            return breakfastDish==null ? Center(child: Text("No User!"),) : buildMealCardBreakfast(breakfastDish!);
           } else if (snapshot.hasError){
             return Text('Something went wrong!');
           } else {
@@ -163,13 +304,57 @@ class UserDashBody extends StatelessWidget {
   }
 
 
-  Future<Map<String,dynamic>> readDish(String dish_id) async{
-    final breakfastDish = FirebaseFirestore.instance.collection('dish1').doc(dish_id);
-    final breakfastDishSnapshot = await breakfastDish.get();
 
-    if(breakfastDishSnapshot.exists){
-      String dishImage = breakfastDishSnapshot.data()!['dish_image'];
-      String dishDescription = breakfastDishSnapshot.data()!['description'];
+
+  Widget buildLunchMealCard(String dish_id){
+    return FutureBuilder<Map<String,dynamic>>(
+        future: readDish(dish_id),
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            final lunchDish = snapshot.data;
+            return lunchDish==null ? Center(child: Text("No User!"),) : buildMealCardLunch(lunchDish!);
+          } else if (snapshot.hasError){
+            return Text('Something went wrong!');
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        }
+    );
+  }
+
+
+
+
+  Widget buildDinnerMealCard(String dish_id){
+    return FutureBuilder<Map<String,dynamic>>(
+        future: readDish(dish_id),
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            final dinnerDish = snapshot.data;
+            return dinnerDish==null ? Center(child: Text("No User!"),) : buildMealCardDinner(dinnerDish!);
+          } else if (snapshot.hasError){
+            return Text('Something went wrong!');
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        }
+    );
+  }
+
+
+
+
+  Future<Map<String,dynamic>> readDish(String dish_id) async{
+    final dish = FirebaseFirestore.instance.collection('dish1').doc(dish_id);
+    final dishSnapshot = await dish.get();
+
+    if(dishSnapshot.exists){
+      String dishImage = dishSnapshot.data()!['dish_image'];
+      String dishDescription = dishSnapshot.data()!['description'];
 
       print('b dish: $dish_id, d image: $dishImage, d des: $dishDescription');
 
@@ -179,7 +364,7 @@ class UserDashBody extends StatelessWidget {
         'dishDescription': dishDescription
       };
     }else {
-      print("breakfastDishSnapshot does not exist");
+      print("dishSnapshot does not exist");
       return{};
     }
   }
@@ -245,21 +430,22 @@ class UserDashBody extends StatelessWidget {
               SizedBox(height: 15,),
 
 
-              // FutureBuilder<Map<String,dynamic>>(
-              //     future: readLunch(map),
-              //     builder: (context, snapshot){
-              //       if(snapshot.hasData){
-              //         final data = snapshot.data;
-              //         return data==null ? Center(child: Text("No User!"),) : buildLunch(data!);
-              //       } else if (snapshot.hasError){
-              //         return Text('Something went wrong!');
-              //       } else {
-              //         return Center(
-              //           child: CircularProgressIndicator(),
-              //         );
-              //       }
-              //     }
-              // ),
+              FutureBuilder<Map<String,dynamic>>(
+                  future: getDietPlanInfo(dietplan_id),
+                  builder: (context, snapshot){
+                    if(snapshot.hasData){
+                      final mealIDs = snapshot.data;
+                      return mealIDs==null ? Center(child: Text("No User!"),) : buildLunch(mealIDs!);
+                    } else if (snapshot.hasError){
+                      return Text('Something went wrong!');
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }
+              ),
+
 
               SizedBox(height: 15,),
 
@@ -268,21 +454,21 @@ class UserDashBody extends StatelessWidget {
               SizedBox(height: 15,),
 
 
-              // FutureBuilder<Map<String,dynamic>>(
-              //     future: readDinner(map),
-              //     builder: (context, snapshot){
-              //       if(snapshot.hasData){
-              //         final data = snapshot.data;
-              //         return data==null ? Center(child: Text("No User!"),) : buildDinner(data!);
-              //       } else if (snapshot.hasError){
-              //         return Text('Something went wrong!');
-              //       } else {
-              //         return Center(
-              //           child: CircularProgressIndicator(),
-              //         );
-              //       }
-              //     }
-              // ),
+              FutureBuilder<Map<String,dynamic>>(
+                  future: getDietPlanInfo(dietplan_id),
+                  builder: (context, snapshot){
+                    if(snapshot.hasData){
+                      final mealIDs = snapshot.data;
+                      return mealIDs==null ? Center(child: Text("No User!"),) : buildDinner(mealIDs!);
+                    } else if (snapshot.hasError){
+                      return Text('Something went wrong!');
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }
+              ),
 
               SizedBox(height: 30,),
             ],
