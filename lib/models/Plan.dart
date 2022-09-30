@@ -1,3 +1,5 @@
+
+
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -56,10 +58,14 @@ class DietPlanModel{
   }
 
   static Stream<QuerySnapshot> getPlanStream(String dietary_preference,String age_group,String gender,String intensity,String activeness){
-   // print(dietary_preference);
-   // print(activeness);
-   // print(gender);
+    // print(dietary_preference);
+    // print(activeness);
+    // print(gender);
     return FirebaseFirestore.instance.collection('diet_plan').where('dietary_preference', isEqualTo: dietary_preference).where("age_group", isEqualTo: age_group).where("gender", isEqualTo: gender).snapshots();
+  }
+
+  static Stream<QuerySnapshot> getCurrentPlanStream(){
+    return FirebaseFirestore.instance.collection('diet_plan').snapshots();
   }
 
   static List<DietPlanModel> getMostReccomendedPlans(AsyncSnapshot<QuerySnapshot> snapshot,String age_group,String intensity,String activeness) {
@@ -104,10 +110,10 @@ class DietPlanModel{
       "61-75":(5*effValue)~/6,
       "More than 75":effValue
     };
-   // print("xxxxx");
-   // print(recommendedPlans.length);
-   // print("yyyy");
-   // print(intensity);
+    // print("xxxxx");
+    // print(recommendedPlans.length);
+    // print("yyyy");
+    // print(intensity);
     for(int j=0; j<recommendedPlans.length; j++){
       DietPlanModel cur = recommendedPlans[j];
       cur.diffValue = sqrt(
@@ -120,9 +126,28 @@ class DietPlanModel{
     recommendedPlans.sort((DietPlanModel a, DietPlanModel b){
       return (b.diffValue-a.diffValue).toInt();
     });
+    print(recommendedPlans);
     return recommendedPlans;
   }
 
+  static Future<DietPlanModel> getDietPlanForUser(String user_id)async{
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection("user").doc(user_id).get();
+    Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
+    String planId = data["current_plan"];
+    ds = await FirebaseFirestore.instance.collection("diet_plan").doc(planId).get();
+    data = ds.data() as Map<String, dynamic>;
+    return DietPlanModel(
+        planId: planId,
+        dietary_preference: data["dietary_preference"],
+        gender: data["gender"],
+        intensity: data["intensity"],
+        activeness: data["activeness"],
+        age_group: data["age_group"],
+        breakfast_id: data["breakfast_id"],
+        lunch_id: data["lunch_id"],
+        dinner_id: data["dinner_id"]
+    );
+  }
 
 
 

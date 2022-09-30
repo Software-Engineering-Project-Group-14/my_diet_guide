@@ -217,11 +217,8 @@ class _RateState extends State<Rate> {
                         );
                       }
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Text(
-                          'Loading',
-                          style: TextStyle(
-                            color: Colors.white
-                          ),
+                        return Center(
+                          child: CircularProgressIndicator(),
                         );
                       }
                       //return Text('');

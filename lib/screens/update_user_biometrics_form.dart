@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/change_plan.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/user_profile.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
@@ -89,7 +90,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
       'intensity': intensity
     });
     
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UserDashboard()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan()));
   }
 
 
