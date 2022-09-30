@@ -23,7 +23,7 @@ class _CheckBMIState extends State<CheckBMI> {
       Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.indigo[800],
+          backgroundColor: Colors.transparent,
           title: const Text(
             'Check BMI',
           ),
