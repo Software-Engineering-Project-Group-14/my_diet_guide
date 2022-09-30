@@ -23,46 +23,47 @@ class _PlanCardState extends State<PlanCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      borderOnForeground: true,
-      elevation: 10,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            leading: Container(
-              child: Image(
-                image: AssetImage('assets/images/diet_plan/' + plan.img),
-                fit: BoxFit.cover,
-                //width: 110,
-                //height: 110,
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Card(
+        color: Colors.white,
+        borderOnForeground: true,
+        elevation: 10,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: Container(
+                child: Image(
+                  image: AssetImage('assets/images/diet_plan/' + plan.img),
+                  fit: BoxFit.cover,
+                  //width: 110,
+                  //height: 110,
+                ),
+              ),
+              title: Center(child: Text("Plan ${plan.planId}", style: TextStyle(color: Colors.green, fontSize: 20))),
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    children: [
+                      Text(
+                        'Intensity Level: ' + plan.intensity,
+                        style: TextStyle(color: Colors.red, fontSize: 15),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'For ' + plan.activeness + ' users',
+                        style: TextStyle(color: Colors.black, fontSize: 15),
+                      )
+                    ],
+                  )
+
+                ],
               ),
             ),
-            title: Text("Plan ${plan.planId}", style: TextStyle(color: Colors.green)),
-            subtitle: Text(
-              "Description",
-              style: TextStyle(color: Colors.orangeAccent),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 3, 0, 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Intensity Level: ' + plan.intensity,
-                  style: TextStyle(color: Colors.white, fontSize: 13),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'For ' + plan.activeness + ' users',
-                  style: TextStyle(color: Colors.white, fontSize: 13),
-                )
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
