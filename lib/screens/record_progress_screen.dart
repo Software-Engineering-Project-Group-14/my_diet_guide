@@ -10,8 +10,9 @@ class RecordProgressScreen extends StatefulWidget {
   final String meal;
   final String dishName;
   final String dishImage;
+  final String description;
 
-  const RecordProgressScreen({Key? key, required this.user_id, required this.meal, required this.dishName, required this.dishImage}) : super(key: key);
+  const RecordProgressScreen({Key? key, required this.user_id, required this.meal, required this.dishName, required this.dishImage, required this.description}) : super(key: key);
 
   @override
   State<RecordProgressScreen> createState() => _RecordProgressScreenState();
@@ -19,13 +20,38 @@ class RecordProgressScreen extends StatefulWidget {
 
 class _RecordProgressScreenState extends State<RecordProgressScreen> {
 
-  Future getMealDescription() async {
-    return '';
+
+  Future recordProgress(String user_id, ) async {
+
   }
 
 
   @override
   Widget build(BuildContext context) {
+
+    var today_day_int = DateTime.now().weekday;
+    late String today_day;
+
+    if(today_day_int==1){
+      today_day='Monday';
+    } else if(today_day_int==2){
+      today_day='Tuesday';
+    } else if(today_day_int==3){
+      today_day='Wednesday';
+    }else if(today_day_int==4){
+      today_day='Thursday';
+    }else if(today_day_int==5){
+      today_day='Friday';
+    }else if(today_day_int==6){
+      today_day='Saturday';
+    }else if(today_day_int==7){
+      today_day='Sunday';
+    }
+
+    String month = DateTime.now().month.toString().padLeft(2, '0');
+    String date = DateTime.now().day.toString().padLeft(2, '0');
+    String today_date = '${DateTime.now().year}/$month/$date';
+
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
       appBar: AppBar(
@@ -64,7 +90,7 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
 
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                          child: Text("2022/09/27 - Tuesday", style: TextStyle(fontSize: 19, color: Colors.white,),),
+                          child: Text("$today_date - $today_day", style: TextStyle(fontSize: 19, color: Colors.white,),),
                         ),
 
                         SizedBox(height: 30,),
@@ -96,7 +122,7 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                             ),
                             Container(
                               width: 220,
-                              child: Text("dsi fvewi fvewqrp frnwq frwqnji vnfwqj vfnwq vfnwqj", style: TextStyle(color: Colors.white, fontSize: 16), textAlign: TextAlign.justify,),
+                              child: Text(widget.description, style: TextStyle(color: Colors.white, fontSize: 16), textAlign: TextAlign.justify,),
                             )
                           ],
                         ),
@@ -123,7 +149,8 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                       Column(
                                         children: [
                                           GestureDetector(
-                                            onTap: (){},
+                                            onTap: (){
+                                            },
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 5),
                                               decoration: BoxDecoration(

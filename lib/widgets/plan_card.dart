@@ -45,10 +45,10 @@ class _PlanCardState extends State<PlanCard> {
               ),
             ),
             title: Text("${plan.name}",
-                style: TextStyle(color: Colors.green)),
+                style: TextStyle(color: Colors.white)),
             subtitle: Text(
               "${plan.desc}",
-              style: TextStyle(color: Colors.orangeAccent),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           Padding(
@@ -58,16 +58,16 @@ class _PlanCardState extends State<PlanCard> {
               children: <Widget>[
                 Text(
                   'Intensity Level: '+plan.intensity,
-                  style: GoogleFonts.poppins(
-                      color: Colors.red,
+                  style: TextStyle(
+                      color: Colors.white,
                       fontSize: 13
                   ),
                 ),
                 const SizedBox(width: 8),
                 Text(
                   'For '+plan.activeness+' users',
-                  style: GoogleFonts.poppins(
-                      color: Colors.blue,
+                  style: TextStyle(
+                      color: Colors.white,
                       fontSize: 13
                   ),
                 )

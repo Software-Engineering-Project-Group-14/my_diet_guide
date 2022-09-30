@@ -72,6 +72,15 @@ flutter:
     - assets/images/diet_plan/
     - assets/images/wallpapers/
     - assets/images/dishes/
+    - assets/images/dishes/Energetic/Breakfast/
+    - assets/images/dishes/Energetic/Lunch/
+    - assets/images/dishes/Energetic/Dinner/
+    - assets/images/dishes/Low carb/Breakfast/
+    - assets/images/dishes/Low carb/Lunch/
+    - assets/images/dishes/Low carb/Dinner/
+    - assets/images/dishes/Vegetarian/Breakfast/
+    - assets/images/dishes/Vegetarian/Lunch/
+    - assets/images/dishes/Vegetarian/Dinner/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

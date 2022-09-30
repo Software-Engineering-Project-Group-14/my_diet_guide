@@ -81,7 +81,7 @@ class _UserProfileState extends State<UserProfile> {
 
 
 
-  Widget buildUser(Map<String, dynamic> map, BuildContext context) {
+  Widget buildUser(Map<String, dynamic> map) {
 
     firstName = map['first name'];
     lastName = map['last name'];
@@ -222,7 +222,7 @@ class _UserProfileState extends State<UserProfile> {
                           builder: (context, snapshot){
                             if(snapshot.hasData){
                               final data = snapshot.data;
-                              return data==null ? Center(child: Text("No User!"),) : buildUser(data!, context);
+                              return data==null ? Center(child: Text("No User!"),) : buildUser(data!);
                             } else if (snapshot.hasError){
                               return Text('Something went wrong!');
                             } else {

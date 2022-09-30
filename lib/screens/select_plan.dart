@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/Plan.dart';
+import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
 
 import '../models/UserBiometrics.dart';
@@ -47,49 +48,58 @@ class _SelectPlanState extends State<SelectPlan> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+        backgroundColor: Colors.teal.shade900,
+        body: Stack(
+          children: [
+            BlurredBackground(),
 
-        backgroundColor: Colors.green.shade100,
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
+                  Column(
                     children: [
-                      Text(
-                        "Recommended Plans",
-                        style: GoogleFonts.poppins(
-                          fontSize: 22,
-                        ),
-                      )
+                      Row(
+                        children: [
+                          Center(
+                            child: Text(
+                              "Recommended Plans",
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: recommendedPlanStream,
+                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+
+                          if (snapshot.hasError) {
+                            return const Text('Something went wrong', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),);
+                          }
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Text('Loading', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold));
+                          }
+                          List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, userAgeGroup, userIntensity, userActiveness);
+                          return Column(
+                            children: l.map((DietPlanModel planModel){
+                              return PlanCard(dietPlanModel: planModel);
+                            }).toList().cast(),
+                          );
+                        },
+
+                      ),
+
                     ],
-                  ),
-                  StreamBuilder<QuerySnapshot>(
-                    stream: recommendedPlanStream,
-                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-
-                      if (snapshot.hasError) {
-                        return const Text('Something went wrong');
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Text('Loading');
-                      }
-                      List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, userAgeGroup, userIntensity, userActiveness);
-                      return Column(
-                        children: l.map((DietPlanModel planModel){
-                          return PlanCard(dietPlanModel: planModel);
-                        }).toList().cast(),
-                      );
-                    },
-
-                  ),
-
+                  )
                 ],
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         )
     );
 
