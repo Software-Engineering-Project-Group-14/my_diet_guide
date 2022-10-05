@@ -12,7 +12,7 @@ class BMIModel{
 
     double heightSquare = height * height;
     double result = weight / heightSquare;
-    print('bmi model : ' + '${result}');
+    //print('bmi model : ' + '${result}');
     return result;
 
   }

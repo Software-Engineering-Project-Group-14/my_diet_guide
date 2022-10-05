@@ -52,7 +52,7 @@ class UserBiometrics{
   static Future<UserBiometrics> getUserBiometrics(String user_id)async{
     DocumentSnapshot ds = await FirebaseFirestore.instance.collection("user biometrics").doc(user_id).get();
     Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
-    print(data.toString());
+    //print(data.toString());
     return UserBiometrics(
         user_id: user_id,
         gender: data["gender"],

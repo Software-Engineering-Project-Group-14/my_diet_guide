@@ -129,7 +129,7 @@ class DietPlanModel{
     recommendedPlans.sort((DietPlanModel a, DietPlanModel b){
       return (b.diffValue-a.diffValue).toInt();
     });
-    print(recommendedPlans);
+    //print(recommendedPlans);
     return recommendedPlans;
   }
 

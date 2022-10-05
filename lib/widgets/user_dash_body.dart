@@ -54,9 +54,10 @@ class UserDashBody extends StatelessWidget {
 
   Future <Map<String, dynamic>> getDietPlanInfo(String dietplan_id) async {
     final dietplanDoc = FirebaseFirestore.instance.collection('diet_plan').doc(dietplan_id);
+    //print(dietplanDoc);
     final snapshot2 = await dietplanDoc.get();
-
     if(snapshot2.exists){
+      //print(snapshot2.data().toString());
       breakfast_id = snapshot2.data()!['breakfast_id'];
       lunch_id = snapshot2.data()!['lunch_id'];
       dinner_id = snapshot2.data()!['dinner_id'];

@@ -36,11 +36,11 @@ class _SelectPlanState extends State<SelectPlan> {
     userActiveness = widget.userBiometrics.activeness;
     userGender = widget.userBiometrics.gender;
     userId = widget.userBiometrics.user_id;
-    print(userDietaryPreference);
-    print(userAgeGroup);
-    print(userIntensity);
-    print(userActiveness);
-    print(userGender);
+    //print(userDietaryPreference);
+    //print(userAgeGroup);
+    //print(userIntensity);
+    //print(userActiveness);
+   // print(userGender);
     recommendedPlanStream = DietPlanModel.getPlanStream(userDietaryPreference, userAgeGroup,userGender, userIntensity, userActiveness);
     super.initState();
   }
