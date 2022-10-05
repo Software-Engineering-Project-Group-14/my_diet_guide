@@ -81,7 +81,7 @@ class _SelectPlanState extends State<SelectPlan> {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, userAgeGroup, userIntensity, userActiveness);
+                      List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, userAgeGroup, userIntensity, userActiveness, null);
                       if(l.length == 0){
                         return Column(
                           children: [

@@ -67,185 +67,184 @@ class _ChangePlanState extends State<ChangePlan> {
                 BlurredBackground(),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    //mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Current plan",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 20,
-                                      color: Colors.white
-                                  ),
-                                ),
-                              ],
-                            ),
-                            StreamBuilder<DietPlanModel>(
-                                stream: currentPlanStream,
-                                builder: (context, AsyncSnapshot<DietPlanModel> snapshot) {
-                                  if (snapshot.hasError) {
-                                    return const Text(
-                                      'Something went wrong',
-                                      style: TextStyle(
-                                          color: Colors.white
-                                      ),
-                                    );
-                                  }
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                  //print("\nCurrent plan snapshot");
+                  child: StreamBuilder<DietPlanModel>(
+                    stream: currentPlanStream,
+                    builder: (context, AsyncSnapshot<DietPlanModel> snapshot) {
+                      if (snapshot.hasError) {
+                        return const Text(
+                          'Something went wrong',
+                          style: TextStyle(
+                              color: Colors.white
+                          ),
+                        );
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      //print("\nCurrent plan snapshot");
 
-                                  DietPlanModel currentPlan = snapshot.data!;
-                                  //  final currentPlan = snapshot.data;
-                                  //  print(currentPlan);
-
-                                  return Row(
-                                    children: [
-                                      Expanded(child: PlanCard(dietPlanModel:currentPlan))
-                                    ],
-                                  );
-                                }
-                            )
-                          ],
-                        ),
-                      ),
-                      StreamBuilder<UserBiometrics>(
-                          stream: userBiometricsStream,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return const Text(
-                                'Something went wrong in loading user biometrics',
-                                style: TextStyle(
-                                    color: Colors.white
-                                ),
-                              );
-                            }
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                            //print("\nCurrent plan snapshot");
-
-                            UserBiometrics userBiometrics = snapshot.data!;
-                            Stream<QuerySnapshot> recommendedplanStream = DietPlanModel.getPlanStream(userBiometrics.dietaryPreference, DietPlanModel.getAgeGroup(userBiometrics.age), userBiometrics.gender,userBiometrics.intensity,userBiometrics.activeness);
-                            return Column(
+                      DietPlanModel currentPlan = snapshot.data!;
+                      //  final currentPlan = snapshot.data;
+                      //  print(currentPlan);
+                      return Column(
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
                               children: [
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Other recommended plans",
+                                      "Current plan",
                                       style: GoogleFonts.poppins(
-                                          fontSize: 22,
+                                          fontSize: 20,
                                           color: Colors.white
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
-                                StreamBuilder<QuerySnapshot>(
-                                  stream: recommendedplanStream,
-                                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                Row(
+                                  children: [
+                                    Expanded(child: PlanCard(dietPlanModel:currentPlan))
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          StreamBuilder<UserBiometrics>(
+                              stream: userBiometricsStream,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return const Text(
+                                    'Something went wrong in loading user biometrics',
+                                    style: TextStyle(
+                                        color: Colors.white
+                                    ),
+                                  );
+                                }
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                //print("\nCurrent plan snapshot");
 
-                                    if (snapshot.hasError) {
-                                      return const Text(
-                                        'Something went wrong',
-                                        style: TextStyle(
-                                            color: Colors.white
-                                        ),
-                                      );
-                                    }
-                                    if (snapshot.connectionState == ConnectionState.waiting) {
-                                      return Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    }
+                                UserBiometrics userBiometrics = snapshot.data!;
+                                Stream<QuerySnapshot> recommendedplanStream = DietPlanModel.getPlanStream(userBiometrics.dietaryPreference, DietPlanModel.getAgeGroup(userBiometrics.age), userBiometrics.gender,userBiometrics.intensity,userBiometrics.activeness);
+                                return Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Other recommended plans",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 22,
+                                              color: Colors.white
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    StreamBuilder<QuerySnapshot>(
+                                      stream: recommendedplanStream,
+                                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
 
-                                    List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, DietPlanModel.getAgeGroup(userBiometrics.age), userBiometrics.intensity, userBiometrics.activeness, );
-
-                                    if(l.length == 0){
-                                      return Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
-                                            child: Text(
-                                              "There are no available diet plans for your biometrics.",
-                                              style: TextStyle(
-                                                  color: Colors.red,
-                                                  fontSize: 20
-                                              ),
+                                        if (snapshot.hasError) {
+                                          return const Text(
+                                            'Something went wrong',
+                                            style: TextStyle(
+                                                color: Colors.white
                                             ),
-                                          )
-                                        ],
-                                      );
-                                    }else{
-                                      return Column(
-                                        children: l.map((DietPlanModel planModel){
-                                          //  print(planModel);
-                                          return GestureDetector(
-                                            child: PlanCard(dietPlanModel: planModel),
-                                            onTap: () async {
-                                              bool success = true;
-                                              String msg = "";
-                                              try{
-                                                await FirebaseFirestore.instance.collection('user')
-                                                    .doc(user_id).set({
-                                                  'current_plan':planModel.planId
-                                                }, SetOptions(merge: true));
-                                                msg = "Plan changed successfully.";
-                                              }catch(error){
-                                                success = false;
-                                                msg = "An error occurred. Please try again.";
-                                              }
-                                              showDialog<void>(
-                                                context: context,
-                                                barrierDismissible: false, // user must tap button!
-                                                builder: (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: Text('Plan Change'),
-                                                    content: SingleChildScrollView(
-                                                      child: ListBody(
-                                                        children: [
-                                                          Text(msg),
+                                          );
+                                        }
+                                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                          return Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        }
+
+                                        List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, DietPlanModel.getAgeGroup(userBiometrics.age), userBiometrics.intensity, userBiometrics.activeness, currentPlan.planId);
+
+                                        if(l.length == 0){
+                                          return Column(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
+                                                child: Text(
+                                                  "There are no available diet plans for your biometrics.",
+                                                  style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontSize: 20
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          );
+                                        }else{
+                                          return Column(
+                                            children: l.map((DietPlanModel planModel){
+                                              //  print(planModel);
+                                              return GestureDetector(
+                                                child: PlanCard(dietPlanModel: planModel),
+                                                onTap: () async {
+                                                  bool success = true;
+                                                  String msg = "";
+                                                  try{
+                                                    await FirebaseFirestore.instance.collection('user')
+                                                        .doc(user_id).set({
+                                                      'current_plan':planModel.planId
+                                                    }, SetOptions(merge: true));
+                                                    msg = "Plan changed successfully.";
+                                                  }catch(error){
+                                                    success = false;
+                                                    msg = "An error occurred. Please try again.";
+                                                  }
+                                                  showDialog<void>(
+                                                    context: context,
+                                                    barrierDismissible: false, // user must tap button!
+                                                    builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text('Plan Change'),
+                                                        content: SingleChildScrollView(
+                                                          child: ListBody(
+                                                            children: [
+                                                              Text(msg),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                            child: const Text('OK'),
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop();
+                                                              if(success){
+                                                                Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
+                                                              }
+                                                            },
+                                                          ),
                                                         ],
-                                                      ),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                        child: const Text('OK'),
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                          if(success){
-                                                            Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
-                                                          }
-                                                        },
-                                                      ),
-                                                    ],
+                                                      );
+                                                    },
                                                   );
                                                 },
                                               );
-                                            },
+                                            }).toList().cast(),
                                           );
-                                        }).toList().cast(),
-                                      );
-                                    }
-                                  },
+                                        }
+                                      },
 
-                                ),
+                                    ),
 
-                              ],
-                            );
-                          }
-                      )
-                    ],
+                                  ],
+                                );
+                              }
+                          )
+                        ],
+                      );
+                    }
                   ),
                 ),
               ]

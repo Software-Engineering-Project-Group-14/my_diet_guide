@@ -68,7 +68,7 @@ class DietPlanModel{
     return FirebaseFirestore.instance.collection('diet_plan').snapshots();
   }
 
-  static List<DietPlanModel> getMostReccomendedPlans(AsyncSnapshot<QuerySnapshot> snapshot,String age_group,String intensity,String activeness) {
+  static List<DietPlanModel> getMostReccomendedPlans(AsyncSnapshot<QuerySnapshot> snapshot,String age_group,String intensity,String activeness, String? currentPlanId) {
     //print(intensity);
     List<DietPlanModel> recommendedPlans = [];
     QuerySnapshot<Object?>? data = snapshot.data;
@@ -76,6 +76,9 @@ class DietPlanModel{
     for(int i=0; i<data!.docs.length; i++){
       var cur = data.docs[i];
       // print(cur);
+      if(currentPlanId!=null && cur.id == currentPlanId){
+        continue;
+      }
       DietPlanModel curPlan = DietPlanModel(
           planId: cur.id,
           dietary_preference: cur.get('dietary_preference'),
