@@ -114,17 +114,17 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
 
                         SizedBox(height: 20,),
 
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: Text("Description : ", style: TextStyle(color: Colors.white, fontSize: 16),),
-                            ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child:
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 20),
+                            //   child: Text("Description : ", style: TextStyle(color: Colors.white, fontSize: 16),),
+                            // ),
                             Container(
                               width: 220,
                               child: Text(widget.description, style: TextStyle(color: Colors.white, fontSize: 16), textAlign: TextAlign.justify,),
                             )
-                          ],
                         ),
 
                         SizedBox(height: 20,),
