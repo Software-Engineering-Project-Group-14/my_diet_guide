@@ -69,7 +69,7 @@ class CalorieGenerator{
       print(dishName);
       final dishDoc = FirebaseFirestore.instance.collection('dish1').doc(dishName);
       dishDoc.update({
-        'calorie_gain_per_meal': 200 + Random().nextInt(500)
+        'calorie_gain_per_meal': 500 + Random().nextInt(500)
       });
     }
 
