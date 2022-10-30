@@ -12,7 +12,7 @@ class Calorie_Calculator{
 
   static double calculateRMR(gender, height, weight, age){
     double val = 0;
-    if(gender == " Male"){
+    if(gender == "Male"){
       val = 9.99 * weight + 6.25 * height - 4.92 * age + 5;
     }else if(gender == "Female"){
       val = 9.99 * weight + 6.25 * height - 4.92 * age - 161;
@@ -23,13 +23,13 @@ class Calorie_Calculator{
   }
 
 
+  // Returns calorie burn per day in kgs
   static double calorieBurnPerDay(gender, height, weight, age, activeness){
     if(!activityLevelValues.containsKey(activeness)){
       throw Exception("Undefined activeness at calorieBurnPerDay in CalorieCalculator");
     }
-    return calculateRMR(gender, height, weight, age) * activityLevelValues[activeness]!;
+    return calculateRMR(gender, height, weight, age) * activityLevelValues[activeness]!/7700;
   }
-
 
   static double calorieBurn(gender, height, weight, age, activeness, numDays){
     return numDays * calorieBurnPerDay(gender, height, weight, age, activeness);

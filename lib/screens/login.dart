@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/signup.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/palatte.dart';
@@ -65,37 +66,6 @@ class _LoginState extends State<Login> {
                       key: _formKey,
                       child: Column(
                         children: [
-
-                          // Padding(
-                          //   padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
-                          //   child: TextFormField(
-                          //     decoration: InputDecoration(
-                          //         enabledBorder: OutlineInputBorder(
-                          //             borderRadius: BorderRadius.circular(12),
-                          //             borderSide: BorderSide(color: Colors.white)
-                          //         ),
-                          //         focusedBorder: OutlineInputBorder(
-                          //             borderSide: BorderSide(color: Colors.deepPurple),
-                          //             borderRadius: BorderRadius.circular(12)
-                          //         ),
-                          //         hintText: 'Email',
-                          //         fillColor: Colors.grey[200],
-                          //         filled: true
-                          //     ),
-                          //     validator: (text){
-                          //       if (text == null || text.isEmpty){
-                          //         return 'Can\'t be empty';
-                          //       }
-                          //       if(!EmailValidator.validate(text)){
-                          //         return 'Enter a valid email';
-                          //       }
-                          //       return null;
-                          //     },
-                          //     onChanged: (val) {
-                          //       setState(() => email = val);
-                          //     },
-                          //   ),
-                          // ),
 
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 40),
@@ -237,64 +207,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
 
-
-                          // Padding(
-                          //   padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
-                          //   child: TextFormField(
-                          //     decoration: InputDecoration(
-                          //       enabledBorder: OutlineInputBorder(
-                          //           borderRadius: BorderRadius.circular(12),
-                          //           borderSide: BorderSide(color: Colors.white)
-                          //       ),
-                          //       focusedBorder: OutlineInputBorder(
-                          //           borderSide: BorderSide(color: Colors.deepPurple),
-                          //           borderRadius: BorderRadius.circular(12)
-                          //       ),
-                          //       hintText: 'Password',
-                          //       fillColor: Colors.grey[200],
-                          //       filled: true,
-                          //     ),
-                          //     validator: (text){
-                          //       if (text == null || text.isEmpty){
-                          //         return 'Can\'t be empty';
-                          //       }
-                          //       return null;
-                          //     },
-                          //     obscureText: true,
-                          //     onChanged: (val) {
-                          //       setState(() => password = val);
-                          //     },
-                          //   ),
-                          // ),
-
-
-
                           SizedBox(height: 50,),
-
-
-
-                          // Padding(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: ElevatedButton(
-                          //       style: ElevatedButton.styleFrom(
-                          //           primary: Colors.deepPurple,
-                          //           fixedSize: Size(300, 50)
-                          //       ),
-                          //       child: Text(
-                          //           'Sign In',
-                          //           style: GoogleFonts.aBeeZee(
-                          //               fontSize: 20,
-                          //               color: Colors.black
-                          //           )
-                          //       ),
-                          //       onPressed: () async {
-                          //         if(_formKey.currentState!.validate()){
-                          //           await signIn();
-                          //         }
-                          //       }
-                          //   ),
-                          // ),
-
 
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -343,65 +256,6 @@ class _LoginState extends State<Login> {
                     ),
 
                     const SizedBox(height: 0),
-
-                    //Not a memeber register now
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    //   child: Column(
-                    //     children: [
-                    //       Row(
-                    //         children: [
-                    //           Text(
-                    //               'Not a memeber?',
-                    //               style: GoogleFonts.notoSans(
-                    //                   fontSize: 15,
-                    //                   color: Colors.indigo
-                    //               )
-                    //           ),
-                    //           GestureDetector(
-                    //             onTap: () {
-                    //               Navigator.of(context).push(MaterialPageRoute(
-                    //                   builder: (_){
-                    //                     return SignUp();
-                    //                   }
-                    //               ));
-                    //             },
-                    //             child: Text(
-                    //               ' Register now',
-                    //               style: GoogleFonts.notoSans(
-                    //                   fontSize: 15,
-                    //                   color: Colors.indigo
-                    //               ),),
-                    //           )
-                    //         ],
-                    //       ),
-                    //       Padding(
-                    //         padding: const EdgeInsets.only(top: 10),
-                    //         child: Row(
-                    //           children: [
-                    //             GestureDetector(
-                    //               onTap: (){
-                    //                 Navigator.of(context).push(MaterialPageRoute(
-                    //                   builder: (_){
-                    //                     return ForgotPassword();
-                    //                   },
-                    //                 ));
-                    //               },
-                    //               child: Text(
-                    //                   'Forgot Password?',
-                    //                   style: GoogleFonts.notoSans(
-                    //                       fontSize: 15,
-                    //                       color: Colors.red
-                    //                   )
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // )
-
 
                     // not a member? register now
                     Row(
