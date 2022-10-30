@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_diet_guide/models/plan_generator/CalorieGenerator.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
 import 'package:my_diet_guide/screens/login.dart';
 import 'package:my_diet_guide/screens/rate.dart';
@@ -23,6 +24,8 @@ Future<void> main() async {
         projectId: "my-diet-guide-14",
       )
   );
+
+  CalorieGenerator.addRandomCalories();
   runApp(DevicePreview(builder: (context)=>MyApp()));
   //runApp(const MyApp());
 }
