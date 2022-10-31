@@ -3,7 +3,6 @@ import 'package:age_calculator/age_calculator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
-import 'package:my_diet_guide/screens/update_forms/update_name.dart';
 import 'package:my_diet_guide/screens/update_user_details_form.dart';
 import '../models/user.dart';
 import '../widgets/blurred_background_image.dart';

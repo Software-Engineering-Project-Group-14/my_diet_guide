@@ -16,6 +16,7 @@ class UpdateBiometricsForm extends StatefulWidget {
   final String lastName;
   final String bday;
   final String gender;
+  final int age;
 
   const UpdateBiometricsForm({
     Key? key,
@@ -24,6 +25,7 @@ class UpdateBiometricsForm extends StatefulWidget {
     required this.lastName,
     required this.bday,
     required this.gender,
+    required this.age,
   }) : super(key: key);
 
   @override
@@ -34,9 +36,13 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final _weightController = TextEditingController();
-  final _heightController = TextEditingController();
-  final _targetWeightController = TextEditingController();
+  // final _weightController = TextEditingController();
+  // final _heightController = TextEditingController();
+  // final _targetWeightController = TextEditingController();
+
+  String weight = '';
+  String height = '';
+  String targetWeight = '';
 
 
   final dietary_preferences = ['Vegetarian', 'Energetic', 'Low carb'];
@@ -58,13 +64,13 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
 
 
 
-  @override
-  void dispose(){
-    super.dispose();
-    _weightController.dispose();
-    _heightController.dispose();
-    _targetWeightController.dispose();
-  }
+  // @override
+  // void dispose(){
+  //   super.dispose();
+  //   _weightController.dispose();
+  //   _heightController.dispose();
+  //   _targetWeightController.dispose();
+  // }
 
 
   Future updateProfile() async {
@@ -81,15 +87,16 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
     final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(user_id);
 
     userBioDoc.update({
+      'age': widget.age,
       'gender': widget.gender,
-      'weight': int.parse(_weightController.text.trim()),
-      'height': int.parse(_heightController.text.trim()),
-      'target weight': int.parse(_targetWeightController.text.trim()),
+      'weight': int.parse(weight),
+      'height': int.parse(height),
+      'target weight': int.parse(targetWeight),
       'dietary preference': dietaryPreference,
       'activeness': activeness,
       'intensity': intensity
     });
-    
+
     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan()));
   }
 
@@ -118,15 +125,15 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                 children: [
                   SizedBox(height: 40,),
 
-                  TextBox02(controller: _weightController, hint: "Weight", keyboardType: TextInputType.number),
+                  TextBox02(hint: "Weight", keyboardType: TextInputType.number, value: weight,),
 
                   SizedBox(height: 30,),
 
-                  TextBox02(controller: _heightController, hint: "Height", keyboardType: TextInputType.number),
+                  TextBox02(hint: "Height", keyboardType: TextInputType.number, value: height,),
 
                   SizedBox(height: 30,),
 
-                  TextBox02(controller: _targetWeightController, hint: "Target Weight", keyboardType: TextInputType.number),
+                  TextBox02(hint: "Target Weight", keyboardType: TextInputType.number, value: targetWeight,),
 
                   SizedBox(height: 30,),
 

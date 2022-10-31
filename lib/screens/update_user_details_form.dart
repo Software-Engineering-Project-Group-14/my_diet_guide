@@ -1,3 +1,4 @@
+import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/update_user_biometrics_form.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
@@ -22,10 +23,13 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+  // final _firstNameController = TextEditingController();
+  // final _lastNameController = TextEditingController();
 
-  String? bday;
+  String firstName = '';
+  String lastName = '';
+  String bday = '';
+  int age = 0;
 
   final genders = ['Male', 'Female'];
   String? gender;
@@ -38,8 +42,8 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
 
 
 
-  Widget showBirthday(String? bday){
-    if(bday==null){
+  Widget showBirthday(String bday){
+    if(bday==''){
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Text("Birthday", style: TextStyle(color: Colors.white, fontSize: 19), textAlign: TextAlign.start,),
@@ -54,20 +58,16 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
 
 
 
-  @override
-  void dispose(){
-    super.dispose();
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-  }
+  // @override
+  // void dispose(){
+  //   super.dispose();
+  //   _firstNameController.dispose();
+  //   _lastNameController.dispose();
+  // }
 
 
   Future goToNextPage() async {
-
-    String firstName = _firstNameController.text.trim();
-    String lastName = _lastNameController.text.trim();
-
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UpdateBiometricsForm(user_id: widget.user_id, firstName: firstName, lastName: lastName, bday: bday!, gender: gender!,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UpdateBiometricsForm(user_id: widget.user_id, firstName: firstName, lastName: lastName, bday: bday, gender: gender!, age: age,)));
   }
 
 
@@ -96,11 +96,11 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
                 children: [
                   SizedBox(height: 40,),
 
-                  TextBox02(controller: _firstNameController, hint: "First Name", keyboardType: TextInputType.name),
+                  TextBox02(hint: "First Name", keyboardType: TextInputType.name, value: firstName,),
 
                   SizedBox(height: 30,),
 
-                  TextBox02(controller: _lastNameController, hint: "Last Name", keyboardType: TextInputType.name),
+                  TextBox02(hint: "Last Name", keyboardType: TextInputType.name, value: lastName,),
 
                   SizedBox(height: 30,),
 
@@ -118,6 +118,7 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
                         );
                         if(datetime == null) return;
                         setState(() {
+                          age = AgeCalculator.age(datetime).years;
                           String month = datetime.month.toString().padLeft(2, '0');
                           String day = datetime.day.toString().padLeft(2, '0');
                           bday = '${datetime.year}/$month/$day';
@@ -183,12 +184,9 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
                   ),
 
 
-
                   SizedBox(height: 50,),
 
 
-
-                  //register button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

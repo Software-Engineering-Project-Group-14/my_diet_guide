@@ -39,9 +39,13 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final _weightController = TextEditingController();
-  final _heightController = TextEditingController();
-  final _targetWeightController = TextEditingController();
+  // final _weightController = TextEditingController();
+  // final _heightController = TextEditingController();
+  // final _targetWeightController = TextEditingController();
+
+  String weight = '';
+  String height = '';
+  String targetWeight = '';
 
 
   final dietary_preferences = ['Vegetarian', 'Energetic', 'Low carb'];
@@ -63,13 +67,13 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
 
 
-  @override
-  void dispose(){
-    super.dispose();
-    _weightController.dispose();
-    _heightController.dispose();
-    _targetWeightController.dispose();
-  }
+  // @override
+  // void dispose(){
+  //   super.dispose();
+  //   _weightController.dispose();
+  //   _heightController.dispose();
+  //   _targetWeightController.dispose();
+  // }
 
 
   Future signUp() async {
@@ -80,14 +84,14 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
     String userId = FirebaseAuth.instance.currentUser!.uid;
 
     addUserDetails(userId, widget.firstName, widget.lastName, widget.email, widget.bday);
-    
+
     addUserBiometrics(
         userId,
         widget.age,
         widget.gender,
-        int.parse(_weightController.text.trim()),
-        int.parse(_heightController.text.trim()),
-        int.parse(_targetWeightController.text.trim()),
+        int.parse(weight),
+        int.parse(height),
+        int.parse(targetWeight),
         dietaryPreference!,
         activeness!,
         intensity!
@@ -96,9 +100,9 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPlan(userBiometrics: UserBiometrics(
         user_id: userId,
         gender: widget.gender,
-        weight: int.parse(_weightController.text.trim()),
-        height: int.parse(_heightController.text.trim()),
-        targetWeight: int.parse(_targetWeightController.text.trim()),
+        weight: int.parse(weight),
+        height: int.parse(height),
+        targetWeight: int.parse(targetWeight),
         dietaryPreference: dietaryPreference!,
         activeness: activeness!,
         intensity: intensity!,
@@ -162,9 +166,9 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
                     Text("User Details",
                         style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
                         ),
                         textAlign: TextAlign.left),
 
@@ -195,7 +199,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                     //   ),
                     // ),
 
-                    TextBox02(controller: _weightController, hint: "Weight", keyboardType: TextInputType.number),
+                    TextBox02(hint: "Weight", keyboardType: TextInputType.number, value: weight,),
 
 
 
@@ -224,8 +228,8 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                     //     ),
                     //   ),
                     // ),
-                    
-                    TextBox02(controller: _heightController, hint: "Height", keyboardType: TextInputType.number),
+
+                    TextBox02(hint: "Height", keyboardType: TextInputType.number, value: height,),
 
 
 
@@ -255,7 +259,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                     //   ),
                     // ),
 
-                    TextBox02(controller: _targetWeightController, hint: "Target Weight", keyboardType: TextInputType.number),
+                    TextBox02(hint: "Target Weight", keyboardType: TextInputType.number, value: targetWeight,),
 
 
 
@@ -288,7 +292,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                             value: dietaryPreference,
                             items: dietary_preferences.map(buildMenuItem).toList(),
                             validator: (value){
-                              if(value==null){
+                              if(value==null || value.isEmpty){
                                 return 'Select a field';
                               }
                               return null;
@@ -333,7 +337,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                             value: activeness,
                             items: active_types.map(buildMenuItem).toList(),
                             validator: (value){
-                              if(value==null){
+                              if(value==null || value.isEmpty){
                                 return 'Select a field';
                               }
                               return null;
@@ -379,7 +383,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                             value: intensity,
                             items: intensities.map(buildMenuItem).toList(),
                             validator: (value){
-                              if(value==null){
+                              if(value==null || value.isEmpty){
                                 return 'Select a field';
                               }
                               return null;

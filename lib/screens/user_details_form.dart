@@ -27,27 +27,28 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _ageController = TextEditingController();
+  String firstName = '';
+  String lastName = '';
+  String bday ='';
+  int age = 0;
 
-  String? bday = null;
-  int? age;
+  // String? bday = null;
+  // int? age;
 
   final genders = ['Male', 'Female'];
   String? gender;
 
 
   DropdownMenuItem<String> buildMenuItem(String dp) =>
-    DropdownMenuItem(
-      value: dp,
-      child: Text(dp, style: TextStyle(fontSize: 19, color: Colors.white),),
-    );
+      DropdownMenuItem(
+        value: dp,
+        child: Text(dp, style: TextStyle(fontSize: 19, color: Colors.white),),
+      );
 
 
 
-  Widget showBirthday(String? bday){
-    if(bday==null){
+  Widget showBirthday(String bday){
+    if(bday==''){
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Text("Birthday", style: TextStyle(color: Colors.white, fontSize: 19), textAlign: TextAlign.start,),
@@ -62,31 +63,21 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
 
 
-  @override
-  void dispose(){
-    super.dispose();
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _ageController.dispose();
-  }
-
-
-
   Future signUp() async {
-    String firstName = _firstNameController.text.trim();
-    String lastName = _lastNameController.text.trim();
+    // String firstName = _firstNameController.text.trim();
+    // String lastName = _lastNameController.text.trim();
 
     Navigator.push(context, MaterialPageRoute(
-      builder: (context) =>
-        UserBiometricsForm(
-          email: widget.email,
-          password: widget.password,
-          firstName: firstName,
-          lastName: lastName,
-          age: age!,
-          bday: bday!,
-          gender: gender!
-        )
+        builder: (context) =>
+            UserBiometricsForm(
+                email: widget.email,
+                password: widget.password,
+                firstName: firstName,
+                lastName: lastName,
+                age: age,
+                bday: bday,
+                gender: gender!
+            )
     ));
 
   }
@@ -97,244 +88,244 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
-        BackgroundImage(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 80,),
+        children: [
+          BackgroundImage(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 80,),
 
 
-                  Text(
-                    "User Details",
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
+                    Text(
+                        "User Details",
+                        style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                        ),
+                        textAlign: TextAlign.left
                     ),
-                    textAlign: TextAlign.left
-                  ),
 
 
-                  SizedBox(height: 40,),
-
-
-
-                  // first name textfield
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  //   child: TextField(
-                  //     keyboardType: TextInputType.name,
-                  //     controller: _firstNameController,
-                  //     decoration: InputDecoration(
-                  //       enabledBorder: OutlineInputBorder(
-                  //         borderSide: BorderSide(color: Colors.white),
-                  //         borderRadius: BorderRadius.circular(12),
-                  //       ),
-                  //       focusedBorder: OutlineInputBorder(
-                  //         borderSide: BorderSide(color: Colors.deepPurple),
-                  //         borderRadius: BorderRadius.circular(12),
-                  //       ),
-                  //       hintText: 'First Name',
-                  //       fillColor: Colors.grey.shade200,
-                  //       filled: true,
-                  //     ),
-                  //   ),
-                  // ),
-
-
-                  TextBox02(controller: _firstNameController, hint: "First Name", keyboardType: TextInputType.name),
+                    SizedBox(height: 40,),
 
 
 
-                  SizedBox(height: 30,),
+                    // first name textfield
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    //   child: TextField(
+                    //     keyboardType: TextInputType.name,
+                    //     controller: _firstNameController,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.white),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.deepPurple),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       hintText: 'First Name',
+                    //       fillColor: Colors.grey.shade200,
+                    //       filled: true,
+                    //     ),
+                    //   ),
+                    // ),
+
+
+                    TextBox02(hint: "First Name", keyboardType: TextInputType.name, value: firstName,),
 
 
 
-                  // last name textfield
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  //   child: TextField(
-                  //     keyboardType: TextInputType.name,
-                  //     decoration: InputDecoration(
-                  //       enabledBorder: OutlineInputBorder(
-                  //         borderSide: BorderSide(color: Colors.white),
-                  //         borderRadius: BorderRadius.circular(12),
-                  //       ),
-                  //       focusedBorder: OutlineInputBorder(
-                  //         borderSide: BorderSide(color: Colors.deepPurple),
-                  //         borderRadius: BorderRadius.circular(12),
-                  //       ),
-                  //       hintText: 'Last Name',
-                  //       fillColor: Colors.grey.shade200,
-                  //       filled: true,
-                  //     ),
-                  //   ),
-                  // ),
-
-                  TextBox02(controller: _lastNameController, hint: "Last Name", keyboardType: TextInputType.name),
+                    SizedBox(height: 30,),
 
 
 
-                  SizedBox(height: 30,),
+                    // last name textfield
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    //   child: TextField(
+                    //     keyboardType: TextInputType.name,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.white),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.deepPurple),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       hintText: 'Last Name',
+                    //       fillColor: Colors.grey.shade200,
+                    //       filled: true,
+                    //     ),
+                    //   ),
+                    // ),
+
+                    TextBox02(hint: "Last Name", keyboardType: TextInputType.name, value: lastName,),
 
 
 
-                  // age textfield
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  //   child: TextField(
-                  //     keyboardType: TextInputType.number,
-                  //     controller: _ageController,
-                  //     decoration: InputDecoration(
-                  //       enabledBorder: OutlineInputBorder(
-                  //         borderSide: BorderSide(color: Colors.white),
-                  //         borderRadius: BorderRadius.circular(12),
-                  //       ),
-                  //       focusedBorder: OutlineInputBorder(
-                  //         borderSide: BorderSide(color: Colors.deepPurple),
-                  //         borderRadius: BorderRadius.circular(12),
-                  //       ),
-                  //       hintText: 'Age',
-                  //       fillColor: Colors.grey.shade200,
-                  //       filled: true,
-                  //     ),
-                  //   ),
-                  // ),
-
-                  //TextBox02(controller: _ageController, hint: "Age", keyboardType: TextInputType.number),
+                    SizedBox(height: 30,),
 
 
 
-                  //SizedBox(height: 30,),
+                    // age textfield
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    //   child: TextField(
+                    //     keyboardType: TextInputType.number,
+                    //     controller: _ageController,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.white),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       focusedBorder: OutlineInputBorder(
+                    //         borderSide: BorderSide(color: Colors.deepPurple),
+                    //         borderRadius: BorderRadius.circular(12),
+                    //       ),
+                    //       hintText: 'Age',
+                    //       fillColor: Colors.grey.shade200,
+                    //       filled: true,
+                    //     ),
+                    //   ),
+                    // ),
+
+                    //TextBox02(controller: _ageController, hint: "Age", keyboardType: TextInputType.number),
 
 
 
-                  // birthday textfield
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: GestureDetector(
-                      onTap: () async {
-                        DateTime? datetime = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime.now()
-                        );
-                        if(datetime == null) return;
-                        setState(() {
-                          age = AgeCalculator.age(datetime).years;
-                          String month = datetime.month.toString().padLeft(2, '0');
-                          String day = datetime.day.toString().padLeft(2, '0');
-                          bday = '${datetime.year}/$month/$day';
-                        });
-                      },
-                      child: Container(
-                          height: 55,
-                          width: 332,
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade600.withOpacity(0.6),
-                              borderRadius: BorderRadius.circular(16)
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                            child: showBirthday(bday),
-                          )
+                    //SizedBox(height: 30,),
+
+
+
+                    // birthday textfield
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: GestureDetector(
+                        onTap: () async {
+                          DateTime? datetime = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now()
+                          );
+                          if(datetime == null) return;
+                          setState(() {
+                            age = AgeCalculator.age(datetime).years;
+                            String month = datetime.month.toString().padLeft(2, '0');
+                            String day = datetime.day.toString().padLeft(2, '0');
+                            bday = '${datetime.year}/$month/$day';
+                          });
+                        },
+                        child: Container(
+                            height: 55,
+                            width: 332,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade600.withOpacity(0.6),
+                                borderRadius: BorderRadius.circular(16)
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                              child: showBirthday(bday),
+                            )
+                        ),
                       ),
                     ),
-                  ),
 
 
 
 
-                  SizedBox(height: 30,),
+                    SizedBox(height: 30,),
 
 
 
 
-                  // gender dropdown
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
-                      decoration: BoxDecoration(color: Colors.grey.shade600.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButtonFormField<String>(
-                          hint: Align(
-                            alignment: Alignment.centerLeft,
+                    // gender dropdown
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        decoration: BoxDecoration(color: Colors.grey.shade600.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField<String>(
+                            hint: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Gender",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
+                                ),
+                              ),
+                            ),
+                            iconSize: 32,
+                            iconEnabledColor: Colors.white,
+                            value: gender,
+                            items: genders.map(buildMenuItem).toList(),
+                            validator: (value){
+                              if(value==null || value.isEmpty){
+                                return 'Select a field';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) => setState(() {
+                              gender=value!;
+                            }),
+                            isExpanded: true,
+                            borderRadius: BorderRadius.circular(16),
+                            dropdownColor: Colors.grey.shade600.withOpacity(0.6),
+
+                          ),
+                        ),
+                      ),
+                    ),
+
+
+
+                    SizedBox(height: 50,),
+
+
+
+                    //register button
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: GestureDetector(
+                        onTap: signUp,
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.teal.shade900,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Center(
                             child: Text(
-                              "Gender",
+                              'Next',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 19,
+                                fontWeight:FontWeight.bold,
+                                fontSize: 20,
                               ),
                             ),
                           ),
-                          iconSize: 32,
-                          iconEnabledColor: Colors.white,
-                          value: gender,
-                          items: genders.map(buildMenuItem).toList(),
-                          validator: (value){
-                            if(value==null){
-                              return 'Select a field';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) => setState(() {
-                            gender=value!;
-                          }),
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(16),
-                          dropdownColor: Colors.grey.shade600.withOpacity(0.6),
-
                         ),
                       ),
                     ),
-                  ),
 
 
-
-                  SizedBox(height: 50,),
-
-
-
-                  //register button
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: GestureDetector(
-                      onTap: signUp,
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.teal.shade900,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Next',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight:FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ]
+        ]
     );
   }
 }
