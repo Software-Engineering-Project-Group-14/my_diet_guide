@@ -108,7 +108,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
         activeness: activeness!,
         intensity: intensity!,
         age:widget.age,
-        calculated_current_weight: int.parse(_weightController.text.trim())-Calorie_Calculator.calorieBurnPerDay(widget.gender, int.parse(_heightController.text.trim()), int.parse(_weightController.text.trim()), widget.age, activeness!),
+        calculated_current_weight: int.parse(weight)-Calorie_Calculator.calorieBurnPerDay(widget.gender, int.parse(height), int.parse(weight), widget.age, activeness!),
         last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
     ))));
   }

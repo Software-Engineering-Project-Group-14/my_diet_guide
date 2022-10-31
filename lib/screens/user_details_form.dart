@@ -298,7 +298,11 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: GestureDetector(
-                        onTap: signUp,
+                        onTap: () async {
+                          if(_formKey.currentState!.validate()){
+                            await signUp();
+                          }
+                        },
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
