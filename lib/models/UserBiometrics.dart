@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/models/Calorie_Calculator.dart';
 
 class UserBiometrics{
 
@@ -12,6 +13,8 @@ class UserBiometrics{
   final String activeness;
   final String intensity;
   final int age;
+  double calculated_current_weight;
+  DateTime last_calorie_calculated_date;
 
   UserBiometrics({
     required this.user_id,
@@ -22,7 +25,9 @@ class UserBiometrics{
     required this.dietaryPreference,
     required this.activeness,
     required this.intensity,
-    required this.age
+    required this.age,
+    required this.calculated_current_weight,
+    required this.last_calorie_calculated_date
   });
 
   Map<String, dynamic> toJson() => {
@@ -34,7 +39,9 @@ class UserBiometrics{
     'dietary preference':dietaryPreference,
     'activeness':activeness,
     'intensity': intensity,
-    'age': age
+    'age': age,
+    'calculated_current_weight': calculated_current_weight,
+    'last_calorie_calculated_date': last_calorie_calculated_date
   };
 
   static UserBiometrics fromJson(Map<String, dynamic> json) => UserBiometrics(
@@ -46,13 +53,14 @@ class UserBiometrics{
     dietaryPreference: json['dietary preference'],
     activeness: json['activeness'],
     intensity: json['intensity'],
-      age: json['age']
+    age: json['age'],
+      calculated_current_weight: json['calculated_current_weight'],
+      last_calorie_calculated_date: json['last_calorie_calculated_date']
   );
 
   static Future<UserBiometrics> getUserBiometrics(String user_id)async{
     DocumentSnapshot ds = await FirebaseFirestore.instance.collection("user biometrics").doc(user_id).get();
     Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
-    //print(data.toString());
     return UserBiometrics(
         user_id: user_id,
         gender: data["gender"],
@@ -62,8 +70,30 @@ class UserBiometrics{
         dietaryPreference: data["dietary preference"],
         activeness: data["activeness"],
         intensity: data["intensity"],
-        age: data["age"]
+        age: data["age"],
+        calculated_current_weight: data['calculated_current_weight'],
+        last_calorie_calculated_date: DateTime.parse(data['last_calorie_calculated_date'].toDate().toString())
     );
   }
+
+
+  static void updateCalculatedCurrentWeight(user_id) async{
+    UserBiometrics userBiometrics = await getUserBiometrics(user_id);
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    int dayDiffrence = today.difference(userBiometrics.last_calorie_calculated_date).inDays;
+    if(dayDiffrence > 0){
+      userBiometrics.calculated_current_weight -= Calorie_Calculator.calorieBurn(userBiometrics.gender, userBiometrics.height, userBiometrics.weight, userBiometrics.age, userBiometrics.activeness, dayDiffrence);
+      userBiometrics.last_calorie_calculated_date =   today;
+      final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(user_id);
+      userBioDoc.update({
+        'calculated_current_weight': userBiometrics.calculated_current_weight,
+        'last_calorie_calculated_date': userBiometrics.last_calorie_calculated_date
+      });
+    }
+  }
+
+
+
 
 }

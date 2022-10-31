@@ -14,7 +14,7 @@ class ViewDietCard extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: GestureDetector(
           onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDetails(user_id: user_id,)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDetails(user_id: user_id, day: day)));
           },
           child: ClipRRect(
             child: BackdropFilter(

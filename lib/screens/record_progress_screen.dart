@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/models/ProgressRecorder.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import 'package:my_diet_guide/widgets/bottom_bar.dart';
 import 'package:my_diet_guide/widgets/side_bar.dart';
@@ -20,11 +21,11 @@ class RecordProgressScreen extends StatefulWidget {
 
 class _RecordProgressScreenState extends State<RecordProgressScreen> {
 
-
+/*
   Future recordProgress(String user_id, ) async {
 
   }
-
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +150,8 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                       Column(
                                         children: [
                                           GestureDetector(
-                                            onTap: (){
+                                            onTap: ()async{
+                                              ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Did not complete");
                                             },
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 5),
@@ -169,7 +171,9 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                       Column(
                                         children: [
                                           GestureDetector(
-                                            onTap: (){},
+                                            onTap: (){
+                                              ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Partially Completed");
+                                            },
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 5),
                                               width: 25,
@@ -191,7 +195,9 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                       Column(
                                         children: [
                                           GestureDetector(
-                                            onTap: (){},
+                                            onTap: (){
+                                              ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Completed");
+                                            },
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 5),
                                               width: 25,
@@ -210,7 +216,9 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                       Column(
                                         children: [
                                           GestureDetector(
-                                            onTap: (){},
+                                            onTap: (){
+                                              ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Over ate");
+                                            },
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 5),
                                               width: 25,

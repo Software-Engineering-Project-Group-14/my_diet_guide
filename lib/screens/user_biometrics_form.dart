@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/models/Calorie_Calculator.dart';
 import 'package:my_diet_guide/screens/select_plan.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/text_box_02.dart';
@@ -106,7 +107,9 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
         dietaryPreference: dietaryPreference!,
         activeness: activeness!,
         intensity: intensity!,
-        age:widget.age
+        age:widget.age,
+        calculated_current_weight: int.parse(_weightController.text.trim())-Calorie_Calculator.calorieBurnPerDay(widget.gender, int.parse(_heightController.text.trim()), int.parse(_weightController.text.trim()), widget.age, activeness!),
+        last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
     ))));
   }
 
@@ -129,7 +132,8 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
   Future addUserBiometrics(String userId, int age, String gender, int weight, int height, int targetWeight, String dietaryPreference, String activeness, String intensity) async {
     final userBiometricsDoc = FirebaseFirestore.instance.collection('user biometrics').doc(userId);
-
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
     final json = {
       'user_id': userId,
       'age': age,
@@ -139,7 +143,9 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
       'target weight': targetWeight,
       'dietary preference': dietaryPreference,
       'activeness': activeness,
-      'intensity': intensity
+      'intensity': intensity,
+      'calculated_current_weight':weight-Calorie_Calculator.calorieBurnPerDay(gender, height, weight, age, activeness),
+      'last_calorie_calculated_date': today
     };
 
     await userBiometricsDoc.set(json);
