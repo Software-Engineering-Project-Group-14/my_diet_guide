@@ -29,7 +29,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
   String firstName = '';
   String lastName = '';
-  String bday ='';
+  String bday = '';
   int age = 0;
 
   // String? bday = null;
@@ -48,7 +48,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
 
   Widget showBirthday(String bday){
-    if(bday==''){
+    if(bday.isEmpty){
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Text("Birthday", style: TextStyle(color: Colors.white, fontSize: 19), textAlign: TextAlign.start,),
@@ -139,7 +139,49 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                     // ),
 
 
-                    TextBox02(hint: "First Name", keyboardType: TextInputType.name, value: firstName,),
+                    //TextBox02(hint: "First Name", keyboardType: TextInputType.name, value: firstName,),
+
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade600.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: TextFormField(
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                              ),
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 20),
+                                border: InputBorder.none,
+                                hintText: "First Name",
+                                hintStyle: TextStyle(
+                                  fontSize: 19,
+                                  color: Colors.white,
+                                ),
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                ),
+                              ),
+                              onChanged: (val){
+                                setState(() => firstName = val);
+                              },
+                              validator: (text){
+                                if(text == null || text.isEmpty){
+                                  return 'Cannot be empty';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
 
 
@@ -168,8 +210,49 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                     //   ),
                     // ),
 
-                    TextBox02(hint: "Last Name", keyboardType: TextInputType.name, value: lastName,),
+                    //TextBox02(hint: "Last Name", keyboardType: TextInputType.name, value: lastName,),
 
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade600.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: TextFormField(
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                              ),
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 20),
+                                border: InputBorder.none,
+                                hintText: "Last Name",
+                                hintStyle: TextStyle(
+                                  fontSize: 19,
+                                  color: Colors.white,
+                                ),
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                ),
+                              ),
+                              onChanged: (val){
+                                setState(() => lastName = val);
+                              },
+                              validator: (text){
+                                if(text == null || text.isEmpty){
+                                  return 'Cannot be empty';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
 
                     SizedBox(height: 30,),
@@ -336,47 +419,47 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
 
 
 
-class UserDetailValidator{
-
-  static String? validateWeight(String weight){
-    bool empty = weight.isEmpty;
-    bool contDot = weight.contains('.');
-    if(empty){
-      return 'cannot be empty';
-    } else if(contDot == true){
-      return 'Weight should not be a decimal value';
-    }
-    return null;
-  }
-
-  static String? validateHeight(String height){
-    bool empty = height.isEmpty;
-    bool contDot = height.contains('.');
-    if(empty){
-      return 'cannot be empty';
-    } else if(contDot == true){
-      return 'Height should not be a decimal value';
-    }
-    return null;
-  }
-
-  static String? validateTargetWeight(String targetWeight){
-    bool empty = targetWeight.isEmpty;
-    bool contDot = targetWeight.contains('.');
-    if(empty){
-      return 'cannot be empty';
-    } else if(contDot == true){
-      return 'Weight should not be a decimal value';
-    }
-    return null;
-  }
-
-  static String? validateDropDown(String text){
-    bool empty = text.isEmpty;
-    if(empty){
-      return 'cannot be empty';
-    }
-    return null;
-  }
-
-}
+// class UserDetailValidator{
+//
+//   static String? validateWeight(String weight){
+//     bool empty = weight.isEmpty;
+//     bool contDot = weight.contains('.');
+//     if(empty){
+//       return 'cannot be empty';
+//     } else if(contDot == true){
+//       return 'Weight should not be a decimal value';
+//     }
+//     return null;
+//   }
+//
+//   static String? validateHeight(String height){
+//     bool empty = height.isEmpty;
+//     bool contDot = height.contains('.');
+//     if(empty){
+//       return 'cannot be empty';
+//     } else if(contDot == true){
+//       return 'Height should not be a decimal value';
+//     }
+//     return null;
+//   }
+//
+//   static String? validateTargetWeight(String targetWeight){
+//     bool empty = targetWeight.isEmpty;
+//     bool contDot = targetWeight.contains('.');
+//     if(empty){
+//       return 'cannot be empty';
+//     } else if(contDot == true){
+//       return 'Weight should not be a decimal value';
+//     }
+//     return null;
+//   }
+//
+//   static String? validateDropDown(String text){
+//     bool empty = text.isEmpty;
+//     if(empty){
+//       return 'cannot be empty';
+//     }
+//     return null;
+//   }
+//
+// }

@@ -14,7 +14,7 @@ class UserProfile extends StatefulWidget {
 
   final String user_id;
 
-  UserProfile({Key? key, required this.user_id}) : super(key: key);
+  const UserProfile({Key? key, required this.user_id}) : super(key: key);
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -45,37 +45,15 @@ class _UserProfileState extends State<UserProfile> {
     final snapshot1 = await userDoc.get();
 
     if(snapshot1.exists){
-      User user = User.fromJson(snapshot1.data()!);
-      firstName = user.firstName;
-      lastName = user.lastName;
-      bday = user.birthday;
-    }
-
-    final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(widget.user_id);
-    final snapshot2 = await userBioDoc.get();
-
-    if(snapshot2.exists){
-      UserBiometrics userBio = UserBiometrics.fromJson(snapshot2.data()!);
-      gender = userBio.gender;
-      weight = userBio.weight;
-      height = userBio.height;
-      targetWeight = userBio.targetWeight;
-      dietaryPreference = userBio.dietaryPreference;
-      activeness = userBio.activeness;
-      intensity = userBio.intensity;
+      firstName = snapshot1.data()!['first name'];
+      lastName = snapshot1.data()!['last name'];
+      bday = snapshot1.data()!['birthday'];
     }
 
     return {
       'first name' : firstName,
       'last name': lastName,
       'birthday' : bday,
-      'gender': gender,
-      'weight': weight,
-      'height': height,
-      'target weight': targetWeight,
-      'dietary preference': dietaryPreference,
-      'activeness': activeness,
-      'intensity': intensity
     };
   }
 
@@ -86,14 +64,6 @@ class _UserProfileState extends State<UserProfile> {
     firstName = map['first name'];
     lastName = map['last name'];
     bday = map['birthday'];
-
-    gender= map['gender'];
-    weight= map['weight'];
-    height= map['height'];
-    targetWeight= map['target weight'];
-    dietaryPreference= map['dietary preference'];
-    activeness= map['activeness'];
-    intensity= map['intensity'];
 
     int byear = int.parse(bday.substring(0,4));
     int bmonth = int.parse(bday.substring(5,7));
@@ -129,7 +99,53 @@ class _UserProfileState extends State<UserProfile> {
           child: Text("Age : $age years", style: TextStyle(fontSize: 19, color: Colors.white),),
         ),
 
-        SizedBox(height: 20,),
+        SizedBox(height: 10,),
+
+      ],
+    );
+  }
+
+
+
+  Future<Map<String, dynamic>> readUserBiometrics() async{
+    final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(widget.user_id);
+    final snapshot2 = await userBioDoc.get();
+
+    if(snapshot2.exists){
+      gender = snapshot2.data()!['gender'];
+      weight = snapshot2.data()!['weight'];
+      height = snapshot2.data()!['height'];
+      targetWeight = snapshot2.data()!['target weight'];
+      dietaryPreference = snapshot2.data()!['dietary preference'];
+      activeness = snapshot2.data()!['activeness'];
+      intensity = snapshot2.data()!['intensity'];
+    }
+
+    return {
+      'gender': gender,
+      'weight': weight,
+      'height': height,
+      'target weight': targetWeight,
+      'dietary preference': dietaryPreference,
+      'activeness': activeness,
+      'intensity': intensity
+    };
+  }
+
+
+
+  Widget buildUserBiometrics(Map<String, dynamic> map) {
+    gender= map['gender'];
+    weight= map['weight'];
+    height= map['height'];
+    targetWeight= map['target weight'];
+    dietaryPreference= map['dietary preference'];
+    activeness= map['activeness'];
+    intensity= map['intensity'];
+
+    return Column(
+      children: [
+        SizedBox(height: 10,),
 
         Container(
           alignment: Alignment.topLeft,
@@ -213,6 +229,9 @@ class _UserProfileState extends State<UserProfile> {
             child: Column(
               children: [
                 SizedBox(height: 30,),
+                // Center(
+                //   child: Text("User Id - ${widget.user_id}", style: TextStyle(color: Colors.white, fontSize: 28),),
+                // ),
                 Center(
                   child: Text("User Profile", style: TextStyle(color: Colors.white, fontSize: 28),),
                 ),
@@ -222,32 +241,65 @@ class _UserProfileState extends State<UserProfile> {
                     //borderRadius: BorderRadius.circular(28),
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                      child: Container(
-                        width: 360,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [Colors.white24, Colors.white10],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 360,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    colors: [Colors.white24, Colors.white10],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight
+                                ),
+                                //borderRadius: BorderRadius.circular(28),
+                                border: Border.all(width: 2, color: Colors.white10)
                             ),
-                            //borderRadius: BorderRadius.circular(28),
-                            border: Border.all(width: 2, color: Colors.white10)
-                        ),
-                        child: FutureBuilder<Map<String,dynamic>>(
-                          future: readUser(),
-                          builder: (context, snapshot){
-                            if(snapshot.hasData){
-                              final data = snapshot.data;
-                              return data==null ? Center(child: Text("No User!"),) : buildUser(data!);
-                            } else if (snapshot.hasError){
-                              return Text('Something went wrong!');
-                            } else {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
-                        ),
+                            child: FutureBuilder<Map<String,dynamic>>(
+                              future: readUser(),
+                              builder: (context, snapshot){
+                                if(snapshot.hasData){
+                                  final data = snapshot.data;
+                                  return data==null ? Center(child: Text("No User!"),) : buildUser(data);
+                                } else if (snapshot.hasError){
+                                  return Center(child: Text('Something went wrong!'));
+                                } else {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+
+                          Container(
+                            width: 360,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    colors: [Colors.white24, Colors.white10],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight
+                                ),
+                                //borderRadius: BorderRadius.circular(28),
+                                border: Border.all(width: 2, color: Colors.white10)
+                            ),
+                            child: FutureBuilder<Map<String,dynamic>>(
+                              future: readUserBiometrics(),
+                              builder: (context, snapshot){
+                                if(snapshot.hasData){
+                                  final data = snapshot.data;
+                                  return data==null ? Center(child: Text("No User!"),) : buildUserBiometrics(data);
+                                } else if (snapshot.hasError){
+                                  return Center(child: Text('Something went wrong!'));
+                                } else {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+
+                        ],
                       ),
                     ),
                   ),

@@ -43,7 +43,7 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
 
 
   Widget showBirthday(String bday){
-    if(bday==''){
+    if(bday.isEmpty){
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Text("Birthday", style: TextStyle(color: Colors.white, fontSize: 19), textAlign: TextAlign.start,),
@@ -96,11 +96,97 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
                 children: [
                   SizedBox(height: 40,),
 
-                  TextBox02(hint: "First Name", keyboardType: TextInputType.name, value: firstName,),
+                  //TextBox02(hint: "First Name", keyboardType: TextInputType.name, value: firstName,),
+
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade600.withOpacity(0.6),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: TextFormField(
+                            style: TextStyle(
+                              fontSize: 19,
+                              color: Colors.white,
+                            ),
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 20),
+                              border: InputBorder.none,
+                              hintText: "First Name",
+                              hintStyle: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                              ),
+                            ),
+                            onChanged: (val){
+                              setState(() => firstName = val);
+                            },
+                            validator: (text){
+                              if(text == null || text.isEmpty){
+                                return 'Cannot be empty';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
 
                   SizedBox(height: 30,),
 
-                  TextBox02(hint: "Last Name", keyboardType: TextInputType.name, value: lastName,),
+                  //TextBox02(hint: "Last Name", keyboardType: TextInputType.name, value: lastName,),
+
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade600.withOpacity(0.6),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: TextFormField(
+                            style: TextStyle(
+                              fontSize: 19,
+                              color: Colors.white,
+                            ),
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(vertical: 20),
+                              border: InputBorder.none,
+                              hintText: "Last Name",
+                              hintStyle: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                              ),
+                            ),
+                            onChanged: (val){
+                              setState(() => lastName = val);
+                            },
+                            validator: (text){
+                              if(text == null || text.isEmpty){
+                                return 'Cannot be empty';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
 
                   SizedBox(height: 30,),
 

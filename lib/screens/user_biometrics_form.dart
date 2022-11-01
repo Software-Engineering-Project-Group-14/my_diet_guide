@@ -108,7 +108,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
         activeness: activeness!,
         intensity: intensity!,
         age:widget.age,
-        calculated_current_weight: int.parse(weight)-Calorie_Calculator.calorieBurnPerDay(widget.gender, int.parse(height), int.parse(weight), widget.age, activeness!),
+        calculated_current_weight: int.parse(weight!)-Calorie_Calculator.calorieBurnPerDay(widget.gender, int.parse(height!), int.parse(weight!), widget.age, activeness!),
         last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
     ))));
   }
@@ -205,8 +205,49 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                     //   ),
                     // ),
 
-                    TextBox02(hint: "Weight", keyboardType: TextInputType.number, value: weight,),
+                    //TextBox02(hint: "Weight", keyboardType: TextInputType.number, value: weight,),
 
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade600.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: TextFormField(
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                              ),
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 20),
+                                border: InputBorder.none,
+                                hintText: "Weight (kg)",
+                                hintStyle: TextStyle(
+                                  fontSize: 19,
+                                  color: Colors.white,
+                                ),
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                ),
+                              ),
+                              onChanged: (val){
+                                setState(() => weight = val);
+                              },
+                              validator: (text){
+                                if(text == null || text.isEmpty){
+                                  return 'Cannot be empty';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
 
                     SizedBox(height: 30,),
@@ -235,8 +276,49 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                     //   ),
                     // ),
 
-                    TextBox02(hint: "Height", keyboardType: TextInputType.number, value: height,),
+                    //TextBox02(hint: "Height", keyboardType: TextInputType.number, value: height,),
 
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade600.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: TextFormField(
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                              ),
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 20),
+                                border: InputBorder.none,
+                                hintText: "Height (cm)",
+                                hintStyle: TextStyle(
+                                  fontSize: 19,
+                                  color: Colors.white,
+                                ),
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                ),
+                              ),
+                              onChanged: (val){
+                                setState(() => height = val);
+                              },
+                              validator: (text){
+                                if(text == null || text.isEmpty){
+                                  return 'Cannot be empty';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
 
                     SizedBox(height: 20,),
@@ -265,8 +347,49 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                     //   ),
                     // ),
 
-                    TextBox02(hint: "Target Weight", keyboardType: TextInputType.number, value: targetWeight,),
+                    //TextBox02(hint: "Target Weight", keyboardType: TextInputType.number, value: targetWeight,),
 
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade600.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: TextFormField(
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white,
+                              ),
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: 20),
+                                border: InputBorder.none,
+                                hintText: "Target Weight (kg)",
+                                hintStyle: TextStyle(
+                                  fontSize: 19,
+                                  color: Colors.white,
+                                ),
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                ),
+                              ),
+                              onChanged: (val){
+                                setState(() => targetWeight = val);
+                              },
+                              validator: (text){
+                                if(text == null || text.isEmpty){
+                                  return 'Cannot be empty';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
 
 

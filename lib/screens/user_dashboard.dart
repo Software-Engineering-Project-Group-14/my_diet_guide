@@ -24,12 +24,13 @@ class _UserDashboardState extends State<UserDashboard> {
 
   final dietUser = FirebaseAuth.instance.currentUser;
 
-  late String user_id = dietUser!.uid;
+  //late String user_id = dietUser!.uid;
 
 
 
   @override
   Widget build(BuildContext context) {
+    String user_id = dietUser!.uid;
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
         appBar: AppBar(

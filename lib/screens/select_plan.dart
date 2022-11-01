@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/Plan.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
+import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
 
 import '../models/UserBiometrics.dart';
@@ -49,113 +50,116 @@ class _SelectPlanState extends State<SelectPlan> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return Stack(
+      children: [
+        BackgroundImage(),
 
-        backgroundColor: Colors.green.shade100,
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Recommended Plans",
-                        style: GoogleFonts.poppins(
-                          fontSize: 22,
-                        ),
-                      )
-                    ],
-                  ),
-                  StreamBuilder<QuerySnapshot>(
-                    stream: recommendedPlanStream,
-                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Recommended Plans",
+                          style: TextStyle(fontSize: 22),
+                        )
+                      ],
+                    ),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: recommendedPlanStream,
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
 
-                      if (snapshot.hasError) {
-                        return const Text('Something went wrong');
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, userAgeGroup, userIntensity, userActiveness, null);
-                      if(l.length == 0){
-                        return Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
-                              child: Text(
-                                "There are no available diet plans for your biometrics.",
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 20
-                                ),
-                              ),
-                            )
-                          ],
-                        );
-                      }else{
-                      return Column(
-                        children: l.map((DietPlanModel planModel){
-                          return GestureDetector(
-                            child: PlanCard(dietPlanModel: planModel),
-                            onTap: () async {
-                              bool success = true;
-                              String msg = "";
-                              try{
-                                await FirebaseFirestore.instance.collection('user')
-                                    .doc(userId).set({
-                                  'current_plan':planModel.planId
-                                }, SetOptions(merge: true));
-                                msg = "Plan selected successfully.";
-                              }catch(error){
-                                success = false;
-                                msg = "An error occurred. Please try again.";
-                              }
-                              showDialog<void>(
-                                context: context,
-                                barrierDismissible: false, // user must tap button!
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Plan Select'),
-                                    content: SingleChildScrollView(
-                                      child: ListBody(
-                                        children: [
-                                          Text(msg),
-                                        ],
-                                      ),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('OK'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          if(success){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                        if (snapshot.hasError) {
+                          return const Text('Something went wrong');
+                        }
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        }).toList().cast(),
-                      );
-                      }
-                    },
+                        }
+                        List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, userAgeGroup, userIntensity, userActiveness, null);
+                        if(l.length == 0){
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
+                                child: Text(
+                                  "There are no available diet plans for your biometrics.",
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 20
+                                  ),
+                                ),
+                              )
+                            ],
+                          );
+                        }else{
+                        return Column(
+                          children: l.map((DietPlanModel planModel){
+                            return GestureDetector(
+                              child: PlanCard(dietPlanModel: planModel),
+                              onTap: () async {
+                                bool success = true;
+                                String msg = "";
+                                try{
+                                  await FirebaseFirestore.instance.collection('user')
+                                      .doc(userId).set({
+                                    'current_plan':planModel.planId
+                                  }, SetOptions(merge: true));
+                                  msg = "Plan selected successfully.";
+                                }catch(error){
+                                  success = false;
+                                  msg = "An error occurred. Please try again.";
+                                }
+                                showDialog<void>(
+                                  context: context,
+                                  barrierDismissible: false, // user must tap button!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Plan Select'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: [
+                                            Text(msg),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('OK'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            if(success){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          }).toList().cast(),
+                        );
+                        }
+                      },
 
-                  ),
+                    ),
 
-                ],
-              )
-            ],
-          ),
-        )
+                  ],
+                )
+              ],
+            ),
+          )
+        ),
+      ]
     );
 
 
