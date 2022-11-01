@@ -22,14 +22,15 @@ class ProgressRecorder{
     if(!progressPrecentageMap.containsKey(progress)) {
       throw Exception("Undefined progress at recordProgress at ProgressRecorder");
     }
-    double calorieGainInkg = (data["calorie_gain_per_meal"] * progressPrecentageMap[progress]/100)/7700;
+    double calorieGain = data["calorie_gain_per_meal"] * progressPrecentageMap[progress]/100;
+    double calorieGainInkg = calorieGain/7700;
     //print(calorieGainInkg);
     final recordPregressDoc = FirebaseFirestore.instance.collection('record progress').doc(userId + DateTime(date.year, date.month, date.day).toString() + meal);
     ds = await recordPregressDoc.get();
     double prevAddRemove = 0;
     if(ds.data() != null){
       data = ds.data() as Map<String, dynamic>;
-      prevAddRemove = data['calorie_gain'];
+      prevAddRemove = data['calorie_gain']/7700;
     }
     //print(prevAddRemove);
     await recordPregressDoc.set({
@@ -38,7 +39,7 @@ class ProgressRecorder{
       'meal': meal,
       'dish': dish,
       'progress': progress,
-      'calorie_gain': calorieGainInkg
+      'calorie_gain': calorieGain
     });
     final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(userId);
     ds = await userBioDoc.get();
