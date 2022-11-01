@@ -62,21 +62,85 @@ class CalorieGenerator{
         "Veggie-loaded flatbread",
       ];
 
+  static List<String> days = [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday"
+  ];
+
+  static List<String> mealNames = [
+        "breakfast",
+        "lunch",
+        "dinner"
+  ];
+
   static void addRandomCalories() async{
-      print(dishes.length);
     for(int i=0;i<dishes.length;i++){
       String dishName = dishes[i];
-      print(dishName);
       final dishDoc = FirebaseFirestore.instance.collection('dish1').doc(dishName);
       dishDoc.update({
         'calorie_gain_per_meal': 500 + Random().nextInt(500)
       });
     }
+  }
 
-
+  static void setCalorieSum(meal, id) async{
+        id = id.toString();
+        final doc_ = FirebaseFirestore.instance.collection(meal).doc(id);
+        DocumentSnapshot ds = await doc_.get();
+        double Sum = 0;
+        for(int i=0;i<7;i++){
+              final dishDoc = await FirebaseFirestore.instance.collection("dish1").doc(ds["${days[i]}_dish_id"]).get();
+              Sum += dishDoc['calorie_gain_per_meal'];
+        }
+        doc_.update({
+              'calorie_gain_per_meal_per_week': Sum,
+        });
   }
 
 
+  static void setAllCalorieSums() async{
+        for(int i=1;i<=37;i++){
+              print(i);
+              if(i<37){
+                    setCalorieSum('breakfast', i);
+              }
+              if(i<=27){
+                    setCalorieSum('lunch', i);
+              }
+              setCalorieSum('dinner', i);
+        }
+
+  }
+
+  static Future<double> getMealSum(meal, id) async{
+        id = id.toString();
+        final doc_ = await FirebaseFirestore.instance.collection(meal).doc(id).get();
+        return doc_["calorie_gain_per_meal_per_week"];
+  }
+
+
+  static void setPlanCalorieSums() async{
+        double Sum = 0;
+        double x = 0;
+        for(int i=0;i<101;i++){
+              final doc_ = FirebaseFirestore.instance.collection("diet_plan").doc(i.toString());
+              final ds = await doc_.get();
+              Sum = 0;
+              for(int j=0;j<3;j++){
+                    x = await getMealSum(mealNames[j], ds["${mealNames[j]}_id"]);
+                    x=x.toDouble();
+                    Sum+=x;
+              }
+              doc_.update({
+                    'calorie_gain_per_plan_per_week': Sum,
+              });
+        }
+  }
 
 
 

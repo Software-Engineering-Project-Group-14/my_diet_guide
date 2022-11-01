@@ -24,8 +24,9 @@ Future<void> main() async {
         projectId: "my-diet-guide-14",
       )
   );
-
-  CalorieGenerator.addRandomCalories();
+  CalorieGenerator.setPlanCalorieSums();
+  //CalorieGenerator.setAllCalorieSums();
+  //CalorieGenerator.addRandomCalories();
   runApp(DevicePreview(builder: (context)=>MyApp()));
   //runApp(const MyApp());
 }

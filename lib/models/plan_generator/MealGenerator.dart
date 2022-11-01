@@ -6,6 +6,8 @@ import 'package:my_diet_guide/models/plan_generator/PlanGenerator.dart';
 
 class MealGenerator{
 
+
+
   final Map<String, Map<String, List<String> >> dishes = {
     "Energetic": {
       "Breakfast":[
@@ -151,6 +153,7 @@ class MealGenerator{
   String getRandomDish(type, meal){
     return dishes[type]![meal]![Random().nextInt(dishes[type]![meal]!.length)];
   }
+
 
 
 
