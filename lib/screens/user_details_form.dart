@@ -271,7 +271,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                             value: gender,
                             items: genders.map(buildMenuItem).toList(),
                             validator: (value){
-                              if(value==null || value.isEmpty){
+                              if(value==null){
                                 return 'Select a field';
                               }
                               return null;

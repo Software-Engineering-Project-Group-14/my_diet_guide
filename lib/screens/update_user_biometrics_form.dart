@@ -309,7 +309,11 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: GestureDetector(
-                          onTap: updateProfile,
+                          onTap: () async{
+                            if(_formKey.currentState!.validate()){
+                              await updateProfile();
+                            }
+                          },
                           child: Container(
                             width: 150,
                             padding: const EdgeInsets.all(20),

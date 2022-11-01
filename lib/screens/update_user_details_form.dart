@@ -221,7 +221,11 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: GestureDetector(
-                          onTap: goToNextPage,
+                          onTap: () async {
+                            if(_formKey.currentState!.validate()){
+                              await goToNextPage();
+                            }
+                          },
                           child: Container(
                             width: 100,
                             padding: const EdgeInsets.all(20),

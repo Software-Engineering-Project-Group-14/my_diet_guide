@@ -298,7 +298,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                             value: dietaryPreference,
                             items: dietary_preferences.map(buildMenuItem).toList(),
                             validator: (value){
-                              if(value==null || value.isEmpty){
+                              if(value==null){
                                 return 'Select a field';
                               }
                               return null;
@@ -343,7 +343,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                             value: activeness,
                             items: active_types.map(buildMenuItem).toList(),
                             validator: (value){
-                              if(value==null || value.isEmpty){
+                              if(value==null){
                                 return 'Select a field';
                               }
                               return null;
@@ -389,7 +389,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                             value: intensity,
                             items: intensities.map(buildMenuItem).toList(),
                             validator: (value){
-                              if(value==null || value.isEmpty){
+                              if(value==null){
                                 return 'Select a field';
                               }
                               return null;
@@ -416,7 +416,11 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: GestureDetector(
-                        onTap: signUp,
+                        onTap: () async {
+                          if(_formKey.currentState!.validate()){
+                            await signUp();
+                          }
+                        },
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
