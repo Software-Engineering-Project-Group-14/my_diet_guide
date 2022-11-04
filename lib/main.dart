@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_diet_guide/generators/DishGenerator.dart';
+import 'package:my_diet_guide/generators/MealGenerator.dart';
+import 'package:my_diet_guide/models/Dish.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
 import 'package:my_diet_guide/screens/login.dart';
@@ -26,6 +29,7 @@ Future<void> main() async {
         projectId: "my-diet-guide-14",
       )
   );
+  MealGenerator.copyBreakfast();
   runApp(DevicePreview(builder: (context)=>MyApp()));
   //runApp(const MyApp());
 }
