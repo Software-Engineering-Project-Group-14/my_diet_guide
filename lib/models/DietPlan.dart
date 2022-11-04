@@ -153,7 +153,8 @@ class DietPlanModel{
     );
   }
 
-  // Assigns this diet plan for given user
+  // Assigns this diet plan for given user, returns true if success false otherwise
+  // Used for select plan and change plan
   Future<bool> select(userId) async{
     try{
       await FirebaseFirestore.instance.collection('user')
@@ -166,12 +167,12 @@ class DietPlanModel{
     }
   }
 
-  // Add plan setting relevant meal ids
-  static Future<String?> add({activeness, age_group, dietary_preference, gender, intensity, breakfastMeal, lunchMeal, dinnerMeal}) async{
+  // Add plan setting relevant meal ids and returns new plan id or null if fails
+  static Future<DietPlanModel?> add({activeness, age_group, dietary_preference, gender, intensity, breakfastMeal, lunchMeal, dinnerMeal}) async{
     try{
       DocumentSnapshot ds = await FirebaseFirestore.instance.collection("diet_plan").doc("nextPlanId").get();
       double nextPlanId = ds["id"].toDouble();
-      print(nextPlanId);
+      print("Next plan id got = ${nextPlanId}");
       await FirebaseFirestore.instance.collection("diet_plan").doc(nextPlanId.toString())
           .set({
         "activeness": activeness,
@@ -183,9 +184,21 @@ class DietPlanModel{
         "lunch_id": lunchMeal,
         "dinner_id": dinnerMeal
       });
-      await FirebaseFirestore.instance.collection("diet_plan").doc((nextPlanId+1).toString()).set(
+      print("Diet plan added");
+      await FirebaseFirestore.instance.collection("diet_plan").doc("nextPlanId").set(
           {"id":nextPlanId+1}, SetOptions(merge: true));
-      return (nextPlanId+1).toString();
+      print("Next plan id incremented = ${nextPlanId+1}");
+      return DietPlanModel(
+          planId: (nextPlanId+1).toString(),
+          activeness: activeness,
+          age_group: age_group,
+          dietary_preference: dietary_preference,
+          gender: gender,
+          intensity: intensity,
+          breakfast_id: breakfastMeal,
+          lunch_id: lunchMeal,
+          dinner_id: dinnerMeal
+      );
     }catch(error){
       return null;
     }

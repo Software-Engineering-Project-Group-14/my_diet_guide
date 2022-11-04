@@ -190,18 +190,12 @@ class _ChangePlanState extends State<ChangePlan> {
                                               return GestureDetector(
                                                 child: PlanCard(dietPlanModel: planModel),
                                                 onTap: () async {
-                                                  bool success = true;
+                                                  bool success = await planModel.select(user_id);
                                                   String msg = "";
-                                                  try{
-                                                    await FirebaseFirestore.instance.collection('user')
-                                                        .doc(user_id).set({
-                                                      'current_plan':planModel.planId
-                                                    }, SetOptions(merge: true));
+                                                  if(success)
                                                     msg = "Plan changed successfully.";
-                                                  }catch(error){
-                                                    success = false;
+                                                  else
                                                     msg = "An error occurred. Please try again.";
-                                                  }
                                                   showDialog<void>(
                                                     context: context,
                                                     barrierDismissible: false, // user must tap button!

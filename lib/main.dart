@@ -12,6 +12,8 @@ import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/view_diet.dart';
 import 'package:my_diet_guide/screens/view_diet_details.dart';
 
+import 'models/DietPlan.dart';
+
 
 
 Future<void> main() async {
@@ -25,6 +27,17 @@ Future<void> main() async {
       )
   );
   runApp(DevicePreview(builder: (context)=>MyApp()));
+  DietPlanModel? val = await DietPlanModel.add(
+      activeness: "Moderately active",
+      age_group: "19-25",
+      dietary_preference: "Low carb",
+      gender: "Male",
+      intensity: "Standard",
+      breakfastMeal: "4",
+      lunchMeal: "24",
+      dinnerMeal: "4"
+  );
+  val!.select("15PmznYrDPV1vcIBTd7466Hi0hA2");
   //runApp(const MyApp());
 }
 
