@@ -37,6 +37,7 @@ class DietPlanModel{
     return "Dietary Preference: $dietary_preference\nGender: $gender\nIntensity: $intensity\nActiveness: $activeness\nAge group: $age_group\n";
   }
 
+  // Getting agr group corresponding to given age
   static String getAgeGroup(int age){
     if(age>=0 && age<=12){
       return "0-12";
@@ -152,7 +153,43 @@ class DietPlanModel{
     );
   }
 
+  // Assigns this diet plan for given user
+  Future<bool> select(userId) async{
+    try{
+      await FirebaseFirestore.instance.collection('user')
+          .doc(userId).set({
+        'current_plan':planId
+      }, SetOptions(merge: true));
+      return true;
+    }catch(error){
+      return false;
+    }
+  }
 
+  // Add plan setting relevant meal ids
+  static Future<String?> add({activeness, age_group, dietary_preference, gender, intensity, breakfastMeal, lunchMeal, dinnerMeal}) async{
+    try{
+      DocumentSnapshot ds = await FirebaseFirestore.instance.collection("diet_plan").doc("nextPlanId").get();
+      double nextPlanId = ds["id"].toDouble();
+      print(nextPlanId);
+      await FirebaseFirestore.instance.collection("diet_plan").doc(nextPlanId.toString())
+          .set({
+        "activeness": activeness,
+        "age_group": age_group,
+        "dietary_preference": dietary_preference,
+        "gender": gender,
+        "intensity": intensity,
+        "breakfast_id": breakfastMeal,
+        "lunch_id": lunchMeal,
+        "dinner_id": dinnerMeal
+      });
+      await FirebaseFirestore.instance.collection("diet_plan").doc((nextPlanId+1).toString()).set(
+          {"id":nextPlanId+1}, SetOptions(merge: true));
+      return (nextPlanId+1).toString();
+    }catch(error){
+      return null;
+    }
+  }
 
 
 }

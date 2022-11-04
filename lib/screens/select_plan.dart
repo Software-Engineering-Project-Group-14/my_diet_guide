@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_diet_guide/models/Plan.dart';
+import 'package:my_diet_guide/models/DietPlan.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
@@ -105,16 +105,9 @@ class _SelectPlanState extends State<SelectPlan> {
                             return GestureDetector(
                               child: PlanCard(dietPlanModel: planModel),
                               onTap: () async {
-                                bool success = true;
+                                bool success = await planModel.select(userId);
                                 String msg = "";
-                                try{
-                                  await FirebaseFirestore.instance.collection('user')
-                                      .doc(userId).set({
-                                    'current_plan':planModel.planId
-                                  }, SetOptions(merge: true));
-                                  msg = "Plan selected successfully.";
-                                }catch(error){
-                                  success = false;
+                                if(!success){
                                   msg = "An error occurred. Please try again.";
                                 }
                                 showDialog<void>(

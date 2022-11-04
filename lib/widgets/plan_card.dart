@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../models/Plan.dart';
+import '../models/DietPlan.dart';
 
 class PlanCard extends StatefulWidget {
   DietPlanModel dietPlanModel;

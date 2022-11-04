@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_diet_guide/models/Plan.dart';
+import 'package:my_diet_guide/models/DietPlan.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
