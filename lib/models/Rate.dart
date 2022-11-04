@@ -27,8 +27,4 @@ class RateModel{
     return FirebaseFirestore.instance.collection('rate').snapshots();
   }
 
-  static int testSample(){
-    return 8;
-  }
-
 }
