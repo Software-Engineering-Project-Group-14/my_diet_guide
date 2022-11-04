@@ -83,7 +83,7 @@ class UserBiometrics{
     DateTime today = DateTime(now.year, now.month, now.day);
     int dayDiffrence = today.difference(userBiometrics.last_calorie_calculated_date).inDays;
     if(dayDiffrence > 0){
-      userBiometrics.calculated_current_weight -= Calorie_Calculator.calorieBurn(userBiometrics.gender, userBiometrics.height, userBiometrics.weight, userBiometrics.age, userBiometrics.activeness, dayDiffrence);
+      userBiometrics.calculated_current_weight -= CalorieCalculator.calorieBurnInKg(userBiometrics.gender, userBiometrics.height, userBiometrics.weight, userBiometrics.age, userBiometrics.activeness, dayDiffrence);
       userBiometrics.last_calorie_calculated_date =   today;
       final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(user_id);
       userBioDoc.update({

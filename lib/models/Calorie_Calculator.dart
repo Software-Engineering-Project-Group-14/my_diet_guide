@@ -1,15 +1,19 @@
 
 
 
-class Calorie_Calculator{
+class CalorieCalculator{
 
-  //https://www.healthline.com/health/fitness-exercise/how-many-calories-do-i-burn-a-day#calories-burned-by-activity
   static Map<String, double>  activityLevelValues = {
   'Not very active' :  1.2,
   'Moderately active' : 1.55,
   'Active' : 1.725
   };
 
+  // Calculates Resting Metabolic Rate from given gender, height, weight and age
+  // Gender is "Male" or "Female"
+  // height in centimetres
+  // weight in kg
+  // age in years
   static double calculateRMR(gender, height, weight, age){
     double val = 0;
     if(gender == "Male"){
@@ -21,20 +25,34 @@ class Calorie_Calculator{
     }
     return val;
   }
-
-
-  // Returns calorie burn per day in kgs
-  static double calorieBurnPerDay(gender, height, weight, age, activeness){
+  
+  // Calculates calorie burned per day by given gender, height, weight, age and activeness and converts to kgs
+  // Gender is "Male" or "Female"
+  // height in centimetres
+  // weight in kg
+  // age in years
+  // activeness is 'Not very active' or 'Moderately active' or 'Active'
+  static double calorieBurnPerDayInKg(gender, height, weight, age, activeness){
     if(!activityLevelValues.containsKey(activeness)){
       throw Exception("Undefined activeness at calorieBurnPerDay in CalorieCalculator");
     }
-    return calculateRMR(gender, height, weight, age) * activityLevelValues[activeness]!/7700;
+    return calorieToKg(calculateRMR(gender, height, weight, age) * activityLevelValues[activeness]!);
   }
 
-  static double calorieBurn(gender, height, weight, age, activeness, numDays){
-    return numDays * calorieBurnPerDay(gender, height, weight, age, activeness);
+  // Calculates calorie burned by given number of days, gender, height, weight, age and activeness and converts to kgs
+  // Gender is "Male" or "Female"
+  // height in centimetres
+  // weight in kg
+  // age in years
+  // activeness is 'Not very active' or 'Moderately active' or 'Active'
+  static double calorieBurnInKg(gender, height, weight, age, activeness, numDays){
+    return numDays * calorieBurnPerDayInKg(gender, height, weight, age, activeness);
   }
-
+  
+  // Converts given calorie to weight (loss) in kgs
+  static double calorieToKg(double calorie){
+    return calorie/7700;
+  }
 
 }
 
