@@ -27,17 +27,6 @@ Future<void> main() async {
       )
   );
   runApp(DevicePreview(builder: (context)=>MyApp()));
-  DietPlanModel? val = await DietPlanModel.add(
-      activeness: "Moderately active",
-      age_group: "19-25",
-      dietary_preference: "Low carb",
-      gender: "Male",
-      intensity: "Standard",
-      breakfastMeal: "4",
-      lunchMeal: "24",
-      dinnerMeal: "4"
-  );
-  val!.select("15PmznYrDPV1vcIBTd7466Hi0hA2");
   //runApp(const MyApp());
 }
 
