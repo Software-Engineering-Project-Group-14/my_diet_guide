@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         stream: auth.authStateChanges(),
         builder: (context, snapshot){
           if(snapshot.hasData){
-            UserBiometrics.updateCalculatedCurrentWeight(auth.currentUser!.uid) ;
+            UserBiometrics.updateCalculatedCurrentWeight(firestore: firestore,user_id: auth.currentUser!.uid) ;
             return UserDashboard();
           }else{
             //return Login();

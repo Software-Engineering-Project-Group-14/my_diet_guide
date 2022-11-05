@@ -78,7 +78,7 @@ class NavigationDrawer extends StatelessWidget {
                 leading: Icon(Icons.edit_calendar_outlined, size: 30, color: Colors.white,),
                 title: Text("Change Diet Plan", style: TextStyle(fontSize: 19, color: Colors.white,),),
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
                 },
               ),
               ListTile(
