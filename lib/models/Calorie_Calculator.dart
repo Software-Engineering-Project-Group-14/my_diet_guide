@@ -1,6 +1,8 @@
 
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class CalorieCalculator{
 
   static Map<String, double>  activityLevelValues = {
@@ -8,6 +10,16 @@ class CalorieCalculator{
   'Moderately active' : 1.55,
   'Active' : 1.725
   };
+
+  static List<String> days = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday"
+  ];
 
   // Calculates Resting Metabolic Rate from given gender, height, weight and age
   // Gender is "Male" or "Female"
@@ -53,6 +65,23 @@ class CalorieCalculator{
   static double calorieToKg(double calorie){
     return calorie/7700;
   }
+
+
+  // Updates calorie sum per given meal per week
+  static void setCalorieSum({required firestore, required meal,required id}) async{
+    id = id.toString();
+    final doc_ = firestore.collection(meal).doc(id);
+    DocumentSnapshot ds = await doc_.get();
+    double Sum = 0;
+    for(int i=0;i<7;i++){
+      final dishDoc = await firestore.collection("dish").doc(ds["${days[i]}_dish_id"]).get();
+      Sum += dishDoc['calorie_gain_per_meal'];
+    }
+    doc_.update({
+      'calorie_gain_per_meal_per_week': Sum,
+    });
+  }
+
 
 }
 
