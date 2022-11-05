@@ -90,7 +90,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
     userBioDoc.update({
       'age': widget.age,
       'gender': widget.gender,
-      'weight': int.parse(height),
+      'weight': int.parse(weight),
       'height': int.parse(height),
       'target weight': int.parse(targetWeight),
       'dietary preference': dietaryPreference,
