@@ -81,7 +81,7 @@ class _DietDetailsState extends State<DietDetails> {
   }
 
   Future<Map<String,dynamic>> readDish(String dish_id) async{
-    final dish = FirebaseFirestore.instance.collection('dish1').doc(dish_id);
+    final dish = FirebaseFirestore.instance.collection('dish').doc(dish_id);
     final dishSnapshot = await dish.get();
 
     if(dishSnapshot.exists){
