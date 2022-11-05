@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,11 @@ import 'package:my_diet_guide/widgets/palatte.dart';
 import 'forgot_password.dart';
 
 class Login extends StatefulWidget{
-  const Login({super.key});
+
+  final FirebaseFirestore fireStore;
+  final FirebaseAuth auth;
+
+  const Login({super.key, required this.fireStore, required this.auth});
 
   @override
   State<Login> createState() => _LoginState();
@@ -29,7 +34,7 @@ class _LoginState extends State<Login> {
 
   Future signIn() async {
     try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await widget.auth.signInWithEmailAndPassword(
           email: email,
           password: password
       );

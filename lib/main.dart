@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,12 +27,15 @@ Future<void> main() async {
         projectId: "my-diet-guide-14",
       )
   );
-  runApp(DevicePreview(builder: (context)=>MyApp()));
+  runApp(DevicePreview(builder: (context)=>MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance)));
   //runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+
+  const MyApp({Key? key, required this.auth, required this.firestore}) : super(key: key);
+  final FirebaseAuth auth;
+  final FirebaseFirestore firestore;
 
   // This widget is the root of your application.
   @override
@@ -45,14 +49,14 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
       ),
       home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
+        stream: auth.authStateChanges(),
         builder: (context, snapshot){
           if(snapshot.hasData){
-            UserBiometrics.updateCalculatedCurrentWeight(FirebaseAuth.instance.currentUser!.uid) ;
+            UserBiometrics.updateCalculatedCurrentWeight(auth.currentUser!.uid) ;
             return UserDashboard();
           }else{
             //return Login();
-            return Login();
+            return Login(fireStore: firestore, auth: auth);
           }
         },
       ),
