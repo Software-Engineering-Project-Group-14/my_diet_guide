@@ -14,7 +14,7 @@ class CalorieCalculator{
   // height in centimetres
   // weight in kg
   // age in years
-  static double calculateRMR(gender, height, weight, age){
+  static double calculateRMR(String gender, double height, double weight, double age){
     double val = 0;
     if(gender == "Male"){
       val = 9.99 * weight + 6.25 * height - 4.92 * age + 5;
@@ -32,7 +32,7 @@ class CalorieCalculator{
   // weight in kg
   // age in years
   // activeness is 'Not very active' or 'Moderately active' or 'Active'
-  static double calorieBurnPerDayInKg(gender, height, weight, age, activeness){
+  static double calorieBurnPerDayInKg(String gender, double height, double weight, double age, String activeness){
     if(!activityLevelValues.containsKey(activeness)){
       throw Exception("Undefined activeness at calorieBurnPerDay in CalorieCalculator");
     }
@@ -45,7 +45,7 @@ class CalorieCalculator{
   // weight in kg
   // age in years
   // activeness is 'Not very active' or 'Moderately active' or 'Active'
-  static double calorieBurnInKg(gender, height, weight, age, activeness, numDays){
+  static double calorieBurnInKg(String gender, double height, double weight, double age, String activeness, int numDays){
     return numDays * calorieBurnPerDayInKg(gender, height, weight, age, activeness);
   }
   

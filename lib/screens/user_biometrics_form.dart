@@ -108,7 +108,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
         activeness: activeness!,
         intensity: intensity!,
         age:widget.age,
-        calculated_current_weight: int.parse(weight!)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, int.parse(height!), int.parse(weight!), widget.age, activeness!),
+        calculated_current_weight: int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(weight), widget.age.toDouble(), activeness!),
         last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
     ))));
   }
@@ -144,7 +144,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
       'dietary preference': dietaryPreference,
       'activeness': activeness,
       'intensity': intensity,
-      'calculated_current_weight':weight-CalorieCalculator.calorieBurnPerDayInKg(gender, height, weight, age, activeness),
+      'calculated_current_weight':weight-CalorieCalculator.calorieBurnPerDayInKg(gender, height.toDouble(), weight.toDouble(), age.toDouble(), activeness),
       'last_calorie_calculated_date': today
     };
 

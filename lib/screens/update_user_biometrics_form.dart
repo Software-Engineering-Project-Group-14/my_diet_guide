@@ -4,7 +4,7 @@ import 'package:my_diet_guide/screens/change_plan.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/user_profile.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
-
+import 'package:my_diet_guide/models/Calorie_Calculator.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/side_bar.dart';
 import '../widgets/text_box_02.dart';
@@ -85,16 +85,19 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
     });
 
     final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(user_id);
-
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
     userBioDoc.update({
       'age': widget.age,
       'gender': widget.gender,
-      'weight': int.parse(weight),
+      'weight': int.parse(height),
       'height': int.parse(height),
       'target weight': int.parse(targetWeight),
       'dietary preference': dietaryPreference,
       'activeness': activeness,
-      'intensity': intensity
+      'intensity': intensity,
+      'calculated_current_weight':int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(height), widget.age.toDouble(), activeness!),
+      'last_calorie_calculated_date': today
     });
 
     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan()));
