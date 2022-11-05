@@ -297,7 +297,7 @@ class _SignUpState extends State<SignUp> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_){
-                                  return Login(fireStore: FirebaseFirestore.instance, auth: FirebaseAuth.instance);
+                                  return Login(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance);
                                 }
                             ));
                           },

@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
             return UserDashboard();
           }else{
             //return Login();
-            return Login(fireStore: firestore, auth: auth);
+            return Login(firestore: firestore, auth: auth);
           }
         },
       ),

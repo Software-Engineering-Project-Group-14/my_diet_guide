@@ -12,10 +12,10 @@ import 'forgot_password.dart';
 
 class Login extends StatefulWidget{
 
-  final FirebaseFirestore fireStore;
+  final FirebaseFirestore firestore;
   final FirebaseAuth auth;
 
-  const Login({super.key, required this.fireStore, required this.auth});
+  const Login({super.key, required this.firestore, required this.auth});
 
   @override
   State<Login> createState() => _LoginState();
@@ -38,6 +38,10 @@ class _LoginState extends State<Login> {
           email: email,
           password: password
       );
+      setState(() {
+        _error = "Success";
+      });
+
     }catch(error){
       //print(error.toString());
       setState(() {
@@ -82,6 +86,7 @@ class _LoginState extends State<Login> {
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: TextFormField(
+                                    key: Key("email"),
                                     style: TextStyle(
                                       fontSize: 22,
                                       color: Colors.white,
@@ -140,6 +145,7 @@ class _LoginState extends State<Login> {
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                     child: TextFormField(
+                                      key: Key("password"),
                                       style: TextStyle(
                                         fontSize: 22,
                                         color: Colors.white,
@@ -217,6 +223,7 @@ class _LoginState extends State<Login> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: GestureDetector(
+                              key: Key("login-button"),
                               onTap: () async {
                                 if(_formKey.currentState!.validate()){
                                   await signIn();
@@ -256,7 +263,7 @@ class _LoginState extends State<Login> {
                       child: Text(
                         _error,
                         style: TextStyle(color: Colors.red, fontSize: 20.0),
-
+                        key: Key("error-message"),
                       ),
                     ),
 
