@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:my_diet_guide/models/Calorie_Calculator.dart';
 
 class DietPlanModel{
   late String planId;
@@ -200,6 +201,12 @@ class DietPlanModel{
       DocumentSnapshot ds = await firestore.collection("diet_plan").doc("nextPlanId").get();
       double nextPlanId = ds["id"].toDouble();
       print("Next plan id got = ${nextPlanId}");
+      double Sum = 0;
+      double x,y,z = 0;
+      x = await firestore.collection('breakfast').doc(breakfastMeal).get();
+      y = await firestore.collection('lunch').doc(lunchMeal).get();
+      z = await firestore.collection('dinner').doc(dinnerMeal).get();
+      Sum += x.toDouble() + y.toDouble() + z.toDouble();
       await firestore.collection("diet_plan").doc(nextPlanId.toString())
           .set({
         "activeness": activeness,
@@ -210,11 +217,13 @@ class DietPlanModel{
         "breakfast_id": breakfastMeal,
         "lunch_id": lunchMeal,
         "dinner_id": dinnerMeal,
+        "calorie_gain_per_plan_per_week": Sum
       });
       //print("Diet plan added");
       await firestore.collection("diet_plan").doc("nextPlanId").set(
           {"id":nextPlanId+1}, SetOptions(merge: true));
       //print("Next plan id incremented = ${nextPlanId+1}");
+
       return DietPlanModel(
           planId: (nextPlanId+1).toString(),
           activeness: activeness,
