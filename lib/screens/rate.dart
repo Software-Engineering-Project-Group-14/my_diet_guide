@@ -10,7 +10,11 @@ import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
 
 class Rate extends StatefulWidget{
-  const Rate({super.key});
+  final FirebaseFirestore firestore;
+  final FirebaseAuth auth;
+
+  const Rate({super.key, required this.firestore, required this.auth});
+
 
   @override
   State<Rate> createState() => _RateState();
@@ -24,14 +28,11 @@ class _RateState extends State<Rate> {
   final _formKey = GlobalKey<FormState>();
   String error = '';
 
-  final Stream<QuerySnapshot> _rateStream = RateModel.getRateStream();
 
-  final dietUser = FirebaseAuth.instance.currentUser;
-  late String user_id = dietUser!.uid;
 
   @override
   Widget build(BuildContext context) {
-
+    final Stream<QuerySnapshot> rateStream = RateModel.getRateStream(firestore: widget.firestore);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.teal.shade900,
@@ -136,6 +137,7 @@ class _RateState extends State<Rate> {
                       child: Column(
                         children: [
                           TextFormField(
+                            key: Key("feedback-text"),
                             showCursor: true,
                             maxLines: 10,
                             decoration: InputDecoration(
@@ -158,6 +160,7 @@ class _RateState extends State<Rate> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton(
+                                key: Key('review-add-button'),
                                 style: ElevatedButton.styleFrom(
                                     primary: Colors.deepPurple,
                                     fixedSize: Size(300, 50)
@@ -172,16 +175,17 @@ class _RateState extends State<Rate> {
                                 onPressed: () async {
                                   //print(starValue);
                                   //print(feedbackText);
-                                  if(FirebaseAuth.instance.currentUser != null || _formKey.currentState!.validate()){
+                                  if(widget.auth.currentUser != null || _formKey.currentState!.validate()){
                                     RateModel rateObject = RateModel(
-                                      starValue, FirebaseAuth.instance.currentUser!.email, feedbackText,
+                                      starValue, widget.auth.currentUser!.email, feedbackText,
                                     );
-                                    bool result = await rateObject.addRateToFirestore();
+                                    bool result = await rateObject.add(firestore: widget.firestore);
                                     if(result){
                                       showDialog(
                                         context: context,
                                         builder: (context){
                                           return const AlertDialog(
+                                            key: Key("review-add-alert-dialog"),
                                             content: Text(
                                                 'Your review added.'
                                             ),
@@ -207,7 +211,7 @@ class _RateState extends State<Rate> {
                     ),
                   ),
                   StreamBuilder<QuerySnapshot>(
-                    stream: _rateStream,
+                    stream: rateStream,
                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                       if (snapshot.hasError) {
                         return const Text(
@@ -226,14 +230,23 @@ class _RateState extends State<Rate> {
                         );
                       }
                       //return Text('');
-                      return Column(
-                        children: snapshot.data!.docs.map((DocumentSnapshot document){
-                          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                          return RateCard(rateModel: RateModel(data['rate'].toDouble(),data['email'],data['review']));
-                        }).toList().cast(),
-                      );
+                      if(snapshot.data == null){
+                        return Text(
+                          'No ratings added yet.',
+                          style: TextStyle(
+                              color: Colors.white
+                          ),
+                        );
+                      }else{
+                        return Column(
+                          key: Key("reviews-column"),
+                          children: snapshot.data!.docs.map((DocumentSnapshot document){
+                            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                            return RateCard(rateModel: RateModel(data['rate'].toDouble(),data['email'],data['review']));
+                          }).toList().cast(),
+                        );
+                      }
                     },
-
                   ),
                 ],
               ),
@@ -241,7 +254,7 @@ class _RateState extends State<Rate> {
             )
           ]
         ),
-        bottomNavigationBar: BottomBar(user_id: user_id),
+        bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid),
       ),
     );
 

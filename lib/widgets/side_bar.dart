@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -91,7 +92,7 @@ class NavigationDrawer extends StatelessWidget {
                 leading: Icon(Icons.star_rate, size: 30, color: Colors.white,),
                 title: Text("Rate My Diet Guide", style: TextStyle(fontSize: 19, color: Colors.white,),),
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Rate()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Rate(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
                 },
               ),
               // ListTile(
