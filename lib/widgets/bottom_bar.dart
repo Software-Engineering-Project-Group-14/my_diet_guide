@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/screens/calenderScreen.dart';
@@ -51,7 +53,7 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfile(user_id: user_id,)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfile(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
             },
           ),
         ],
