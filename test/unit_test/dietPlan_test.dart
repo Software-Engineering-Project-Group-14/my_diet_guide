@@ -1,4 +1,5 @@
 
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
 import 'package:test/test.dart';
 
@@ -29,6 +30,86 @@ void main() async{
     });
 
   });
+
+  group('Add diet plan', (){
+    final firestore = FakeFirebaseFirestore();
+
+    test('valid inputs', (){
+      expect(1,1);
+    });
+    group('invalid inputs', (){
+      test('invalid activeness', (){
+        expect(1,1);
+      });
+      test('invalid age_group', (){
+        expect(1,1);
+      });
+      test('invalid activeness', (){
+        expect(1,1);
+      });
+      test('invalid dietary_preference', (){
+        expect(1,1);
+      });
+      test('invalid gender', (){
+        expect(1,1);
+      });
+      test('invalid intensity', (){
+        expect(1,1);
+      });
+      test('invalid breakfastMeal', (){
+        expect(1,1);
+      });
+      test('invalid lunchMeal', (){
+        expect(1,1);
+      });
+      test('invalid dinnerMeal', (){
+        expect(1,1);
+      });
+
+    });
+  });
+
+  group('Select diet plan', (){
+    final firestore = FakeFirebaseFirestore();
+
+    test('valid inputs', (){
+      expect(1,1);
+    });
+    test('invalid inputs', ()
+    {
+        expect(1, 1);
+    });
+  });
+
+  group('Change diet plan', (){
+    final firestore = FakeFirebaseFirestore();
+
+    test('valid inputs', (){
+      expect(1,1);
+    });
+    test('invalid inputs', ()
+    {
+      expect(1,1);
+    });
+  });
+
+
+  group('Get the current diet plan for user', (){
+    final firestore = FakeFirebaseFirestore();
+
+    test('User with a diet plan', (){
+      expect(1,1);
+    });
+    test('User without diet plan', (){
+      expect(1,1);
+    });
+    test('invalid inputs', ()
+    {
+      expect(1,1);
+    });
+  });
+
+
 
 }
 
