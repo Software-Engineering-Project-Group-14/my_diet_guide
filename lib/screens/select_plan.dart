@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
@@ -10,9 +11,14 @@ import '../models/UserBiometrics.dart';
 
 class SelectPlan extends StatefulWidget {
 
+  final FirebaseFirestore firestore;
+  final FirebaseAuth auth;
   final UserBiometrics userBiometrics;
 
-  const SelectPlan({Key? key, required this.userBiometrics}) : super(key: key);
+  const SelectPlan({Key? key,
+    required this.userBiometrics,
+    required this.firestore,
+    required this.auth}) : super(key: key);
 
   @override
   State<SelectPlan> createState() => _SelectPlanState();
@@ -37,12 +43,14 @@ class _SelectPlanState extends State<SelectPlan> {
     userActiveness = widget.userBiometrics.activeness;
     userGender = widget.userBiometrics.gender;
     userId = widget.userBiometrics.user_id;
-    //print(userDietaryPreference);
-    //print(userAgeGroup);
-    //print(userIntensity);
-    //print(userActiveness);
-   // print(userGender);
-    recommendedPlanStream = DietPlanModel.getPlanStream(userDietaryPreference, userAgeGroup,userGender, userIntensity, userActiveness);
+    recommendedPlanStream = DietPlanModel.getPlanStream(
+        firestore: widget.firestore,
+        dietary_preference: userDietaryPreference,
+        age_group: userAgeGroup,
+        gender: userGender,
+        intensity: userIntensity,
+        activeness: userActiveness
+    );
     super.initState();
   }
 
@@ -83,7 +91,13 @@ class _SelectPlanState extends State<SelectPlan> {
                             child: CircularProgressIndicator(),
                           );
                         }
-                        List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, userAgeGroup, userIntensity, userActiveness, null);
+                        List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(
+                            snapshot: snapshot,
+                            age_group: userAgeGroup,
+                            activeness: userActiveness,
+                            currentPlanId: null,
+                            intensity: userIntensity
+                        );
                         if(l.length == 0){
                           return Column(
                             children: [
@@ -105,7 +119,10 @@ class _SelectPlanState extends State<SelectPlan> {
                             return GestureDetector(
                               child: PlanCard(dietPlanModel: planModel),
                               onTap: () async {
-                                bool success = await planModel.select(userId);
+                                bool success = await planModel.select(
+                                    firestore: widget.firestore,
+                                    user_id: widget.auth.currentUser!.uid
+                                );
                                 String msg = "";
                                 if(!success){
                                   msg = "An error occurred. Please try again.";
@@ -129,7 +146,7 @@ class _SelectPlanState extends State<SelectPlan> {
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                             if(success){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
                                             }
                                           },
                                         ),

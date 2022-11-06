@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/change_plan.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
@@ -11,6 +12,8 @@ import '../widgets/text_box_02.dart';
 
 class UpdateBiometricsForm extends StatefulWidget {
 
+  final FirebaseFirestore firestore;
+  final FirebaseAuth auth;
   final String user_id;
   final String firstName;
   final String lastName;
@@ -26,6 +29,8 @@ class UpdateBiometricsForm extends StatefulWidget {
     required this.bday,
     required this.gender,
     required this.age,
+    required this.firestore,
+    required this.auth,
   }) : super(key: key);
 
   @override
@@ -90,7 +95,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
     userBioDoc.update({
       'age': widget.age,
       'gender': widget.gender,
-      'weight': int.parse(height),
+      'weight': int.parse(weight),
       'height': int.parse(height),
       'target weight': int.parse(targetWeight),
       'dietary preference': dietaryPreference,
@@ -100,7 +105,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
       'last_calorie_calculated_date': today
     });
 
-    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
   }
 
 
@@ -476,7 +481,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
         ],
       ),
 
-      bottomNavigationBar: BottomBar(user_id: widget.user_id),
+      bottomNavigationBar: BottomBar(user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
     );
   }
 }

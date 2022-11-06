@@ -12,7 +12,11 @@ import '../widgets/bottom_bar.dart';
 import '../widgets/side_bar.dart';
 
 class ChangePlan extends StatefulWidget {
-  const ChangePlan({Key? key}) : super(key: key);
+
+  final FirebaseFirestore firestore;
+  final FirebaseAuth auth;
+
+  const ChangePlan({Key? key, required this.firestore, required this.auth}) : super(key: key);
 
   @override
   State<ChangePlan> createState() => _ChangePlanState();
@@ -20,31 +24,13 @@ class ChangePlan extends StatefulWidget {
 
 class _ChangePlanState extends State<ChangePlan> {
 
-  final dietUser = FirebaseAuth.instance.currentUser;
-  late String user_id = dietUser!.uid;
-
-
   late Stream<DietPlanModel> currentPlanStream;
   late Stream<UserBiometrics> userBiometricsStream;
-  /*
-  DietPlanModel currentPlan1 = DietPlanModel(
-      planId: "10",
-      dietary_preference: "Vegetarian",
-      gender: "Male",
-      intensity: "Easy",
-      activeness: "Active",
-      age_group: "26-45",
-      breakfast_id: "7",
-      lunch_id: "3",
-      dinner_id: "4"
-  );
-*/
+
   @override
   void initState() {
-    currentPlanStream = DietPlanModel.getDietPlanForUser(user_id).asStream();
-    userBiometricsStream = UserBiometrics.getUserBiometrics(user_id).asStream();
-    //currentPlanStream = DietPlanModel.getCurrentPlanStream();
-    //  print(currentPlanStream);
+    currentPlanStream = DietPlanModel.getDietPlanForUser(firestore:widget.firestore , user_id:widget.auth.currentUser!.uid).asStream();
+    userBiometricsStream = UserBiometrics.getUserBiometrics(firestore:widget.firestore , user_id:widget.auth.currentUser!.uid).asStream();
     super.initState();
   }
 
@@ -134,7 +120,14 @@ class _ChangePlanState extends State<ChangePlan> {
                                 //print("\nCurrent plan snapshot");
 
                                 UserBiometrics userBiometrics = snapshot.data!;
-                                Stream<QuerySnapshot> recommendedplanStream = DietPlanModel.getPlanStream(userBiometrics.dietaryPreference, DietPlanModel.getAgeGroup(userBiometrics.age), userBiometrics.gender,userBiometrics.intensity,userBiometrics.activeness);
+                                Stream<QuerySnapshot> recommendedplanStream = DietPlanModel.getPlanStream(
+                                    firestore: widget.firestore,
+                                    dietary_preference: userBiometrics.dietaryPreference,
+                                    age_group: DietPlanModel.getAgeGroup(userBiometrics.age),
+                                    gender: userBiometrics.gender,
+                                    intensity: userBiometrics.intensity,
+                                    activeness: userBiometrics.activeness
+                                );
                                 return Column(
                                   children: [
                                     Row(
@@ -166,8 +159,13 @@ class _ChangePlanState extends State<ChangePlan> {
                                           );
                                         }
 
-                                        List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(snapshot, DietPlanModel.getAgeGroup(userBiometrics.age), userBiometrics.intensity, userBiometrics.activeness, currentPlan.planId);
-
+                                        List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(
+                                            snapshot: snapshot,
+                                            age_group: DietPlanModel.getAgeGroup(userBiometrics.age),
+                                            activeness: userBiometrics.activeness,
+                                            currentPlanId: currentPlan.planId,
+                                            intensity: userBiometrics.intensity
+                                        );
                                         if(l.length == 0){
                                           return Column(
                                             children: [
@@ -185,12 +183,16 @@ class _ChangePlanState extends State<ChangePlan> {
                                           );
                                         }else{
                                           return Column(
-                                            children: l.map((DietPlanModel planModel){
+                                            children: l.asMap().entries.map((entry){
                                               //  print(planModel);
                                               return GestureDetector(
-                                                child: PlanCard(dietPlanModel: planModel),
+                                                key: Key("recommend-plan-card-${entry.key}"),
+                                                child: PlanCard(dietPlanModel: entry.value),
                                                 onTap: () async {
-                                                  bool success = await planModel.select(user_id);
+                                                  bool success = await entry.value.select(
+                                                      firestore: widget.firestore,
+                                                      user_id: widget.auth.currentUser!.uid
+                                                  );
                                                   String msg = "";
                                                   if(success)
                                                     msg = "Plan changed successfully.";
@@ -215,7 +217,7 @@ class _ChangePlanState extends State<ChangePlan> {
                                                             onPressed: () {
                                                               Navigator.of(context).pop();
                                                               if(success){
-                                                                Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
+                                                                Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
                                                               }
                                                             },
                                                           ),
@@ -244,7 +246,7 @@ class _ChangePlanState extends State<ChangePlan> {
               ]
           ),
         ),
-        bottomNavigationBar: BottomBar(user_id: user_id),
+        bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth),
       ),
     );
 

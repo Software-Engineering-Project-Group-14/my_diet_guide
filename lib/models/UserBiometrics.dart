@@ -58,8 +58,9 @@ class UserBiometrics{
       last_calorie_calculated_date: json['last_calorie_calculated_date']
   );
 
-  static Future<UserBiometrics> getUserBiometrics(String user_id)async{
-    DocumentSnapshot ds = await FirebaseFirestore.instance.collection("user biometrics").doc(user_id).get();
+  // Get user bio metrics for given user
+  static Future<UserBiometrics> getUserBiometrics({required firestore,required String user_id})async{
+    DocumentSnapshot ds = await firestore.collection("user biometrics").doc(user_id).get();
     Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
     return UserBiometrics(
         user_id: user_id,
@@ -76,16 +77,16 @@ class UserBiometrics{
     );
   }
 
-
-  static void updateCalculatedCurrentWeight(user_id) async{
-    UserBiometrics userBiometrics = await getUserBiometrics(user_id);
+  // Update calculated wright for givn user
+  static void updateCalculatedCurrentWeight({required firestore,required String user_id}) async{
+    UserBiometrics userBiometrics = await getUserBiometrics(firestore: firestore, user_id: user_id);
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
     int dayDiffrence = today.difference(userBiometrics.last_calorie_calculated_date).inDays;
     if(dayDiffrence > 0){
       userBiometrics.calculated_current_weight -= CalorieCalculator.calorieBurnInKg(userBiometrics.gender, userBiometrics.height.toDouble(), userBiometrics.weight.toDouble(), userBiometrics.age.toDouble(), userBiometrics.activeness, dayDiffrence);
       userBiometrics.last_calorie_calculated_date =   today;
-      final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(user_id);
+      final userBioDoc = firestore.collection('user biometrics').doc(user_id);
       userBioDoc.update({
         'calculated_current_weight': userBiometrics.calculated_current_weight,
         'last_calorie_calculated_date': userBiometrics.last_calorie_calculated_date

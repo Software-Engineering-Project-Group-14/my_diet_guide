@@ -120,7 +120,7 @@ void main(){
         double age = 30;
         double rmr = 9.99 * weight + 6.25 * height - 4.92 * age + 5;
         String activeness = "Not very active";
-        double numDays = 30;
+        int numDays = 30;
         double valPerDay = rmr * activityLevelValues[activeness]!/7700;
         double val = valPerDay * numDays;
         expect(CalorieCalculator.calorieBurnInKg(gender, height, weight, age, activeness, numDays), val);
@@ -132,7 +132,7 @@ void main(){
         double age = 30;
         double rmr = 9.99 * weight + 6.25 * height - 4.92 * age + 5;
         String activeness = "Moderately active";
-        double numDays = 30;
+        int numDays = 30;
         double valPerDay = rmr * activityLevelValues[activeness]!/7700;
         double val = valPerDay * numDays;
         expect(CalorieCalculator.calorieBurnInKg(gender, height, weight, age, activeness, numDays), val);
@@ -144,7 +144,7 @@ void main(){
         double age = 30;
         double rmr = 9.99 * weight + 6.25 * height - 4.92 * age + 5;
         String activeness = "Active";
-        double numDays = 30;
+        int numDays = 30;
         double valPerDay = rmr * activityLevelValues[activeness]!/7700;
         double val = valPerDay * numDays;
         expect(CalorieCalculator.calorieBurnInKg(gender, height, weight, age, activeness, numDays), val);
@@ -166,7 +166,7 @@ void main(){
         double age = 30;
         double rmr = 9.99 * weight + 6.25 * height - 4.92 * age - 161;
         String activeness = "Moderately active";
-        double numDays = 30;
+        int numDays = 30;
         double valPerDay = rmr * activityLevelValues[activeness]!/7700;
         double val = valPerDay * numDays;
         expect(CalorieCalculator.calorieBurnInKg(gender, height, weight, age, activeness, numDays), val);
@@ -178,10 +178,10 @@ void main(){
         double age = 30;
         double rmr = 9.99 * weight + 6.25 * height - 4.92 * age - 161;
         String activeness = "Active";
-        double numDays = 30;
+        int numDays = 30;
         double valPerDay = rmr * activityLevelValues[activeness]!/7700;
         double val = valPerDay * numDays;
-        expect(CalorieCalculator.calorieBurnInKg(gender, height, weight, age, activeness, numDays), val);
+        expect(CalorieCalculator.calorieBurnInKg(gender, height, weight, age, activeness, numDays.toInt()), val);
       });
 
 
