@@ -217,7 +217,7 @@ class _ChangePlanState extends State<ChangePlan> {
                                                             onPressed: () {
                                                               Navigator.of(context).pop();
                                                               if(success){
-                                                                Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
+                                                                Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
                                                               }
                                                             },
                                                           ),
@@ -246,7 +246,7 @@ class _ChangePlanState extends State<ChangePlan> {
               ]
           ),
         ),
-        bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid),
+        bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth),
       ),
     );
 

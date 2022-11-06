@@ -146,7 +146,7 @@ class _SelectPlanState extends State<SelectPlan> {
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                             if(success){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard()));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
                                             }
                                           },
                                         ),

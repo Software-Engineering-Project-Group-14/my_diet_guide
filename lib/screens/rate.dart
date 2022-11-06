@@ -254,7 +254,7 @@ class _RateState extends State<Rate> {
             )
           ]
         ),
-        bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid),
+        bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth,),
       ),
     );
 

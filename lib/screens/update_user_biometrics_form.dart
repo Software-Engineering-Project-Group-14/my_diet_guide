@@ -12,6 +12,8 @@ import '../widgets/text_box_02.dart';
 
 class UpdateBiometricsForm extends StatefulWidget {
 
+  final FirebaseFirestore firestore;
+  final FirebaseAuth auth;
   final String user_id;
   final String firstName;
   final String lastName;
@@ -27,6 +29,8 @@ class UpdateBiometricsForm extends StatefulWidget {
     required this.bday,
     required this.gender,
     required this.age,
+    required this.firestore,
+    required this.auth,
   }) : super(key: key);
 
   @override
@@ -477,7 +481,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
         ],
       ),
 
-      bottomNavigationBar: BottomBar(user_id: widget.user_id),
+      bottomNavigationBar: BottomBar(user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
     );
   }
 }

@@ -1,12 +1,17 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/view_diet_details.dart';
 
 class ViewDietCard extends StatelessWidget {
+
+  final FirebaseFirestore firestore;
+  final FirebaseAuth auth;
   final String day;
   final String user_id;
-  const ViewDietCard({Key? key, required this.day, required this.user_id}) : super(key: key);
+  const ViewDietCard({Key? key, required this.day, required this.user_id, required this.firestore, required this.auth}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class ViewDietCard extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: GestureDetector(
           onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDetails(user_id: user_id, day: day)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDetails(user_id: user_id, day: day, firestore: firestore, auth: auth)));
           },
           child: ClipRRect(
             child: BackdropFilter(

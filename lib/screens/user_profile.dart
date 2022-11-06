@@ -321,7 +321,7 @@ class _UserProfileState extends State<UserProfile> {
                       ))
                     ),
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpdateDetailsForm(user_id: widget.auth.currentUser!.uid)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpdateDetailsForm(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth)));
                     },
                     child: Container(
                       child: Text("Update My Details", style: TextStyle(color: Colors.white, fontSize: 18),),
@@ -336,7 +336,7 @@ class _UserProfileState extends State<UserProfile> {
         ],
       ),
 
-      bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid),
+      bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth,),
 
     );
   }

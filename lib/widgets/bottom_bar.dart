@@ -9,9 +9,11 @@ import 'package:my_diet_guide/screens/view_diet.dart';
 
 class BottomBar extends StatelessWidget {
 
+  final FirebaseFirestore firestore;
+  final FirebaseAuth auth;
   final String user_id;
 
-  const BottomBar({Key? key, required this.user_id}) : super(key: key);
+  const BottomBar({Key? key, required this.user_id, required this.firestore, required this.auth}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserDashboard()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserDashboard(firestore: firestore, auth: auth,)));
             },
           ),
           IconButton(
@@ -44,16 +46,17 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan(user_id: user_id,)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan(user_id: user_id, firestore: firestore, auth: auth)));
             },
           ),
           IconButton(
+            key: Key('user-profile-btn'),
             icon: Icon(
               FontAwesomeIcons.solidUser,
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfile(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfile(firestore: firestore, auth: auth)));
             },
           ),
         ],

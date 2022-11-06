@@ -19,6 +19,13 @@ void main() {
 
       await widgetTester.enterText(find.byKey(Key('email')), 'userrr@gmail.com');
       expect(find.text('userrr@gmail.com'), findsOneWidget);
+
+      await widgetTester.enterText(find.byKey(Key("password")), "userpassword");
+      expect(find.text('userpassword'), findsOneWidget);
+
+      await widgetTester.tap(find.byKey(Key("login-button")));
+      await widgetTester.pump();
+      expect(find.text("Success"), findsOneWidget);
     });
   });
 
