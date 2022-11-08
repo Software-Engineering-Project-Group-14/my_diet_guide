@@ -64,7 +64,8 @@ class MyApp extends StatelessWidget {
         //'/diet_details': (context) => DietDetails(),
         //'/view_diet_details' : (context) => ViewDietPlan(),
         '/check_bmi' : (context) => CheckBMI(),
-        '/sign_up' : (context) => SignUp()
+        '/sign_up' : (context) => SignUp(),
+        '/log_in': (context) => Login(firestore: firestore, auth: auth)
       },
     );
   }
