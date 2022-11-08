@@ -54,7 +54,7 @@ class _UserDashboardState extends State<UserDashboard> {
         body: Stack(
           children: [
             BlurredBackground(),
-            UserDashBody(user_id: user_id, firestore: widget.firestore, auth: widget.auth),
+            UserDashBody(key: Key('user-dash-body'), user_id: user_id, firestore: widget.firestore, auth: widget.auth),
           ],
         ),
 

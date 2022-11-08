@@ -6,8 +6,8 @@ import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/user_profile.dart';
 
 void main() {
-  group('User Details display by retreiving data from firestore database', () {
-    testWidgets("User Dashboard displayed", (WidgetTester widgetTester) async {
+  group('User Details display by retrieving data from firestore database', () {
+    testWidgets("Render to user dashboard", (WidgetTester widgetTester) async {
       final firestore = FakeFirebaseFirestore();
       final auth = MockFirebaseAuth(
           mockUser: MockUser(
