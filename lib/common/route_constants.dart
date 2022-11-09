@@ -11,9 +11,10 @@ class RouteConstants {
   static String userDetailsUpdateRoute = '/userDetails/update';
   static String userDetailsViewRoute = '/userDetails/view';
 
-  static String planChangeRoute = '/plan/change';
-  static String planSelectRoute = '/plan/select';
-  static String planViewRoute = '/plan/view';
+  static String planRoute = '/plan/';
+  static String planChangeSubRoute = 'change';
+  static String planSelectSubRoute = 'select';
+  static String planViewSubRoute = 'view';
 
   static String bioUpdateRoute = '/bio/update';
   static String bioCreateRoute = '/bio/create';

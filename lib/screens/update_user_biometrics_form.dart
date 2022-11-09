@@ -107,7 +107,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
     });
 
     //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
-    Navigator.pushNamed(context, RouteConstants.planChangeRoute);
+    Navigator.pushNamed(context, RouteConstants.planChangeSubRoute);
   }
 
 

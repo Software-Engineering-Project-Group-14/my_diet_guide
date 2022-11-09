@@ -49,7 +49,7 @@ class BottomBar extends StatelessWidget {
             ),
             onPressed: (){
               //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan(user_id: user_id, firestore: firestore, auth: auth)));
-              Navigator.pushNamed(context, RouteConstants.planViewRoute);
+              Navigator.pushNamed(context, RouteConstants.planViewSubRoute);
               },
           ),
           IconButton(

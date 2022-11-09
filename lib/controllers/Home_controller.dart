@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/controllers/Controller.dart';
 
@@ -26,4 +25,5 @@ class HomeController extends Controller {
       },
     );
   }
+
 }

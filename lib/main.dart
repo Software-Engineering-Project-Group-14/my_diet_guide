@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
+import 'package:my_diet_guide/controllers/DietPlan_controller.dart';
 import 'package:my_diet_guide/controllers/Home_controller.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/change_plan.dart';
@@ -62,22 +63,29 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
       ),
+      initialRoute: RouteConstants.homeRoute,
       onGenerateRoute: (settings){
         late Widget page;
+
         if (settings.name == RouteConstants.homeRoute){
           page = const HomeController();
+
         }else if (settings.name == RouteConstants.forgotPasswordRoute){
           page = ForgotPassword();
-        }else if (settings.name == RouteConstants.userDetailsCreateRoute){
+
+        }else if(settings.name!.startsWith(RouteConstants.planRoute)){
+          final subRoute = settings.name!.substring(RouteConstants.planRoute.length);
+          page = DietPlanController(
+            subRoute: subRoute,
+          );
+
+        } else if (settings.name == RouteConstants.userDetailsCreateRoute){
           final args = settings.arguments as Map<String, String>;
           page = UserDetailsForm(
               email: args['email']!,
               password: args['password']!
           );
-        }else if (settings.name == RouteConstants.planChangeRoute){
-          page = ChangePlan(
-              firestore: FirebaseFirestore.instance,
-              auth: FirebaseAuth.instance);
+
         }else if (settings.name == RouteConstants.bioUpdateRoute){
           final args = settings.arguments as Map<String, dynamic>;
           page =UpdateBiometricsForm(
@@ -90,9 +98,7 @@ class MyApp extends StatelessWidget {
               firestore: FirebaseFirestore.instance,
               auth: FirebaseAuth.instance
           );
-        } else if (settings.name == RouteConstants.planSelectRoute){
-          final userBiometrics = settings.arguments as UserBiometrics;
-          page = SelectPlan(userBiometrics: userBiometrics, firestore: firestore, auth: auth);
+
         } else if (settings.name == RouteConstants.bioCreateRoute){
           final args = settings.arguments as Map<String, dynamic>;
           page = UserBiometricsForm(
@@ -106,23 +112,27 @@ class MyApp extends StatelessWidget {
               bday: args['bday'],
               gender: args['gender']
           );
+
         } else if (settings.name == RouteConstants.userDetailsUpdateRoute){
           page = UpdateDetailsForm(user_id: auth.currentUser!.uid, firestore: firestore, auth: auth);
+
         } else if (settings.name == RouteConstants.userDetailsViewRoute){
           page = UserProfile(firestore: firestore, auth: auth);
-        } else if (settings.name == RouteConstants.planViewRoute){
-          page = ViewDietPlan(user_id: auth.currentUser!.uid, firestore: firestore, auth: auth);
+
         } else if (settings.name == RouteConstants.bmiCheckRoute){
           page = CheckBMI();
+
         } else if (settings.name == RouteConstants.rateRoute){
           page = Rate(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,);
+
         } else if (settings.name == RouteConstants.dietViewRoute){
           final args = settings.arguments as Map<String, dynamic>;
           page = DietDetails(user_id: args['user_id'], day: args['day'], firestore: firestore, auth: auth);
-        }
-        else {
+
+        } else {
           throw Exception('Unknown route: ${settings.name}');
         }
+
         return MaterialPageRoute<dynamic>(
           builder: (context) {
             return page;
@@ -130,15 +140,6 @@ class MyApp extends StatelessWidget {
           settings: settings,
         );
       },
-      /*
-      routes: {
-        //'/diet_details': (context) => DietDetails(),
-        //'/view_diet_details' : (context) => ViewDietPlan(),
-        '/check_bmi' : (context) => CheckBMI(),
-        '/sign_up' : (context) => SignUp(),
-        '/log_in': (context) => Login(firestore: firestore, auth: auth)
-      },
-      */
     );
   }
 }
