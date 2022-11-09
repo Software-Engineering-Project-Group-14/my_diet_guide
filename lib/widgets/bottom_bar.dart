@@ -1,20 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/screens/calenderScreen.dart';
-import 'package:my_diet_guide/screens/user_dashboard.dart';
-import 'package:my_diet_guide/screens/user_profile.dart';
-import 'package:my_diet_guide/screens/view_diet.dart';
+
 
 class BottomBar extends StatelessWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final String user_id;
 
-  const BottomBar({Key? key, required this.user_id, required this.firestore, required this.auth}) : super(key: key);
+  const BottomBar({Key? key, required this.user_id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

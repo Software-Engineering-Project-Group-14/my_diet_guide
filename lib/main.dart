@@ -95,15 +95,11 @@ class MyApp extends StatelessWidget {
               bday: args['bday']!,
               gender: args['gender']!,
               age: args['age']!,
-              firestore: FirebaseFirestore.instance,
-              auth: FirebaseAuth.instance
           );
 
         } else if (settings.name == RouteConstants.bioCreateRoute){
           final args = settings.arguments as Map<String, dynamic>;
           page = UserBiometricsForm(
-              firestore: FirebaseFirestore.instance,
-              auth: FirebaseAuth.instance,
               email: args['email'],
               password: args['password'],
               firstName: args['firstName'],
@@ -114,20 +110,20 @@ class MyApp extends StatelessWidget {
           );
 
         } else if (settings.name == RouteConstants.userDetailsUpdateRoute){
-          page = UpdateDetailsForm(user_id: auth.currentUser!.uid, firestore: firestore, auth: auth);
+          page = UpdateDetailsForm(user_id: auth.currentUser!.uid);
 
         } else if (settings.name == RouteConstants.userDetailsViewRoute){
-          page = UserProfile(firestore: firestore, auth: auth);
+          page = UserProfile();
 
         } else if (settings.name == RouteConstants.bmiCheckRoute){
           page = CheckBMI();
 
         } else if (settings.name == RouteConstants.rateRoute){
-          page = Rate(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,);
+          page = Rate();
 
         } else if (settings.name == RouteConstants.dietViewRoute){
           final args = settings.arguments as Map<String, dynamic>;
-          page = DietDetails(user_id: args['user_id'], day: args['day'], firestore: firestore, auth: auth);
+          page = DietDetails(user_id: args['user_id'], day: args['day']);
 
         } else {
           throw Exception('Unknown route: ${settings.name}');

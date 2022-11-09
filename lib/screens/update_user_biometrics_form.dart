@@ -2,19 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/screens/change_plan.dart';
-import 'package:my_diet_guide/screens/user_dashboard.dart';
-import 'package:my_diet_guide/screens/user_profile.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import 'package:my_diet_guide/models/Calorie_Calculator.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/side_bar.dart';
-import '../widgets/text_box_02.dart';
 
 class UpdateBiometricsForm extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final String user_id;
   final String firstName;
   final String lastName;
@@ -30,8 +24,6 @@ class UpdateBiometricsForm extends StatefulWidget {
     required this.bday,
     required this.gender,
     required this.age,
-    required this.firestore,
-    required this.auth,
   }) : super(key: key);
 
   @override
@@ -483,7 +475,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
         ],
       ),
 
-      bottomNavigationBar: BottomBar(user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+      bottomNavigationBar: BottomBar(user_id: widget.user_id),
     );
   }
 }

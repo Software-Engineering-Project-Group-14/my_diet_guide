@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/screens/login.dart';
-import 'package:my_diet_guide/screens/user_details_form.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/palatte.dart';
 

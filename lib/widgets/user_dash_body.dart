@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/record_progress_screen.dart';
 import 'package:my_diet_guide/widgets/today_meal_card.dart';
@@ -8,11 +7,9 @@ import 'package:my_diet_guide/widgets/user_dash_header.dart';
 
 class UserDashBody extends StatelessWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final String user_id;
 
-  UserDashBody({Key? key, required this.user_id, required this.firestore, required this.auth}) : super(key: key);
+  UserDashBody({Key? key, required this.user_id,}) : super(key: key);
 
   var today_day_int = DateTime.now().weekday;
   late String today_day;
@@ -248,7 +245,7 @@ class UserDashBody extends StatelessWidget {
         title: "Breakfast",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Breakfast', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, firestore: firestore, auth: auth)
+        navigate: RecordProgressScreen(meal: 'Breakfast', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription)
     );
 
   }
@@ -265,7 +262,7 @@ class UserDashBody extends StatelessWidget {
         title: "Lunch",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Lunch', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, firestore: firestore, auth: auth,)
+        navigate: RecordProgressScreen(meal: 'Lunch', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription,)
     );
 
   }
@@ -282,7 +279,7 @@ class UserDashBody extends StatelessWidget {
         title: "Dinner",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Dinner', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, firestore: firestore, auth: auth,)
+        navigate: RecordProgressScreen(meal: 'Dinner', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, )
     );
 
   }

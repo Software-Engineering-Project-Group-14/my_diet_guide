@@ -12,7 +12,7 @@ void main() {
       final auth = MockFirebaseAuth();
       await widgetTester.pumpWidget(
           MaterialApp(
-              home: Login(firestore: firestore, auth: auth)
+              home: Login()
           )
       );
 
@@ -41,7 +41,7 @@ void main() {
       final auth = MockFirebaseAuth();
       await tester.pumpWidget(
           MaterialApp(
-              home: Login(firestore: firestore, auth: auth)
+              home: Login()
           )
       );
 

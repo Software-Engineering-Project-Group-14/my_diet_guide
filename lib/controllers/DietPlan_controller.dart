@@ -31,15 +31,13 @@ class DietPlanController extends Controller {
 
         if(settings.name == RouteConstants.planSelectSubRoute){
           final userBiometrics = settings.arguments as UserBiometrics;
-          page = SelectPlan(userBiometrics: userBiometrics, firestore: Controller.firestore!, auth: Controller.auth!);
+          page = SelectPlan(userBiometrics: userBiometrics);
 
         }else if(settings.name == RouteConstants.planViewSubRoute){
-          page = ViewDietPlan(user_id: auth!.currentUser!.uid, firestore: firestore!, auth: auth);
+          page = ViewDietPlan(user_id: auth!.currentUser!.uid);
 
         }else if(settings.name == RouteConstants.planChangeSubRoute){
-          page = ChangePlan(
-              firestore: firestore!,
-              auth: auth!);
+          page = ChangePlan();
 
         }else{
           throw Exception('Unknown route: ${RouteConstants.planRoute}${settings.name} ');

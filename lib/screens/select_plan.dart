@@ -8,18 +8,16 @@ import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
 
+import '../controllers/Controller.dart';
 import '../models/UserBiometrics.dart';
 
 class SelectPlan extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final UserBiometrics userBiometrics;
 
   const SelectPlan({Key? key,
     required this.userBiometrics,
-    required this.firestore,
-    required this.auth}) : super(key: key);
+}) : super(key: key);
 
   @override
   State<SelectPlan> createState() => _SelectPlanState();
@@ -45,7 +43,6 @@ class _SelectPlanState extends State<SelectPlan> {
     userGender = widget.userBiometrics.gender;
     userId = widget.userBiometrics.user_id;
     recommendedPlanStream = DietPlanModel.getPlanStream(
-        firestore: widget.firestore,
         dietary_preference: userDietaryPreference,
         age_group: userAgeGroup,
         gender: userGender,
@@ -121,8 +118,7 @@ class _SelectPlanState extends State<SelectPlan> {
                               child: PlanCard(dietPlanModel: planModel),
                               onTap: () async {
                                 bool success = await planModel.select(
-                                    firestore: widget.firestore,
-                                    user_id: widget.auth.currentUser!.uid
+                                    user_id: Controller.auth!.currentUser!.uid
                                 );
                                 String msg = "";
                                 if(!success){

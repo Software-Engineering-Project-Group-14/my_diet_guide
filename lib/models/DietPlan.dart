@@ -4,9 +4,10 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:my_diet_guide/models/Calorie_Calculator.dart';
 
-class DietPlanModel{
+import 'Model.dart';
+
+class DietPlanModel extends Model{
   late String planId;
   late String img;
   late String dietary_preference;
@@ -61,14 +62,13 @@ class DietPlanModel{
 
   // Get all the plans for given parametres
   static Stream<QuerySnapshot> getPlanStream({
-    required firestore,
     required String dietary_preference,
     required String age_group,
     required String gender,
     required String intensity,
     required String activeness
   }){
-    return firestore.collection('diet_plan')
+    return Model.firestore!.collection('diet_plan')
         .where('dietary_preference', isEqualTo: dietary_preference)
         .where("age_group", isEqualTo: age_group)
         .where("gender", isEqualTo: gender)
@@ -76,8 +76,8 @@ class DietPlanModel{
   }
 
   // Get all the plans
-  static Stream<QuerySnapshot> getCurrentPlanStream({required firestore}){
-    return firestore.collection('diet_plan').snapshots();
+  static Stream<QuerySnapshot> getCurrentPlanStream(){
+    return Model.firestore!.collection('diet_plan').snapshots();
   }
 
   // Get sorted recommeneded plans for given parametres
@@ -153,11 +153,11 @@ class DietPlanModel{
   }
 
   // Get the subscribed diet plan for given user
-  static Future<DietPlanModel> getDietPlanForUser({required firestore,required String user_id})async{
-    DocumentSnapshot ds = await firestore.collection("user").doc(user_id).get();
+  static Future<DietPlanModel> getDietPlanForUser({required String user_id})async{
+    DocumentSnapshot ds = await Model.firestore!.collection("user").doc(user_id).get();
     Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
     String planId = data["current_plan"];
-    ds = await firestore.collection("diet_plan").doc(planId).get();
+    ds = await Model.firestore!.collection("diet_plan").doc(planId).get();
     data = ds.data() as Map<String, dynamic>;
     return DietPlanModel(
         planId: planId,
@@ -174,9 +174,9 @@ class DietPlanModel{
 
   // Assigns this diet plan for given user, returns true if success false otherwise
   // Used for select plan and change plan
-  Future<bool> select({required firestore,required String user_id}) async{
+  Future<bool> select({required String user_id}) async{
     try{
-      await FirebaseFirestore.instance.collection('user')
+      await Model.firestore!.collection('user')
           .doc(user_id).set({
         'current_plan':planId
       }, SetOptions(merge: true));
@@ -188,7 +188,6 @@ class DietPlanModel{
 
   // Add plan setting relevant meal ids and returns new plan id or null if fails
   static Future<DietPlanModel?> add({
-    required firestore,
     required activeness,
     required age_group,
     required dietary_preference,
@@ -198,16 +197,19 @@ class DietPlanModel{
     required lunchMeal,
     required dinnerMeal}) async{
     try{
-      DocumentSnapshot ds = await firestore.collection("diet_plan").doc("nextPlanId").get();
+      DocumentSnapshot ds = await Model.firestore!.collection("diet_plan").doc("nextPlanId").get();
       double nextPlanId = ds["id"].toDouble();
       print("Next plan id got = ${nextPlanId}");
       double Sum = 0;
       double x,y,z = 0;
-      x = await firestore.collection('breakfast').doc(breakfastMeal).get();
-      y = await firestore.collection('lunch').doc(lunchMeal).get();
-      z = await firestore.collection('dinner').doc(dinnerMeal).get();
+      ds = await Model.firestore!.collection('breakfast').doc(breakfastMeal).get();
+      x = ds['calorie_gain_per_meal_per_week'].toDouble();
+      ds = await Model.firestore!.collection('lunch').doc(lunchMeal).get();
+      y = ds['calorie_gain_per_meal_per_week'].toDouble();
+      ds = await Model.firestore!.collection('dinner').doc(dinnerMeal).get();
+      z = ds['calorie_gain_per_meal_per_week'].toDouble();
       Sum += x.toDouble() + y.toDouble() + z.toDouble();
-      await firestore.collection("diet_plan").doc(nextPlanId.toString())
+      await Model.firestore!.collection("diet_plan").doc(nextPlanId.toString())
           .set({
         "activeness": activeness,
         "age_group": age_group,
@@ -220,7 +222,7 @@ class DietPlanModel{
         "calorie_gain_per_plan_per_week": Sum
       });
       //print("Diet plan added");
-      await firestore.collection("diet_plan").doc("nextPlanId").set(
+      await Model.firestore!.collection("diet_plan").doc("nextPlanId").set(
           {"id":nextPlanId+1}, SetOptions(merge: true));
       //print("Next plan id incremented = ${nextPlanId+1}");
 

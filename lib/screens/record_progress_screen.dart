@@ -9,15 +9,13 @@ import 'package:my_diet_guide/widgets/side_bar.dart';
 
 class RecordProgressScreen extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final String user_id;
   final String meal;
   final String dishName;
   final String dishImage;
   final String description;
 
-  const RecordProgressScreen({Key? key, required this.user_id, required this.meal, required this.dishName, required this.dishImage, required this.description, required this.firestore, required this.auth}) : super(key: key);
+  const RecordProgressScreen({Key? key, required this.user_id, required this.meal, required this.dishName, required this.dishImage, required this.description}) : super(key: key);
 
   @override
   State<RecordProgressScreen> createState() => _RecordProgressScreenState();
@@ -257,7 +255,7 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomBar(user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+      bottomNavigationBar: BottomBar(user_id: widget.user_id),
     );
   }
 }

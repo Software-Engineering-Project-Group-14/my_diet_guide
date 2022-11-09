@@ -9,14 +9,12 @@ import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/signup.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/palatte.dart';
+import '../controllers/Controller.dart';
 import 'forgot_password.dart';
 
 class Login extends StatefulWidget{
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
-
-  const Login({super.key, required this.firestore, required this.auth});
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -35,7 +33,7 @@ class _LoginState extends State<Login> {
 
   Future signIn() async {
     try{
-      await widget.auth.signInWithEmailAndPassword(
+      await Controller.auth!.signInWithEmailAndPassword(
           email: email,
           password: password
       );

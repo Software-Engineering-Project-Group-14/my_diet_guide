@@ -1,16 +1,7 @@
 import 'package:age_calculator/age_calculator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/screens/user_biometrics_form.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
-import 'package:my_diet_guide/widgets/dropdown_01.dart';
-import 'package:my_diet_guide/widgets/text_box_01.dart';
-
-import '../widgets/text_box_02.dart';
-
 
 class UserDetailsForm extends StatefulWidget {
 

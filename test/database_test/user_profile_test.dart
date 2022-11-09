@@ -1,11 +1,14 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:my_diet_guide/controllers/Controller.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/user_profile.dart';
 
 void main() {
+
   group('User Details display by retrieving data from firestore database', () {
     testWidgets("Render to user dashboard", (WidgetTester widgetTester) async {
       final firestore = FakeFirebaseFirestore();
@@ -37,9 +40,9 @@ void main() {
         'user_id': '12dewfwbbbqwbadhebwqb',
         'weight': 70
       });
-
+      Controller.init(firestore: firestore, auth: auth);
       await widgetTester.pumpWidget(MaterialApp(
-        home: UserDashboard(firestore: firestore, auth: auth),
+        home: UserDashboard(),
       ));
 
       expect(find.byKey(Key('user-dashboard')), findsOneWidget);
@@ -75,9 +78,9 @@ void main() {
         'user_id': '12dewfwbbbqwbadhebwqb',
         'weight': 70
       });
-
+      Controller.init(firestore: firestore, auth: auth);
       await widgetTester.pumpWidget(MaterialApp(
-        home: UserDashboard(firestore: firestore, auth: auth),
+        home: UserDashboard(),
       ));
 
       expect(find.byKey(Key('bottom-bar')), findsOneWidget);
@@ -116,9 +119,9 @@ void main() {
         'user_id': '12dewfwbbbqwbadhebwqb',
         'weight': 70
       });
-
+      Controller.init(firestore: firestore, auth: auth);
       await widgetTester.pumpWidget(MaterialApp(
-        home: UserDashboard(firestore: firestore, auth: auth),
+        home: UserDashboard(),
       ));
 
       expect(find.byKey(Key('bottom-bar')), findsOneWidget);
@@ -126,7 +129,7 @@ void main() {
       await widgetTester.tap(find.byKey(Key('user-profile-btn')));
 
       await widgetTester.pumpWidget(MaterialApp(
-        home: UserProfile(firestore: firestore, auth: auth),
+        home: UserProfile(),
       ));
 
       expect(find.text('User Profile'), findsOneWidget);

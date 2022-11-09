@@ -3,7 +3,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CalorieCalculator{
+import 'Model.dart';
+
+class CalorieCalculator extends Model{
 
   static Map<String, double>  activityLevelValues = {
   'Not very active' :  1.2,
@@ -68,13 +70,13 @@ class CalorieCalculator{
 
 
   // Updates calorie sum per given meal per week
-  static void setCalorieSum({required firestore, required meal,required id}) async{
+  static void setCalorieSum({required meal,required id}) async{
     id = id.toString();
-    final doc_ = firestore.collection(meal).doc(id);
+    final doc_ = Model.firestore!.collection(meal).doc(id);
     DocumentSnapshot ds = await doc_.get();
     double Sum = 0;
     for(int i=0;i<7;i++){
-      final dishDoc = await firestore.collection("dish").doc(ds["${days[i]}_dish_id"]).get();
+      final dishDoc = await Model.firestore!.collection("dish").doc(ds["${days[i]}_dish_id"]).get();
       Sum += dishDoc['calorie_gain_per_meal'];
     }
     doc_.update({

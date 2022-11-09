@@ -3,21 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/screens/update_user_biometrics_form.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import 'package:my_diet_guide/widgets/bottom_bar.dart';
 import 'package:my_diet_guide/widgets/side_bar.dart';
-import '../widgets/text_box_02.dart';
 
 class UpdateDetailsForm extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final String user_id;
 
   const UpdateDetailsForm({
     Key? key,
-    required this.user_id, required this.firestore, required this.auth,
+    required this.user_id,
   }) : super(key: key);
 
   @override
@@ -358,7 +354,7 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
         ],
       ),
 
-      bottomNavigationBar: BottomBar(user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+      bottomNavigationBar: BottomBar(user_id: widget.user_id),
     );
   }
 }

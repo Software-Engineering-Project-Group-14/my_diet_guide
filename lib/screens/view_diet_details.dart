@@ -3,22 +3,18 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/record_progress_screen.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 
 import '../widgets/bottom_bar.dart';
 import '../widgets/side_bar.dart';
 import '../widgets/today_meal_card.dart';
-import '../widgets/user_dash_header.dart';
 
 class DietDetails extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final String user_id;
   final String day;
-  const DietDetails({Key? key, required this.user_id, required this.day, required this.firestore, required this.auth}) : super(key: key);
+  const DietDetails({Key? key, required this.user_id, required this.day,}) : super(key: key);
 
   @override
   State<DietDetails> createState() => _DietDetailsState();
@@ -161,7 +157,7 @@ class _DietDetailsState extends State<DietDetails> {
         title: "Breakfast",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Breakfast', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, firestore: widget.firestore, auth: widget.auth)
+        navigate: RecordProgressScreen(meal: 'Breakfast', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription)
     );
 
   }
@@ -237,7 +233,7 @@ class _DietDetailsState extends State<DietDetails> {
         title: "Lunch",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Lunch', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, firestore: widget.firestore, auth: widget.auth,)
+        navigate: RecordProgressScreen(meal: 'Lunch', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, )
     );
 
   }
@@ -313,7 +309,7 @@ class _DietDetailsState extends State<DietDetails> {
         title: "Dinner",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Dinner', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, firestore: widget.firestore, auth: widget.auth,)
+        navigate: RecordProgressScreen(meal: 'Dinner', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, )
     );
 
   }
@@ -616,7 +612,7 @@ class _DietDetailsState extends State<DietDetails> {
         ],
       ),
 
-      bottomNavigationBar: BottomBar(user_id: user_id, firestore: widget.firestore, auth: widget.auth),
+      bottomNavigationBar: BottomBar(user_id: user_id),
     );
   }
 }
