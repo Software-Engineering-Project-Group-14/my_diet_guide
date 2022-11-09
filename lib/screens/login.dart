@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/signup.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
@@ -209,9 +210,10 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                      return ForgotPassword();
-                                    }));
+                                    Navigator.pushNamed(context, RouteConstants.forgotPasswordRoute);
+                                   // Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    //  return ForgotPassword();
+                                    //}));
                                   },
                                 ),
                               ],

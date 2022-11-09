@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/update_user_details_form.dart';
+import '../common/route_constants.dart';
 import '../models/user.dart';
 import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
@@ -321,7 +322,8 @@ class _UserProfileState extends State<UserProfile> {
                       ))
                     ),
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpdateDetailsForm(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth)));
+                  //    Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpdateDetailsForm(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth)));
+                      Navigator.pushNamed(context, RouteConstants.userDetailsUpdateRoute);
                     },
                     child: Container(
                       child: Text("Update My Details", style: TextStyle(color: Colors.white, fontSize: 18),),

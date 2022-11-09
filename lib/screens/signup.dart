@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/screens/login.dart';
 import 'package:my_diet_guide/screens/user_details_form.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
@@ -29,8 +30,14 @@ class _SignUpState extends State<SignUp> {
   //function for sign up a user
   Future signUpFunc() async {
     if (passwordConfirmed()) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) =>
-          UserDetailsForm(email: email, password: password)));
+      Navigator.pushNamed(context, RouteConstants.userDetailsCreateRoute,
+          arguments: <String, String>{
+            email: email,
+            password: password
+          }
+      );
+     // Navigator.push(context, MaterialPageRoute(builder: (context) =>
+       //   UserDetailsForm(email: email, password: password)));
     }
   }
 
@@ -295,11 +302,13 @@ class _SignUpState extends State<SignUp> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_){
-                                  return Login(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance);
-                                }
-                            ));
+                            Navigator.pushNamed(context, RouteConstants.homeRoute);
+                         //   Navigator.of(context).push(MaterialPageRoute(
+                          //      builder: (_){
+                          //        return Login(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance);
+                          //      }
+                         //   )
+                           // );
                           },
                           child: Text('    Log in',
                             style: TextStyle(

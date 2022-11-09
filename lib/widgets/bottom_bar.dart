@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/screens/calenderScreen.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/user_profile.dart';
@@ -37,7 +38,8 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserDashboard(firestore: firestore, auth: auth,)));
+              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserDashboard(firestore: firestore, auth: auth,)));
+              Navigator.pushNamed(context, RouteConstants.homeRoute);
             },
           ),
           IconButton(
@@ -46,8 +48,9 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan(user_id: user_id, firestore: firestore, auth: auth)));
-            },
+              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan(user_id: user_id, firestore: firestore, auth: auth)));
+              Navigator.pushNamed(context, RouteConstants.planViewRoute);
+              },
           ),
           IconButton(
             key: Key('user-profile-btn'),
@@ -56,7 +59,8 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfile(firestore: firestore, auth: auth)));
+              Navigator.pushNamed(context, RouteConstants.userDetailsViewRoute);
+              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfile(firestore: firestore, auth: auth)));
             },
           ),
         ],

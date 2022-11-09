@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/screens/view_diet_details.dart';
 
 class ViewDietCard extends StatelessWidget {
@@ -19,7 +20,13 @@ class ViewDietCard extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: GestureDetector(
           onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDetails(user_id: user_id, day: day, firestore: firestore, auth: auth)));
+            //Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDetails(user_id: user_id, day: day, firestore: firestore, auth: auth)));
+            Navigator.pushNamed(context, RouteConstants.dietViewRoute,
+            arguments: <String, String>{
+              'day':day,
+              'user_id':user_id
+            }
+            );
           },
           child: ClipRRect(
             child: BackdropFilter(

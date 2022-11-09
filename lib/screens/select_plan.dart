@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
@@ -146,7 +147,8 @@ class _SelectPlanState extends State<SelectPlan> {
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                             if(success){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
+                                              //Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
+                                              Navigator.pushNamed(context, RouteConstants.homeRoute);
                                             }
                                           },
                                         ),
