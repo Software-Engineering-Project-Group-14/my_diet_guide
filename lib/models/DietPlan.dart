@@ -18,6 +18,7 @@ class DietPlanModel extends Model{
   late String breakfast_id;
   late String lunch_id;
   late String dinner_id;
+  late double calorie_gain_per_plan_per_week;
   double diffValue = 0;
 
   DietPlanModel({
@@ -30,6 +31,7 @@ class DietPlanModel extends Model{
     required this.breakfast_id,
     required this.lunch_id,
     required this.dinner_id,
+    required this.calorie_gain_per_plan_per_week
   }){
     img = dietary_preference+".png";
   }
@@ -107,7 +109,8 @@ class DietPlanModel extends Model{
           age_group: cur.get('age_group'),
           breakfast_id: cur.get('breakfast_id'),
           lunch_id: cur.get('lunch_id'),
-          dinner_id: cur.get('dinner_id')
+          dinner_id: cur.get('dinner_id'), 
+          calorie_gain_per_plan_per_week: cur.get('calorie_gain_per_plan_per_week')
       );
       //print(curPlan);
       recommendedPlans.add(curPlan);
@@ -168,7 +171,8 @@ class DietPlanModel extends Model{
         age_group: data["age_group"],
         breakfast_id: data["breakfast_id"],
         lunch_id: data["lunch_id"],
-        dinner_id: data["dinner_id"]
+        dinner_id: data["dinner_id"],
+        calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week']
     );
   }
 
@@ -198,8 +202,12 @@ class DietPlanModel extends Model{
     required dinnerMeal}) async{
     try{
       DocumentSnapshot ds = await Model.firestore!.collection("diet_plan").doc("nextPlanId").get();
-      double nextPlanId = ds["id"].toDouble();
-      print("Next plan id got = ${nextPlanId}");
+      int nextPlanId;
+      if(ds.data()==null){
+        nextPlanId = 1;
+      }else{
+        nextPlanId = ds["id"].toDouble();
+      }
       double Sum = 0;
       double x,y,z = 0;
       ds = await Model.firestore!.collection('breakfast').doc(breakfastMeal).get();
@@ -227,7 +235,7 @@ class DietPlanModel extends Model{
       //print("Next plan id incremented = ${nextPlanId+1}");
 
       return DietPlanModel(
-          planId: (nextPlanId+1).toString(),
+          planId: (nextPlanId).toString(),
           activeness: activeness,
           age_group: age_group,
           dietary_preference: dietary_preference,
@@ -235,11 +243,33 @@ class DietPlanModel extends Model{
           intensity: intensity,
           breakfast_id: breakfastMeal,
           lunch_id: lunchMeal,
-          dinner_id: dinnerMeal
+          dinner_id: dinnerMeal,
+          calorie_gain_per_plan_per_week: Sum
       );
     }catch(error){
       return null;
     }
+  }
+
+  static Future<DietPlanModel?> get(String planId)async{
+    try{
+      DocumentSnapshot ds = await Model.firestore!.collection("diet_plan").doc(planId).get();
+      return DietPlanModel(
+          planId: planId,
+          dietary_preference: ds["dietary_preference"],
+          gender: ds["gender"],
+          intensity: ds["intensity"],
+          activeness: ds["activeness"],
+          age_group: ds["age_group"],
+          breakfast_id: ds["breakfast_id"],
+          lunch_id: ds["lunch_id"],
+          dinner_id: ds["dinner_id"],
+          calorie_gain_per_plan_per_week: ds["calorie_gain_per_plan_per_week"]
+      );
+    }catch(error){
+      return null;
+    }
+
   }
 
 
