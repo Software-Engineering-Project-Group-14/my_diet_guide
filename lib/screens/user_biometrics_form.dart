@@ -96,7 +96,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
         intensity!
     );
 
-    Navigator.pushNamed(context, RouteConstants.planSelectSubRoute,
+    Navigator.pushNamed(context, RouteConstants.planSelectRoute,
         arguments: UserBiometrics(
             user_id: userId,
             gender: widget.gender,

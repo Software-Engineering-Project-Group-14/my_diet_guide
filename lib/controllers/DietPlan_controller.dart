@@ -12,25 +12,62 @@ import '../screens/view_diet.dart';
 class DietPlanController extends Controller {
 
   final String subRoute;
+  final dynamic? arguments;
 
   const DietPlanController({
     super.key,
     required this.subRoute,
+    this.arguments
   });
 
+  @override
+  State<DietPlanController> createState() => _DietPlanControllerState();
+
+
+
+}
+
+class _DietPlanControllerState  extends State<DietPlanController>{
 
   @override
   Widget build(BuildContext context) {
-    final firestore = Controller.firestore;
     final auth = Controller.auth;
+    late Widget page;
+    switch(widget.subRoute){
+
+      case RouteConstants.planSelectSubRoute:{
+        final userBiometrics = widget.arguments as UserBiometrics;
+        page = SelectPlan(userBiometrics: userBiometrics);
+      }
+      break;
+
+      case RouteConstants.planViewSubRoute:{
+        page = ViewDietPlan(user_id: auth!.currentUser!.uid);
+      }
+      break;
+
+      case RouteConstants.planChangeSubRoute:{
+        page = ChangePlan();
+      }
+      break;
+
+      default:{
+        throw Exception('Unknown route: ${RouteConstants.planRoute}${widget.subRoute} ');
+      }
+
+    }
+
+    return page;
+
+    /*
     return Navigator(
       key: GlobalKey<NavigatorState>(),
-      initialRoute: subRoute,
+      initialRoute: widget.subRoute,
       onGenerateRoute: (settings) {
         late Widget page;
 
         if(settings.name == RouteConstants.planSelectSubRoute){
-          final userBiometrics = settings.arguments as UserBiometrics;
+          final userBiometrics = widget.arguments as UserBiometrics;
           page = SelectPlan(userBiometrics: userBiometrics);
 
         }else if(settings.name == RouteConstants.planViewSubRoute){
@@ -51,6 +88,8 @@ class DietPlanController extends Controller {
         );
       },
     );
+     */
   }
+
 
 }

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/models/Model.dart';
 
-abstract class Controller extends StatelessWidget {
+abstract class Controller extends StatefulWidget {
 
   static FirebaseAuth? auth;
 

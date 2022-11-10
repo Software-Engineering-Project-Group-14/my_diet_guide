@@ -2,30 +2,34 @@
 
 class RouteConstants {
 
-  static String homeRoute = '/';
+  static const String homeRoute = '/';
   
-  static String loginRoute = '/login';
-  static String forgotPasswordRoute = '/forgot';
+  static const String loginRoute = '/login';
+  static const String forgotPasswordRoute = '/forgot';
   
-  static String userDetailsCreateRoute = '/userDetails/create';
-  static String userDetailsUpdateRoute = '/userDetails/update';
-  static String userDetailsViewRoute = '/userDetails/view';
+  static const String userDetailsCreateRoute = '/userDetails/create';
+  static const String userDetailsUpdateRoute = '/userDetails/update';
+  static const String userDetailsViewRoute = '/userDetails/view';
 
-  static String planRoute = '/plan/';
-  static String planChangeSubRoute = 'change';
-  static String planSelectSubRoute = 'select';
-  static String planViewSubRoute = 'view';
+  static const String planRoute = '/plan/';
+  static const String planChangeSubRoute = 'change';
+  static const String planSelectSubRoute = 'select';
+  static const String planViewSubRoute = 'view';
+  static const String planChangeRoute = '/plan/$planChangeSubRoute';
+  static const String planSelectRoute = '/plan/$planSelectSubRoute';
+  static const String planViewRoute = '/plan/$planViewSubRoute';
 
-  static String bioUpdateRoute = '/bio/update';
-  static String bioCreateRoute = '/bio/create';
-  
-  static String bmiCheckRoute = '/bmi/check';
-  
-  static String rateRoute = '/rate';
 
-  static String dietViewRoute = '/diet/view';
+  static const String bioUpdateRoute = '/bio/update';
+  static const String bioCreateRoute = '/bio/create';
   
-//  static String homeRoute = '/';
+  static const String bmiCheckRoute = '/bmi/check';
+  
+  static const String rateRoute = '/rate';
+
+  static const String dietViewRoute = '/diet/view';
+  
+//  static const String homeRoute = '/';
 
 
 

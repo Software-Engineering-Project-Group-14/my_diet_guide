@@ -29,8 +29,8 @@ class _SignUpState extends State<SignUp> {
     if (passwordConfirmed()) {
       Navigator.pushNamed(context, RouteConstants.userDetailsCreateRoute,
           arguments: <String, String>{
-            email: email,
-            password: password
+            'email': email,
+            'password': password
           }
       );
      // Navigator.push(context, MaterialPageRoute(builder: (context) =>

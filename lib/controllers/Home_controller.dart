@@ -1,4 +1,6 @@
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/controllers/Controller.dart';
 
@@ -11,6 +13,12 @@ class HomeController extends Controller {
   const HomeController({Key? key}) : super(key: key);
 
   @override
+  State<HomeController> createState() => _HomeControllerState();
+
+}
+
+class _HomeControllerState extends State<HomeController> {
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: Controller.auth!.authStateChanges(),
@@ -20,10 +28,11 @@ class HomeController extends Controller {
           return UserDashboard();
         }else{
           //return Login();
-         return Login();
+          return Login();
         }
       },
     );
   }
-
 }
+
+

@@ -10,7 +10,7 @@ import 'package:my_diet_guide/widgets/plan_card.dart';
 import '../controllers/Controller.dart';
 import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
-import '../widgets/side_bar.dart';
+//import '../widgets/side_bar.dart';
 
 class ChangePlan extends StatefulWidget {
 
@@ -45,7 +45,7 @@ class _ChangePlanState extends State<ChangePlan> {
             title: Text("Change my diet plan"),
             toolbarHeight: 80
         ),
-        drawer: NavigationDrawer(),
+       // drawer: NavigationDrawer(),
         body: SingleChildScrollView(
           child: Stack(
               children: [
@@ -244,7 +244,6 @@ class _ChangePlanState extends State<ChangePlan> {
               ]
           ),
         ),
-        bottomNavigationBar: BottomBar(user_id: Controller.auth!.currentUser!.uid),
       ),
     );
 

@@ -45,16 +45,21 @@ Future<void> main() async {
   //runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
 
   const MyApp({Key? key, required this.auth, required this.firestore}) : super(key: key);
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Controller.init(auth: auth, firestore: firestore);
+    Controller.init(auth: widget.auth, firestore: widget.firestore);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "My Diet Guide",
@@ -77,6 +82,8 @@ class MyApp extends StatelessWidget {
           final subRoute = settings.name!.substring(RouteConstants.planRoute.length);
           page = DietPlanController(
             subRoute: subRoute,
+            arguments: settings.arguments
+            //userBiometrics: userBiometrics
           );
 
         } else if (settings.name == RouteConstants.userDetailsCreateRoute){
@@ -110,7 +117,7 @@ class MyApp extends StatelessWidget {
           );
 
         } else if (settings.name == RouteConstants.userDetailsUpdateRoute){
-          page = UpdateDetailsForm(user_id: auth.currentUser!.uid);
+          page = UpdateDetailsForm(user_id: widget.auth.currentUser!.uid);
 
         } else if (settings.name == RouteConstants.userDetailsViewRoute){
           page = UserProfile();
