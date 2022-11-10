@@ -2,6 +2,7 @@
 
 class RouteConstants {
 
+
   static const String homeRoute = '/';
 
   static const String forgotPasswordRoute = '/forgot';
@@ -14,13 +15,13 @@ class RouteConstants {
   static const String userDetailsUpdateRoute = '/userDetails/$userDetailsUpdateSubRoute';
   static const String userDetailsViewRoute = '/userDetails/$userDetailsViewSubRoute';
 
-  static const String planRoute = '/plan/';
+  static const String planRoute = 'plan';
   static const String planChangeSubRoute = 'change';
   static const String planSelectSubRoute = 'select';
   static const String planViewSubRoute = 'view';
-  static const String planChangeRoute = '/plan/$planChangeSubRoute';
-  static const String planSelectRoute = '/plan/$planSelectSubRoute';
-  static const String planViewRoute = '/plan/$planViewSubRoute';
+  static const String planChangeRoute = '/$planRoute/$planChangeSubRoute';
+  static const String planSelectRoute = '/$planRoute/$planSelectSubRoute';
+  static const String planViewRoute = '/$planRoute/$planViewSubRoute';
 
   static const String bioRoute = '/bio/';
   static const String bioUpdateSubRoute = 'update';

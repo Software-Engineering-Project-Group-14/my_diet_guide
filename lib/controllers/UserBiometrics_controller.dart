@@ -8,14 +8,8 @@ import '../screens/user_biometrics_form.dart';
 
 class UserBiometricsController extends Controller {
 
-  final String subRoute;
-  final dynamic arguments;
 
-  const UserBiometricsController(
-      {Key? key,
-        required this.subRoute,
-        this.arguments
-      }) : super(key: key);
+  UserBiometricsController({Key? key, required super.context}) : super(key: key);
 
   @override
   State<UserBiometricsController> createState() => _UserBiometricsControllerState();

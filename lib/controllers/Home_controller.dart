@@ -10,7 +10,7 @@ import '../screens/user_dashboard.dart';
 
 class HomeController extends Controller {
 
-  const HomeController({Key? key}) : super(key: key);
+  HomeController({Key? key, required super.context}) : super(key: key);
 
   @override
   State<HomeController> createState() => _HomeControllerState();

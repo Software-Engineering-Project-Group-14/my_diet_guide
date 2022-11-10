@@ -5,7 +5,7 @@ import '../screens/rate.dart';
 
 
 class RateController extends Controller {
-  const RateController({Key? key}) : super(key: key);
+  RateController({Key? key, required super.context}) : super(key: key);
 
   @override
   State<RateController> createState() => _RateControllerState();

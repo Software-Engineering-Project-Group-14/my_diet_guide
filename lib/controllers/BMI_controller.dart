@@ -3,7 +3,7 @@ import 'package:my_diet_guide/controllers/Controller.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
 
 class BMIController extends Controller {
-  const BMIController({Key? key}) : super(key: key);
+  BMIController({Key? key, required super.context}) : super(key: key);
 
   @override
   State<BMIController> createState() => _BMIControllerState();

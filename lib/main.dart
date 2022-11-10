@@ -11,9 +11,10 @@ import 'package:my_diet_guide/controllers/BMI_controller.dart';
 import 'package:my_diet_guide/controllers/DietPlan_controller.dart';
 import 'package:my_diet_guide/controllers/Diet_controller.dart';
 import 'package:my_diet_guide/controllers/Home_controller.dart';
+import 'package:my_diet_guide/controllers/Rate_controller.dart';
 import 'package:my_diet_guide/controllers/user_controller.dart';
 import 'package:my_diet_guide/screens/forgot_password.dart';
-import 'package:my_diet_guide/screens/rate.dart';
+
 
 import 'controllers/Controller.dart';
 import 'controllers/UserBiometrics_controller.dart';
@@ -48,9 +49,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Controller.init(auth: widget.auth, firestore: widget.firestore);
-    String cur = ModalRoute.of(context)!.settings.name!;
-    final List<String> routeList = cur.split('/');
-    print(routeList);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "My Diet Guide",
@@ -62,51 +60,26 @@ class _MyAppState extends State<MyApp> {
       initialRoute: RouteConstants.homeRoute,
       routes: {
 
-        RouteConstants.homeRoute: (context){
-          return HomeController();
-        },
-
+        RouteConstants.homeRoute: (context)=>HomeController(context: context,),
         RouteConstants.forgotPasswordRoute: (context)=>ForgotPassword(),
 
-        RouteConstants.planViewRoute: (context)=>DietPlanController(
-            subRoute: ModalRoute.of(context)!.settings.name!.
-            substring(RouteConstants.planRoute.length)),
-        RouteConstants.planChangeRoute: (context)=>DietPlanController(
-            subRoute: ModalRoute.of(context)!.settings.name!.
-            substring(RouteConstants.planRoute.length)),
-        RouteConstants.planSelectRoute: (context)=>DietPlanController(
-            arguments: ModalRoute.of(context)!.settings.arguments,
-            subRoute: ModalRoute.of(context)!.settings.name!.
-            substring(RouteConstants.planRoute.length)),
+        RouteConstants.planViewRoute: (context) => DietPlanController(context: context,),
+        RouteConstants.planChangeRoute:(context) => DietPlanController(context: context,),
+        RouteConstants.planSelectRoute:(context) => DietPlanController(context: context,),
 
-        RouteConstants.userDetailsViewRoute: (context)=>UserDetailsController(
-            subRoute: ModalRoute.of(context)!.settings.name!.
-            substring(RouteConstants.userDetailsRoute.length)),
-        RouteConstants.userDetailsCreateRoute: (context)=>UserDetailsController(
-            arguments: ModalRoute.of(context)!.settings.arguments,
-            subRoute: ModalRoute.of(context)!.settings.name!.
-            substring(RouteConstants.userDetailsRoute.length)),
-        RouteConstants.userDetailsUpdateRoute: (context)=>UserDetailsController(
-            arguments: ModalRoute.of(context)!.settings.arguments,
-            subRoute: ModalRoute.of(context)!.settings.name!.
-            substring(RouteConstants.userDetailsRoute.length)),
+        RouteConstants.userDetailsViewRoute: (context)=>UserDetailsController(context: context,),
+        RouteConstants.userDetailsCreateRoute: (context)=>UserDetailsController(context: context,),
+        RouteConstants.userDetailsUpdateRoute: (context)=>UserDetailsController(context: context,),
 
-        RouteConstants.bioCreateRoute: (context)=>UserBiometricsController(
-            arguments: ModalRoute.of(context)!.settings.arguments,
-            subRoute: ModalRoute.of(context)!.settings.name!.
-            substring(RouteConstants.userDetailsRoute.length)),
-        RouteConstants.bioUpdateRoute: (context)=>UserBiometricsController(
-            arguments: ModalRoute.of(context)!.settings.arguments,
-            subRoute: ModalRoute.of(context)!.settings.name!.
-            substring(RouteConstants.userDetailsRoute.length)),
+        RouteConstants.bioCreateRoute: (context)=>UserBiometricsController(context: context,),
+        RouteConstants.bioUpdateRoute: (context)=>UserBiometricsController(context: context,),
 
-        RouteConstants.bmiCheckRoute: (context)=>BMIController(),
+        RouteConstants.bmiCheckRoute: (context)=>BMIController(context: context,),
 
-        RouteConstants.rateRoute: (context)=>Rate(),
+        RouteConstants.rateRoute: (context)=>RateController(context: context),
 
-        RouteConstants.dietViewRoute: (context)=>DietController(
-          arguments: ModalRoute.of(context)!.settings.arguments,
-        ),
+        RouteConstants.dietViewRoute: (context)=>DietController(context: context,),
+
       },
       onUnknownRoute: (settings){
         throw Exception('Unknown route: ${ModalRoute.of(context)!.settings.name}');

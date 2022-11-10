@@ -9,6 +9,12 @@ abstract class Controller extends StatefulWidget {
 
   static FirebaseFirestore? firestore;
 
+  late String subRoute;
+  late String parentRoute;
+  late String route;
+  late dynamic arguments;
+  final BuildContext context;
+
   static void init({
     required FirebaseAuth auth,
     required FirebaseFirestore firestore
@@ -18,6 +24,16 @@ abstract class Controller extends StatefulWidget {
     Model.init(auth: auth, firestore: firestore);
   }
 
-  const Controller({Key? key}) : super(key: key);
+  Controller({Key? key, required this.context}) : super(key: key){
+    route = ModalRoute.of(context)!.settings.name!;
+    List<String> routesList = route.split('/');
+    if(routesList.length == 1){
+      parentRoute = '';
+    }else if( routesList.length >= 2){
+      parentRoute = routesList[1];
+      if(routesList.length >=3)  subRoute = routesList[2];
+    }
+    arguments = ModalRoute.of(context)!.settings.arguments;
+  }
 
 }

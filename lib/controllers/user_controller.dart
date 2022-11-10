@@ -11,14 +11,8 @@ import '../screens/user_profile.dart';
 
 class UserDetailsController extends Controller {
 
-  final String subRoute;
-  final dynamic arguments;
 
-  const UserDetailsController({
-    super.key,
-    required this.subRoute,
-    this.arguments
-  });
+  UserDetailsController({Key? key, required super.context}) : super(key: key);
 
   @override
   State<UserDetailsController> createState() => _UserDetailsControllerState();

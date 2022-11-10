@@ -6,12 +6,7 @@ import '../screens/view_diet_details.dart';
 
 class DietController extends Controller {
 
-  final dynamic arguments;
-
-  const DietController({
-    Key? key,
-    required this.arguments
-  }) : super(key: key);
+  DietController({Key? key, required super.context}) : super(key: key);
 
   @override
   State<DietController> createState() => _DietControllerState();

@@ -11,14 +11,7 @@ import '../screens/view_diet.dart';
 
 class DietPlanController extends Controller {
 
-  final String subRoute;
-  final dynamic? arguments;
-
-  const DietPlanController({
-    super.key,
-    required this.subRoute,
-    this.arguments
-  });
+  DietPlanController({Key? key, required super.context}) : super(key: key);
 
   @override
   State<DietPlanController> createState() => _DietPlanControllerState();
