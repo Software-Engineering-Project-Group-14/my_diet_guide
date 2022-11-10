@@ -7,28 +7,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
+import 'package:my_diet_guide/controllers/BMI_controller.dart';
 import 'package:my_diet_guide/controllers/DietPlan_controller.dart';
+import 'package:my_diet_guide/controllers/Diet_controller.dart';
 import 'package:my_diet_guide/controllers/Home_controller.dart';
-import 'package:my_diet_guide/models/UserBiometrics.dart';
-import 'package:my_diet_guide/screens/change_plan.dart';
-import 'package:my_diet_guide/screens/check_bmi.dart';
+import 'package:my_diet_guide/controllers/user_controller.dart';
 import 'package:my_diet_guide/screens/forgot_password.dart';
-import 'package:my_diet_guide/screens/login.dart';
 import 'package:my_diet_guide/screens/rate.dart';
-import 'package:my_diet_guide/screens/select_plan.dart';
-import 'package:my_diet_guide/screens/signup.dart';
-import 'package:my_diet_guide/screens/update_user_biometrics_form.dart';
-import 'package:my_diet_guide/screens/update_user_details_form.dart';
-import 'package:my_diet_guide/screens/user_biometrics_form.dart';
-import 'package:my_diet_guide/screens/user_dashboard.dart';
-import 'package:my_diet_guide/screens/user_details_form.dart';
-import 'package:my_diet_guide/screens/user_profile.dart';
-import 'package:my_diet_guide/screens/view_diet.dart';
-import 'package:my_diet_guide/screens/view_diet_details.dart';
 
 import 'controllers/Controller.dart';
-import 'models/DietPlan.dart';
-
+import 'controllers/UserBiometrics_controller.dart';
 
 
 Future<void> main() async {
@@ -60,6 +48,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Controller.init(auth: widget.auth, firestore: widget.firestore);
+    String cur = ModalRoute.of(context)!.settings.name!;
+    final List<String> routeList = cur.split('/');
+    print(routeList);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "My Diet Guide",
@@ -69,80 +60,58 @@ class _MyAppState extends State<MyApp> {
         textTheme: GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
       ),
       initialRoute: RouteConstants.homeRoute,
-      onGenerateRoute: (settings){
-        late Widget page;
+      routes: {
 
-        if (settings.name == RouteConstants.homeRoute){
-          page = const HomeController();
+        RouteConstants.homeRoute: (context){
+          return HomeController();
+        },
 
-        }else if (settings.name == RouteConstants.forgotPasswordRoute){
-          page = ForgotPassword();
+        RouteConstants.forgotPasswordRoute: (context)=>ForgotPassword(),
 
-        }else if(settings.name!.startsWith(RouteConstants.planRoute)){
-          final subRoute = settings.name!.substring(RouteConstants.planRoute.length);
-          page = DietPlanController(
-            subRoute: subRoute,
-            arguments: settings.arguments
-            //userBiometrics: userBiometrics
-          );
+        RouteConstants.planViewRoute: (context)=>DietPlanController(
+            subRoute: ModalRoute.of(context)!.settings.name!.
+            substring(RouteConstants.planRoute.length)),
+        RouteConstants.planChangeRoute: (context)=>DietPlanController(
+            subRoute: ModalRoute.of(context)!.settings.name!.
+            substring(RouteConstants.planRoute.length)),
+        RouteConstants.planSelectRoute: (context)=>DietPlanController(
+            arguments: ModalRoute.of(context)!.settings.arguments,
+            subRoute: ModalRoute.of(context)!.settings.name!.
+            substring(RouteConstants.planRoute.length)),
 
-        } else if (settings.name == RouteConstants.userDetailsCreateRoute){
-          final args = settings.arguments as Map<String, String>;
-          page = UserDetailsForm(
-              email: args['email']!,
-              password: args['password']!
-          );
+        RouteConstants.userDetailsViewRoute: (context)=>UserDetailsController(
+            subRoute: ModalRoute.of(context)!.settings.name!.
+            substring(RouteConstants.userDetailsRoute.length)),
+        RouteConstants.userDetailsCreateRoute: (context)=>UserDetailsController(
+            arguments: ModalRoute.of(context)!.settings.arguments,
+            subRoute: ModalRoute.of(context)!.settings.name!.
+            substring(RouteConstants.userDetailsRoute.length)),
+        RouteConstants.userDetailsUpdateRoute: (context)=>UserDetailsController(
+            arguments: ModalRoute.of(context)!.settings.arguments,
+            subRoute: ModalRoute.of(context)!.settings.name!.
+            substring(RouteConstants.userDetailsRoute.length)),
 
-        }else if (settings.name == RouteConstants.bioUpdateRoute){
-          final args = settings.arguments as Map<String, dynamic>;
-          page =UpdateBiometricsForm(
-              user_id: args['user_id']!,
-              firstName: args['firstName']!,
-              lastName: args['lastName']!,
-              bday: args['bday']!,
-              gender: args['gender']!,
-              age: args['age']!,
-          );
+        RouteConstants.bioCreateRoute: (context)=>UserBiometricsController(
+            arguments: ModalRoute.of(context)!.settings.arguments,
+            subRoute: ModalRoute.of(context)!.settings.name!.
+            substring(RouteConstants.userDetailsRoute.length)),
+        RouteConstants.bioUpdateRoute: (context)=>UserBiometricsController(
+            arguments: ModalRoute.of(context)!.settings.arguments,
+            subRoute: ModalRoute.of(context)!.settings.name!.
+            substring(RouteConstants.userDetailsRoute.length)),
 
-        } else if (settings.name == RouteConstants.bioCreateRoute){
-          final args = settings.arguments as Map<String, dynamic>;
-          page = UserBiometricsForm(
-              email: args['email'],
-              password: args['password'],
-              firstName: args['firstName'],
-              lastName: args['lastName'],
-              age: args['age'],
-              bday: args['bday'],
-              gender: args['gender']
-          );
+        RouteConstants.bmiCheckRoute: (context)=>BMIController(),
 
-        } else if (settings.name == RouteConstants.userDetailsUpdateRoute){
-          page = UpdateDetailsForm(user_id: widget.auth.currentUser!.uid);
+        RouteConstants.rateRoute: (context)=>Rate(),
 
-        } else if (settings.name == RouteConstants.userDetailsViewRoute){
-          page = UserProfile();
-
-        } else if (settings.name == RouteConstants.bmiCheckRoute){
-          page = CheckBMI();
-
-        } else if (settings.name == RouteConstants.rateRoute){
-          page = Rate();
-
-        } else if (settings.name == RouteConstants.dietViewRoute){
-          final args = settings.arguments as Map<String, dynamic>;
-          page = DietDetails(user_id: args['user_id'], day: args['day']);
-
-        } else {
-          throw Exception('Unknown route: ${settings.name}');
-        }
-
-        return MaterialPageRoute<dynamic>(
-          builder: (context) {
-            return page;
-          },
-          settings: settings,
-        );
+        RouteConstants.dietViewRoute: (context)=>DietController(
+          arguments: ModalRoute.of(context)!.settings.arguments,
+        ),
       },
+      onUnknownRoute: (settings){
+        throw Exception('Unknown route: ${ModalRoute.of(context)!.settings.name}');
+      },
+
     );
   }
 }
