@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/update_user_details_form.dart';
+import '../common/route_constants.dart';
+import '../controllers/Controller.dart';
 import '../models/user.dart';
 import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
@@ -13,12 +15,9 @@ import '../widgets/side_bar.dart';
 
 class UserProfile extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
-
   //final String user_id;
 
-  const UserProfile({Key? key, required this.firestore, required this.auth}) : super(key: key);
+  const UserProfile({Key? key}) : super(key: key);
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -45,7 +44,7 @@ class _UserProfileState extends State<UserProfile> {
 
 
   Future<Map<String, dynamic>> readUser() async{
-    final userDoc = widget.firestore.collection('user').doc(widget.auth.currentUser!.uid);
+    final userDoc = Controller.firestore!.collection('user').doc(Controller.auth!.currentUser!.uid);
     final snapshot1 = await userDoc.get();
 
     if(snapshot1.exists){
@@ -113,7 +112,7 @@ class _UserProfileState extends State<UserProfile> {
 
 
   Future<Map<String, dynamic>> readUserBiometrics() async{
-    final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(widget.auth.currentUser!.uid);
+    final userBioDoc = Controller.firestore!.collection('user biometrics').doc(Controller.auth!.currentUser!.uid);
     final snapshot2 = await userBioDoc.get();
 
     if(snapshot2.exists){
@@ -321,7 +320,8 @@ class _UserProfileState extends State<UserProfile> {
                       ))
                     ),
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpdateDetailsForm(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth)));
+                      Navigator.pushNamed(context, RouteConstants.userDetailsUpdateRoute);
+                      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpdateDetailsForm(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth)));
                     },
                     child: Container(
                       child: Text("Update My Details", style: TextStyle(color: Colors.white, fontSize: 18),),
@@ -336,7 +336,7 @@ class _UserProfileState extends State<UserProfile> {
         ],
       ),
 
-      bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth,),
+      bottomNavigationBar: BottomBar(user_id: Controller.auth!.currentUser!.uid, firestore: Controller.firestore!, auth: Controller.auth!,),
 
     );
   }

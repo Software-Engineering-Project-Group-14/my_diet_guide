@@ -7,6 +7,8 @@ import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/user_profile.dart';
 import 'package:my_diet_guide/screens/view_diet.dart';
 
+import '../common/route_constants.dart';
+
 class BottomBar extends StatelessWidget {
 
   final FirebaseFirestore firestore;
@@ -37,7 +39,8 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserDashboard(firestore: firestore, auth: auth,)));
+              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserDashboard(firestore: firestore, auth: auth,)));
+              Navigator.pushNamed(context, RouteConstants.homeRoute);
             },
           ),
           IconButton(
@@ -46,7 +49,11 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan(user_id: user_id, firestore: firestore, auth: auth)));
+             // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan(user_id: user_id, firestore: firestore, auth: auth)));
+
+              //Navigator.pushNamed(context, RouteConstants.planViewRoute);
+              Navigator.pushNamed(context, RouteConstants.userDetailsViewRoute);
+
             },
           ),
           IconButton(
@@ -56,7 +63,10 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfile(firestore: firestore, auth: auth)));
+              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserProfile()));
+              Navigator.pushNamed(context, RouteConstants.userDetailsViewRoute, arguments: <String,String>{
+                'email': 'x@g.com'
+              });
             },
           ),
         ],

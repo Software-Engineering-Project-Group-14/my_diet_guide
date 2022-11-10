@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/models/Calorie_Calculator.dart';
 
-class UserBiometrics{
+import 'Model.dart';
+
+class UserBiometrics extends Model{
 
   final String user_id;
   final String gender;
