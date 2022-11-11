@@ -23,12 +23,12 @@ class ChangePlan extends StatefulWidget {
 
 class _ChangePlanState extends State<ChangePlan> {
 
-  late Stream<DietPlanModel> currentPlanStream;
+  late Stream<DietPlanModel?> currentPlanStream;
   late Stream<UserBiometrics> userBiometricsStream;
 
   @override
   void initState() {
-    currentPlanStream = DietPlanModel.getDietPlanForUser(user_id:Controller.auth!.currentUser!.uid).asStream() as Stream<DietPlanModel>;
+    currentPlanStream = DietPlanModel.getDietPlanForUser(user_id:Controller.auth!.currentUser!.uid).asStream();
     userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:Controller.auth!.currentUser!.uid).asStream();
     super.initState();
   }
@@ -52,9 +52,9 @@ class _ChangePlanState extends State<ChangePlan> {
                 BlurredBackground(),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: StreamBuilder<DietPlanModel>(
+                  child: StreamBuilder<DietPlanModel?>(
                     stream: currentPlanStream,
-                    builder: (context, AsyncSnapshot<DietPlanModel> snapshot) {
+                    builder: (context, AsyncSnapshot<DietPlanModel?> snapshot) {
                       if (snapshot.hasError) {
                         return const Text(
                           'Something went wrong',
@@ -69,7 +69,14 @@ class _ChangePlanState extends State<ChangePlan> {
                         );
                       }
                       //print("\nCurrent plan snapshot");
-
+                      if (snapshot.data == null) {
+                        return const Text(
+                          'No diet plan is selected by user',
+                          style: TextStyle(
+                              color: Colors.white
+                          ),
+                        );
+                      }
                       DietPlanModel currentPlan = snapshot.data!;
                       //  final currentPlan = snapshot.data;
                       //  print(currentPlan);
