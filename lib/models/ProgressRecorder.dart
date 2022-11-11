@@ -1,13 +1,7 @@
-
-
-
-//import 'dart:html';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_diet_guide/common/messgae_constants.dart';
 import 'package:my_diet_guide/models/Calorie_Calculator.dart';
-
 import 'Model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProgressRecorder extends Model{
 
