@@ -10,6 +10,7 @@ class MessageConstants{
   static const String invalidBreakfastId = 'invalid BreakfastId id';
   static const String invalidLunchId = 'invalid Lunch id';
   static const String invalidDinnerId = 'invalid Dinner id';
+  static const String invalidProgressRecord = "Undefined progress at recordProgress at ProgressRecorder";
 
 
 

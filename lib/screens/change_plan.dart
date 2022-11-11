@@ -28,7 +28,7 @@ class _ChangePlanState extends State<ChangePlan> {
 
   @override
   void initState() {
-    currentPlanStream = DietPlanModel.getDietPlanForUser(user_id:Controller.auth!.currentUser!.uid).asStream();
+    currentPlanStream = DietPlanModel.getDietPlanForUser(user_id:Controller.auth!.currentUser!.uid).asStream() as Stream<DietPlanModel>;
     userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:Controller.auth!.currentUser!.uid).asStream();
     super.initState();
   }

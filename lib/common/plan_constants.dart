@@ -36,6 +36,13 @@ class PlanConstants{
     "Female"
   ];
 
+  static const List<String> recordProgressValues = [
+    "Did not complete",
+    "Partially Completed",
+    "Completed",
+    "Over ate"
+  ];
+
   static String getRandomActiveness(){
     return activenessValues[Random().nextInt(activenessValues.length)];
   }

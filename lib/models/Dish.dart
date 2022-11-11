@@ -43,7 +43,7 @@ class Dish extends Model{
     required double calorie_gain_per_meal,  
   })async{
     try{
-      await Model.firestore!.collection("diet_plan").doc(name).set({
+      await Model.firestore!.collection("dish").doc(name).set({
         "name": name,
         "description": description,
         "dietary_preference": dietary_preference,
@@ -65,7 +65,7 @@ class Dish extends Model{
 
   static Future<Dish?> get(String name)async{
     try{
-      DocumentSnapshot ds = await Model.firestore!.collection("diet_plan").doc(name).get();
+      DocumentSnapshot ds = await Model.firestore!.collection("dish").doc(name).get();
         return Dish(
             name: ds["name"],
             description: ds["description"],
