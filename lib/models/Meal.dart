@@ -46,11 +46,10 @@ class Meal extends Model{
     return "$type  Meal id:$id  Calorie gain:$calorie_gain_per_meal_per_week";
   }
   
-  static Future<Meal?> add({
+  static Future<Map<String,dynamic>> add({
     required String type,
     required String activeness,
     required String age_group,
-   // required double calorie_gain_per_meal_per_week,
     required String gender,
     required String intensity,
     required String monday_dish_id,
@@ -62,7 +61,9 @@ class Meal extends Model{
     required String sunday_dish_id,
     required String dietary_preference
   }) async{
-  try{
+    bool success;
+    String? msg;
+    int? id;
     DocumentSnapshot ds = await Model.firestore!.collection(type).doc("nextId").get();
     int nextId;
     if(ds.data()==null){
@@ -102,27 +103,13 @@ class Meal extends Model{
     });
     await Model.firestore!.collection(type).doc("nextId").set(
         {"id":nextId+1}, SetOptions(merge: true));
-    return Meal(
-        id: (nextId).toString(),
-        type: type,
-        activeness: activeness,
-        age_group: age_group,
-        calorie_gain_per_meal_per_week: Sum,
-        gender: gender,
-        intensity: intensity,
-        monday_dish_id: monday_dish_id,
-        tuesday_dish_id: tuesday_dish_id,
-        wednesday_dish_id: wednesday_dish_id,
-        thursday_dish_id: thursday_dish_id,
-        friday_dish_id: friday_dish_id,
-        saturday_dish_id: saturday_dish_id,
-        sunday_dish_id: sunday_dish_id,
-        dietary_preference: dietary_preference
-    );
-
-  }catch(error){
-    return null;
-  }
+    success = true;
+    id = nextId;
+  return {
+    'success':success,
+    'msg':msg,
+    'id':id
+  };
 }
 
   static Future<Meal?> get(String id, String type)async{

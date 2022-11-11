@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../common/constants.dart';
+import '../common/image_path_constants.dart';
 import 'Model.dart';
 
 

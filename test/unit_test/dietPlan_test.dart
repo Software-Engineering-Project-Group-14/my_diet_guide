@@ -1,8 +1,11 @@
 
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:my_diet_guide/common/messgae_constants.dart';
+import 'package:my_diet_guide/common/plan_constants.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
 import 'package:my_diet_guide/models/Dish.dart';
 import 'package:my_diet_guide/models/Meal.dart';
@@ -107,7 +110,8 @@ Future<List<double>> addSampleMeals() async {
   String friday_dish_id = "Dish $i";
   String saturday_dish_id = "Dish $i";
   String sunday_dish_id = "Dish $i";
-  Meal? meal = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
+  final res = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
+  Meal? meal = await Meal.get(res['id'].toString(), type);
   week_calories.add(meal!.calorie_gain_per_meal_per_week);
   type = 'lunch';
   i = 2;
@@ -118,8 +122,9 @@ Future<List<double>> addSampleMeals() async {
   friday_dish_id = "Dish $i";
   saturday_dish_id = "Dish $i";
   sunday_dish_id = "Dish $i";
-  week_calories.add(calorieValues[i] * 7);
-  meal = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
+  final res2 = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
+  meal = await Meal.get(res2['id'].toString(), type);
+  week_calories.add(meal!.calorie_gain_per_meal_per_week);
   type = 'dinner';
   i = 3;
   monday_dish_id = "Dish $i";
@@ -129,9 +134,28 @@ Future<List<double>> addSampleMeals() async {
   friday_dish_id = "Dish $i";
   saturday_dish_id = "Dish $i";
   sunday_dish_id = "Dish $i";
-  meal = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
+  final res3 = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
+  meal = await Meal.get(res3['id'].toString(), type);
   week_calories.add(meal!.calorie_gain_per_meal_per_week);
   return week_calories;
+}
+
+Future<List<String>> addSamplePlans() async{
+  List<String> ids = [];
+  List<double> calorieValues = await addSampleMeals();
+  String activeness = 'Active';
+  String age_group = '61-75';
+  String gender = "Male";
+  String intensity = 'Difficult';
+  String dietary_preference = 'Vegetarian';
+  String breakfastMeal = '1';
+  String lunchMeal = '1';
+  String dinnerMeal = '1';
+  final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+  ids.add(res['id'].toString());
+  final res2 = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+  ids.add(res2['id'].toString());
+  return ids;
 }
 
 void main() async{
@@ -293,18 +317,22 @@ void main() async{
       String saturday_dish_id = "Dish $i";
       String sunday_dish_id = "Dish $i";
       double calorie_gain_per_meal_per_week =     calorieValues[i] * 7;
-      Meal? meal = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
-      bool val;
-      if(meal==null){
-        val = false;
-      }else{
-       // print(meal.id);
-        int id = int.parse(meal.id);
-        meal = await Meal.get(id.toString(), type);
-        //print(calorie_gain_per_meal_per_week.toDouble()==);
-        val = meal!=null && id==int.parse(meal.id) && activeness==meal.activeness && age_group==meal.age_group && gender==meal.gender && intensity==meal.intensity && dietary_preference==meal.dietary_preference && monday_dish_id==meal.monday_dish_id && tuesday_dish_id==meal.tuesday_dish_id && wednesday_dish_id==meal.wednesday_dish_id && thursday_dish_id==meal.thursday_dish_id && friday_dish_id==meal.friday_dish_id && saturday_dish_id==meal.saturday_dish_id && sunday_dish_id==meal.sunday_dish_id && calorie_gain_per_meal_per_week.toDouble()==meal.calorie_gain_per_meal_per_week.toDouble() ;
-      }
-      expect(val, true);
+      final res = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
+      expect(res['success'], true);
+      Meal? meal = await Meal.get(res['id'].toString(), type);
+      expect(meal!.activeness,activeness);
+      expect(meal.age_group, age_group);
+      expect(meal.gender, gender);
+      expect(meal.intensity, intensity);
+      expect(meal.dietary_preference, dietary_preference);
+      expect(meal.monday_dish_id, monday_dish_id) ;
+      expect(meal.tuesday_dish_id, tuesday_dish_id) ;
+      expect(meal.wednesday_dish_id, wednesday_dish_id) ;
+      expect(meal.thursday_dish_id, thursday_dish_id) ;
+      expect(meal.friday_dish_id, friday_dish_id) ;
+      expect(meal.saturday_dish_id, saturday_dish_id) ;
+      expect(meal.sunday_dish_id, sunday_dish_id) ;
+      expect(meal.calorie_gain_per_meal_per_week.toDouble(),calorie_gain_per_meal_per_week.toDouble());
     });
     test("Add Meal 2", ()async{
       List<double> calorieValues = await addSampleDishes();
@@ -323,18 +351,22 @@ void main() async{
       String saturday_dish_id = "Dish $i";
       String sunday_dish_id = "Dish $i";
       double calorie_gain_per_meal_per_week =     calorieValues[i] * 7;
-      Meal? meal = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
-      bool val;
-      if(meal==null){
-        val = false;
-      }else{
-        // print(meal.id);
-        int id = int.parse(meal.id);
-        meal = await Meal.get(id.toString(), type);
-        //print(calorie_gain_per_meal_per_week.toDouble()==);
-        val = meal!=null && id==int.parse(meal.id) && activeness==meal.activeness && age_group==meal.age_group && gender==meal.gender && intensity==meal.intensity && dietary_preference==meal.dietary_preference && monday_dish_id==meal.monday_dish_id && tuesday_dish_id==meal.tuesday_dish_id && wednesday_dish_id==meal.wednesday_dish_id && thursday_dish_id==meal.thursday_dish_id && friday_dish_id==meal.friday_dish_id && saturday_dish_id==meal.saturday_dish_id && sunday_dish_id==meal.sunday_dish_id && calorie_gain_per_meal_per_week.toDouble()==meal.calorie_gain_per_meal_per_week.toDouble() ;
-      }
-      expect(val, true);
+      final res = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
+      expect(res['success'], true);
+      Meal? meal = await Meal.get(res['id'].toString(), type);
+      expect(meal!.activeness,activeness);
+      expect(meal.age_group, age_group);
+      expect(meal.gender, gender);
+      expect(meal.intensity, intensity);
+      expect(meal.dietary_preference, dietary_preference);
+      expect(meal.monday_dish_id, monday_dish_id) ;
+      expect(meal.tuesday_dish_id, tuesday_dish_id) ;
+      expect(meal.wednesday_dish_id, wednesday_dish_id) ;
+      expect(meal.thursday_dish_id, thursday_dish_id) ;
+      expect(meal.friday_dish_id, friday_dish_id) ;
+      expect(meal.saturday_dish_id, saturday_dish_id) ;
+      expect(meal.sunday_dish_id, sunday_dish_id) ;
+      expect(meal.calorie_gain_per_meal_per_week.toDouble(),calorie_gain_per_meal_per_week.toDouble());
     });
     test("Add Meal 3", ()async{
       List<double> calorieValues = await addSampleDishes();
@@ -353,24 +385,28 @@ void main() async{
       String saturday_dish_id = "Dish $i";
       String sunday_dish_id = "Dish $i";
       double calorie_gain_per_meal_per_week =     calorieValues[i] * 7;
-      Meal? meal = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
-      bool val;
-      if(meal==null){
-        val = false;
-      }else{
-        // print(meal.id);
-        int id = int.parse(meal.id);
-        meal = await Meal.get(id.toString(), type);
-        //print(calorie_gain_per_meal_per_week.toDouble()==);
-        val = meal!=null && id==int.parse(meal.id) && activeness==meal.activeness && age_group==meal.age_group && gender==meal.gender && intensity==meal.intensity && dietary_preference==meal.dietary_preference && monday_dish_id==meal.monday_dish_id && tuesday_dish_id==meal.tuesday_dish_id && wednesday_dish_id==meal.wednesday_dish_id && thursday_dish_id==meal.thursday_dish_id && friday_dish_id==meal.friday_dish_id && saturday_dish_id==meal.saturday_dish_id && sunday_dish_id==meal.sunday_dish_id && calorie_gain_per_meal_per_week.toDouble()==meal.calorie_gain_per_meal_per_week.toDouble() ;
-      }
-      expect(val, true);
+      final res = await Meal.add(type: type, activeness: activeness, age_group: age_group, gender: gender, intensity: intensity, monday_dish_id: monday_dish_id, tuesday_dish_id: tuesday_dish_id, wednesday_dish_id: wednesday_dish_id, thursday_dish_id: thursday_dish_id, friday_dish_id: friday_dish_id, saturday_dish_id: saturday_dish_id, sunday_dish_id: sunday_dish_id, dietary_preference: dietary_preference);
+      expect(res['success'], true);
+      Meal? meal = await Meal.get(res['id'].toString(), type);
+      expect(meal!.activeness,activeness);
+      expect(meal.age_group, age_group);
+      expect(meal.gender, gender);
+      expect(meal.intensity, intensity);
+      expect(meal.dietary_preference, dietary_preference);
+      expect(meal.monday_dish_id, monday_dish_id) ;
+      expect(meal.tuesday_dish_id, tuesday_dish_id) ;
+      expect(meal.wednesday_dish_id, wednesday_dish_id) ;
+      expect(meal.thursday_dish_id, thursday_dish_id) ;
+      expect(meal.friday_dish_id, friday_dish_id) ;
+      expect(meal.saturday_dish_id, saturday_dish_id) ;
+      expect(meal.sunday_dish_id, sunday_dish_id) ;
+      expect(meal.calorie_gain_per_meal_per_week.toDouble(),calorie_gain_per_meal_per_week.toDouble());
     });
   });
 
   group('Add diet plan', (){
-    Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
     test('Add diet plan 1', ()async{
+      Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
       List<double> calorieValues = await addSampleMeals();
       int i = 1;
       String activeness = 'Active';
@@ -382,32 +418,23 @@ void main() async{
       String lunchMeal = '1';
       String dinnerMeal = '1';
       double calorie_gain_per_plan_per_week =     calorieValues[1]+calorieValues[2]+calorieValues[3];
-      DietPlanModel? dietPlanModel = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
-      bool val;
-
-      if(dietPlanModel==null){
-        val = false;
-      }else{
-        int id = int.parse(dietPlanModel.planId);
-        dietPlanModel = await DietPlanModel.get(id.toString());
-        val = dietPlanModel!=null && 
-            id==int.parse(dietPlanModel.planId) && 
-            activeness==dietPlanModel.activeness && 
-            age_group==dietPlanModel.age_group && 
-            gender==dietPlanModel.gender && 
-            intensity==dietPlanModel.intensity && 
-            dietary_preference==dietPlanModel.dietary_preference  && 
-            breakfastMeal==dietPlanModel.breakfast_id && 
-            lunchMeal==dietPlanModel.lunch_id && 
-            dinnerMeal==dietPlanModel.dinner_id &&
-            calorie_gain_per_plan_per_week==dietPlanModel.calorie_gain_per_plan_per_week;
-      }
-      expect(val, true);
+      final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+      expect(res['success'], true);
+      DietPlanModel? dietPlanModel = await DietPlanModel.get(res['id'].toString());
+      expect(dietPlanModel!.activeness,activeness);
+      expect( dietPlanModel.age_group,age_group);
+      expect(dietPlanModel.gender,gender);
+      expect(dietPlanModel.intensity,intensity);
+      expect(dietPlanModel.dietary_preference,dietary_preference);
+      expect(dietPlanModel.breakfast_id,breakfastMeal);
+      expect(dietPlanModel.lunch_id,lunchMeal);
+      expect(dietPlanModel.dinner_id,dinnerMeal);
+      expect(dietPlanModel.calorie_gain_per_plan_per_week,calorie_gain_per_plan_per_week);
 
     });
     test('Add diet plan 2', ()async{
+      Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
       List<double> calorieValues = await addSampleMeals();
-      int i = 2;
       String activeness = 'Not very active';
       String age_group = '61-75';
       String gender = "Male";
@@ -417,82 +444,246 @@ void main() async{
       String lunchMeal = '1';
       String dinnerMeal = '1';
       double calorie_gain_per_plan_per_week =     calorieValues[1]+calorieValues[2]+calorieValues[3];
-      DietPlanModel? dietPlanModel = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
-      bool val;
+      final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+      expect(res['success'], true);
 
-      if(dietPlanModel==null){
-        val = false;
-      }else{
-        int id = int.parse(dietPlanModel.planId);
-        dietPlanModel = await DietPlanModel.get(id.toString());
-        val = dietPlanModel!=null &&
-            id==int.parse(dietPlanModel.planId) &&
-            activeness==dietPlanModel.activeness &&
-            age_group==dietPlanModel.age_group &&
-            gender==dietPlanModel.gender &&
-            intensity==dietPlanModel.intensity &&
-            dietary_preference==dietPlanModel.dietary_preference  &&
-            breakfastMeal==dietPlanModel.breakfast_id &&
-            lunchMeal==dietPlanModel.lunch_id &&
-            dinnerMeal==dietPlanModel.dinner_id &&
-            calorie_gain_per_plan_per_week==dietPlanModel.calorie_gain_per_plan_per_week;
-      }
-      expect(val, true);
-
+      DietPlanModel? dietPlanModel = await DietPlanModel.get(res['id'].toString());
+      expect(dietPlanModel!.activeness,activeness);
+      expect( dietPlanModel.age_group,age_group);
+      expect(dietPlanModel.gender,gender);
+      expect(dietPlanModel.intensity,intensity);
+      expect(dietPlanModel.dietary_preference,dietary_preference);
+      expect(dietPlanModel.breakfast_id,breakfastMeal);
+      expect(dietPlanModel.lunch_id,lunchMeal);
+      expect(dietPlanModel.dinner_id,dinnerMeal);
+      expect(dietPlanModel.calorie_gain_per_plan_per_week,calorie_gain_per_plan_per_week);
     });
     group('invalid inputs', (){
-      test('invalid activeness', (){
-        expect(1,1);
+      test('invalid activeness', ()async{
+        Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
+        await addSampleMeals();
+        String activeness = 'not very active';
+        String age_group = PlanConstants.getRandomAgeGroup();
+        String gender = PlanConstants.getRandomGender();
+        String intensity = PlanConstants.getRandomIntensity();
+        String dietary_preference = PlanConstants.getRandomDietaryPreferences();
+        String breakfastMeal = '1';
+        String lunchMeal = '1';
+        String dinnerMeal = '1';
+        final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+        expect(res['success'], false);
+        expect(res['msg'], MessageConstants.invalidActiveness);
       });
-      test('invalid age_group', (){
-        expect(1,1);
+      test('invalid age_group', ()async{
+        Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
+        await addSampleMeals();
+        String activeness = PlanConstants.getRandomActiveness();
+        String age_group = '64-75';
+        String gender = PlanConstants.getRandomGender();
+        String intensity = PlanConstants.getRandomIntensity();
+        String dietary_preference = PlanConstants.getRandomDietaryPreferences();
+        String breakfastMeal = '1';
+        String lunchMeal = '1';
+        String dinnerMeal = '1';
+        final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+        expect(res['success'], false);
+        expect(res['msg'], MessageConstants.invalidAgeGroup);
       });
-      test('invalid activeness', (){
-        expect(1,1);
       });
-      test('invalid dietary_preference', (){
-        expect(1,1);
+      test('invalid dietary_preference', ()async{
+        Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
+        await addSampleMeals();
+        String activeness = PlanConstants.getRandomActiveness();
+        String age_group = PlanConstants.getRandomAgeGroup();
+        String gender = PlanConstants.getRandomGender();
+        String intensity = PlanConstants.getRandomIntensity();
+        String dietary_preference = 'Vegetaian';
+        String breakfastMeal = '1';
+        String lunchMeal = '1';
+        String dinnerMeal = '1';
+        final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+        expect(res['success'], false);
+        expect(res['msg'], MessageConstants.invalidDietaryPreference);
       });
       test('invalid gender', (){
         expect(1,1);
       });
-      test('invalid intensity', (){
-        expect(1,1);
+      test('invalid intensity', ()async{
+        Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
+        await addSampleMeals();
+        String activeness = PlanConstants.getRandomActiveness();
+        String age_group = PlanConstants.getRandomAgeGroup();
+        String gender = PlanConstants.getRandomGender();
+        String intensity = 'Diffcult';
+        String dietary_preference = PlanConstants.getRandomDietaryPreferences();
+        String breakfastMeal = '1';
+        String lunchMeal = '1';
+        String dinnerMeal = '1';
+        final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+        expect(res['success'], false);
+        expect(res['msg'], MessageConstants.invalidIntensity);
       });
-      test('invalid breakfastMeal', (){
-        expect(1,1);
+      test('invalid breakfastMeal', ()async{
+        Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
+        await addSampleMeals();
+        String activeness = PlanConstants.getRandomActiveness();
+        String age_group = PlanConstants.getRandomAgeGroup();
+        String gender = PlanConstants.getRandomGender();
+        String intensity = PlanConstants.getRandomIntensity();
+        String dietary_preference = PlanConstants.getRandomDietaryPreferences();
+        String breakfastMeal = '10';
+        String lunchMeal = '1';
+        String dinnerMeal = '1';
+        final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+        expect(res['success'], false);
+        expect(res['msg'], MessageConstants.invalidBreakfastId);
       });
-      test('invalid lunchMeal', (){
-        expect(1,1);
+      test('invalid lunchMeal', ()async{
+        Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
+        await addSampleMeals();
+        String activeness = PlanConstants.getRandomActiveness();
+        String age_group = PlanConstants.getRandomAgeGroup();
+        String gender = PlanConstants.getRandomGender();
+        String intensity = PlanConstants.getRandomIntensity();
+        String dietary_preference = PlanConstants.getRandomDietaryPreferences();
+        String breakfastMeal = '1';
+        String lunchMeal = '10';
+        String dinnerMeal = '1';
+        final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+        expect(res['success'], false);
+        expect(res['msg'], MessageConstants.invalidLunchId);
       });
-      test('invalid dinnerMeal', (){
-        expect(1,1);
+      test('invalid dinnerMeal', ()async{
+        Model.init(auth: MockFirebaseAuth(), firestore: FakeFirebaseFirestore());
+        await addSampleMeals();
+        String activeness = PlanConstants.getRandomActiveness();
+        String age_group = PlanConstants.getRandomAgeGroup();
+        String gender = PlanConstants.getRandomGender();
+        String intensity = PlanConstants.getRandomIntensity();
+        String dietary_preference = PlanConstants.getRandomDietaryPreferences();
+        String breakfastMeal = '1';
+        String lunchMeal = '1';
+        String dinnerMeal = '10';
+        final res = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+        expect(res['success'], false);
+        expect(res['msg'], MessageConstants.invalidDinnerId);
       });
-
-    });
   });
 
   group('Select diet plan', (){
-    final firestore = FakeFirebaseFirestore();
-
-    test('valid inputs', (){
-      expect(1,1);
+    test('valid inputs', ()async{
+      final firestore = FakeFirebaseFirestore();String uid = 'rhaenys2';
+      String email = 'rhaenys@meeleys.com';
+      String birthday = "1987/10/11";
+      String firstName = "Rhenys";
+      String lastName = "Targaryen";
+      final auth = MockFirebaseAuth(
+          mockUser: MockUser(
+            isAnonymous: false,
+            uid: uid,
+            email: email,
+            displayName: 'Rhaenys',
+          ),
+          signedIn: true
+      );
+      Model.init(auth: auth, firestore: firestore);
+      await firestore.collection('user').doc(uid).set({
+        'birthday': birthday,
+        'email':email,
+        'first name':firstName,
+        'last name':lastName,
+        'user_id':uid
+      });
+      List<String> ids = await addSamplePlans();
+      expect(ids.length, 2);
+      DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
+      bool val = await dietPlanModel!.select(user_id: uid);
+      expect(val, true);
+      final ds = await firestore.collection('user').doc(uid).get();
+      expect(ds['current_plan'], ids[0]);
     });
-    test('invalid inputs', ()
-    {
-        expect(1, 1);
+    test('invalid inputs', () async{
+      final firestore = FakeFirebaseFirestore();
+      Model.init(auth: MockFirebaseAuth(), firestore: firestore);
+      List<String> ids = await addSamplePlans();
+      expect(ids.length, 2);
+      DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
+      bool val = await dietPlanModel!.select(user_id: "adsasdds");
+      expect(val, false);
     });
   });
 
   group('Change diet plan', (){
-    final firestore = FakeFirebaseFirestore();
 
-    test('valid inputs', (){
-      expect(1,1);
+    test('valid inputs', ()async{
+      final firestore = FakeFirebaseFirestore();String uid = 'rhaenys2';
+      String email = 'rhaenys@meeleys.com';
+      String birthday = "1987/10/11";
+      String firstName = "Rhenys";
+      String lastName = "Targaryen";
+      final auth = MockFirebaseAuth(
+          mockUser: MockUser(
+            isAnonymous: false,
+            uid: uid,
+            email: email,
+            displayName: 'Rhaenys',
+          ),
+          signedIn: true
+      );
+      Model.init(auth: auth, firestore: firestore);
+      await firestore.collection('user').doc(uid).set({
+        'birthday': birthday,
+        'email':email,
+        'first name':firstName,
+        'last name':lastName,
+        'user_id':uid
+      });
+      List<String> ids = await addSamplePlans();
+      expect(ids.length, 2);
+      DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
+      bool val = await dietPlanModel!.select(user_id: uid);
+      expect(val, true);
+      DocumentSnapshot ds = await firestore.collection('user').doc(uid).get();
+      expect(ds['current_plan'], ids[0]);
+      dietPlanModel = await DietPlanModel.get(ids[1]);
+      val = await dietPlanModel!.select(user_id: uid);
+      expect(val, true);
+      ds = await firestore.collection('user').doc(uid).get();
+      expect(ds['current_plan'], ids[1]);
     });
-    test('invalid inputs', ()
-    {
-      expect(1,1);
+    test('invalid inputs', () async{
+      final firestore = FakeFirebaseFirestore();String uid = 'rhaenys2';
+      String email = 'rhaenys@meeleys.com';
+      String birthday = "1987/10/11";
+      String firstName = "Rhenys";
+      String lastName = "Targaryen";
+      final auth = MockFirebaseAuth(
+          mockUser: MockUser(
+            isAnonymous: false,
+            uid: uid,
+            email: email,
+            displayName: 'Rhaenys',
+          ),
+          signedIn: true
+      );
+      Model.init(auth: auth, firestore: firestore);
+      await firestore.collection('user').doc(uid).set({
+        'birthday': birthday,
+        'email':email,
+        'first name':firstName,
+        'last name':lastName,
+        'user_id':uid
+      });
+      List<String> ids = await addSamplePlans();
+      expect(ids.length, 2);
+      DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
+      bool val = await dietPlanModel!.select(user_id: uid);
+      expect(val, true);
+      DocumentSnapshot ds = await firestore.collection('user').doc(uid).get();
+      expect(ds['current_plan'], ids[0]);
+      dietPlanModel = await DietPlanModel.get(ids[1]);
+      val = await dietPlanModel!.select(user_id: "sasfafsafs");
+      expect(val, false);
     });
   });
 
@@ -500,55 +691,100 @@ void main() async{
   group('Get the current diet plan for user', (){
     final firestore = FakeFirebaseFirestore();
 
-    test('User with a diet plan', (){
-      expect(1,1);
+    test('User with a diet plan', () async {
+      final firestore = FakeFirebaseFirestore();String uid = 'rhaenys2';
+      String email = 'rhaenys@meeleys.com';
+      String birthday = "1987/10/11";
+      String firstName = "Rhenys";
+      String lastName = "Targaryen";
+      final auth = MockFirebaseAuth(
+          mockUser: MockUser(
+            isAnonymous: false,
+            uid: uid,
+            email: email,
+            displayName: 'Rhaenys',
+          ),
+          signedIn: true
+      );
+      Model.init(auth: auth, firestore: firestore);
+      await firestore.collection('user').doc(uid).set({
+        'birthday': birthday,
+        'email':email,
+        'first name':firstName,
+        'last name':lastName,
+        'user_id':uid
+      });
+      List<String> ids = await addSamplePlans();
+      expect(ids.length, 2);
+      DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
+      bool val = await dietPlanModel!.select(user_id: uid);
+      expect(val, true);
+      DocumentSnapshot ds = await firestore.collection('user').doc(uid).get();
+      expect(ds['current_plan'], ids[0]);
+      DietPlanModel? dietPlanModel2 = await DietPlanModel.getDietPlanForUser(user_id: uid);
+      expect(dietPlanModel.planId, dietPlanModel2!.planId);
     });
-    test('User without diet plan', (){
-      expect(1,1);
+    test('User without diet plan', () async {
+      final firestore = FakeFirebaseFirestore();String uid = 'rhaenys2';
+      String email = 'rhaenys@meeleys.com';
+      String birthday = "1987/10/11";
+      String firstName = "Rhenys";
+      String lastName = "Targaryen";
+      final auth = MockFirebaseAuth(
+          mockUser: MockUser(
+            isAnonymous: false,
+            uid: uid,
+            email: email,
+            displayName: 'Rhaenys',
+          ),
+          signedIn: true
+      );
+      Model.init(auth: auth, firestore: firestore);
+      await firestore.collection('user').doc(uid).set({
+        'birthday': birthday,
+        'email':email,
+        'first name':firstName,
+        'last name':lastName,
+        'user_id':uid
+      });
+      List<String> ids = await addSamplePlans();
+      expect(ids.length, 2);
+      DietPlanModel? dietPlanModel = await DietPlanModel.getDietPlanForUser(user_id: uid);
+      expect(dietPlanModel, null);
     });
     test('invalid inputs', ()
-    {
-      expect(1,1);
-    });
-  });
-
-
-
-}
-
-
-/*
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: "AIzaSyBG6hB8dbhSyv4wnMM08rPCGVX-ttX8tNY",
-        appId: "1:946107548040:android:dd03aea3530fcabeedba3d",
-        messagingSenderId: "946107548040",
-        projectId: "my-diet-guide-14",
-      )
-  );
-  group('Testing Diet Plan Model', () {
-    test('Diet Plan Adding', () async{
-      String? val = await DietPlanModel.add(
-        activeness: "Moderately active",
-          age_group: "19-25",
-          dietary_preference: "Low carb",
-          gender: "Male",
-          intensity: "Standard",
-          breakfastMeal: "4",
-          lunchMeal: "24",
-          dinnerMeal: "4"
+    async {
+      final firestore = FakeFirebaseFirestore();String uid = 'rhaenys2';
+      String email = 'rhaenys@meeleys.com';
+      String birthday = "1987/10/11";
+      String firstName = "Rhenys";
+      String lastName = "Targaryen";
+      final auth = MockFirebaseAuth(
+          mockUser: MockUser(
+            isAnonymous: false,
+            uid: uid,
+            email: email,
+            displayName: 'Rhaenys',
+          ),
+          signedIn: true
       );
-      bool exists = false;
-      if(val!=null){
-        final doc = await FirebaseFirestore.instance.collection('UserData').doc(val.toString()).get();
-        exists = doc.exists;
-      }
-     expect(exists, true);
+      Model.init(auth: auth, firestore: firestore);
+      await firestore.collection('user').doc(uid).set({
+        'birthday': birthday,
+        'email':email,
+        'first name':firstName,
+        'last name':lastName,
+        'user_id':uid
+      });
+      List<String> ids = await addSamplePlans();
+      expect(ids.length, 2);
+      DietPlanModel? dietPlanModel = await DietPlanModel.getDietPlanForUser(user_id: uid);
+      expect(dietPlanModel, null);
     });
   });
 
+
+
 }
 
-*/
+
