@@ -1,22 +1,22 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_diet_guide/screens/web_screens/admin_login.dart';
+import 'package:my_diet_guide/screens/web_screens/web_login.dart';
 
 import '../../common/route_constants.dart';
 import '../../controllers/Controller.dart';
 import '../../widgets/background_image.dart';
-import '../../widgets/palatte.dart';
 import '../signup.dart';
 
-class WebLogin extends StatefulWidget {
-  const WebLogin({Key? key}) : super(key: key);
+class AdminLogin extends StatefulWidget {
+  const AdminLogin({Key? key}) : super(key: key);
 
   @override
-  State<WebLogin> createState() => _WebLoginState();
+  State<AdminLogin> createState() => _AdminLoginState();
 }
 
-class _WebLoginState extends State<WebLogin> {
+class _AdminLoginState extends State<AdminLogin> {
+
   final _formKey = GlobalKey<FormState>();
 
   String _error = '';
@@ -238,7 +238,7 @@ class _WebLoginState extends State<WebLogin> {
                                 ),
                                 child: const Center(
                                   child: Text(
-                                    'Log In',
+                                    'Admin Log In',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight:FontWeight.bold,
@@ -268,35 +268,6 @@ class _WebLoginState extends State<WebLogin> {
                       ),
                     ),
 
-                    const SizedBox(height: 0),
-
-                    // not a member? register now
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Not a member?',
-                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 18),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_){
-                                  return SignUp();
-                                }
-                            ));
-                          },
-                          child: Text(' Register Now',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.teal.shade900,
-                              fontSize: 18
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
 
                     SizedBox(height: 40,),
 
@@ -310,7 +281,7 @@ class _WebLoginState extends State<WebLogin> {
                             onTap: (){
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_){
-                                    return AdminLogin();
+                                    return WebLogin();
                                   }
                               ));
                             },
@@ -322,7 +293,7 @@ class _WebLoginState extends State<WebLogin> {
                               ),
                               child: const Center(
                                 child: Text(
-                                  'Admin ?',
+                                  'User ?',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight:FontWeight.bold,
