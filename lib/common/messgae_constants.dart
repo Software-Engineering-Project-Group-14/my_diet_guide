@@ -12,7 +12,10 @@ class MessageConstants{
   static const String invalidDinnerId = 'invalid Dinner id';
   static const String invalidProgressRecord = "Undefined progress at recordProgress at ProgressRecorder";
 
+  static const String NoRegisteredPlan = "There is no registered plan for you yet. Select a plan.";
+  static const String noRecommendedPlan = "There are no available diet plans for your biometrics.";
 
+  static const String errorMessage = "An error occurred";
 
 
 }

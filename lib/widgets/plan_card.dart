@@ -1,69 +1,74 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:my_diet_guide/models/DietPlan.dart';
 
-import '../models/DietPlan.dart';
+class PlanCard extends StatelessWidget {
 
-class PlanCard extends StatefulWidget {
-  DietPlanModel dietPlanModel;
+  final DietPlanModel dietPlanModel;
 
-  PlanCard({Key? key, required this.dietPlanModel}) : super(key: key);
-
-  @override
-  State<PlanCard> createState() => _PlanCardState();
-}
-
-class _PlanCardState extends State<PlanCard> {
-  var plan;
-
-  @override
-  void initState() {
-    this.plan = widget.dietPlanModel;
-    super.initState();
-  }
+  const PlanCard({Key? key, required this.dietPlanModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Card(
-        color: Colors.white,
-        borderOnForeground: true,
-        elevation: 10,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              leading: Container(
-                child: Image(
-                  image: AssetImage('assets/images/diet_plan/' + plan.img),
-                  fit: BoxFit.cover,
-                  //width: 110,
-                  //height: 110,
-                ),
-              ),
-              title: Center(child: Text("Plan ${plan.planId}", style: TextStyle(color: Colors.green, fontSize: 20))),
-              subtitle: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Column(
-                    children: [
-                      Text(
-                        'Intensity Level: ' + plan.intensity,
-                        style: TextStyle(color: Colors.red, fontSize: 15),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'For ' + plan.activeness + ' users',
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      )
-                    ],
-                  )
-
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Colors.white24, Colors.white10],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight
+          ),
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(width: 2, color: Colors.white10)
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Plan ${dietPlanModel.planId}', style: const TextStyle(fontSize: 19, color: Colors.white, fontWeight: FontWeight.bold), textAlign: TextAlign.left,),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(dietPlanModel.dietary_preference, style: const TextStyle(fontSize: 16, color: Colors.white), textAlign: TextAlign.left,),
+                  ),
                 ],
               ),
+
+              const SizedBox(height: 20,),
+
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      Text("Intensity : ${dietPlanModel.intensity} ", style: TextStyle(color: Colors.white, fontSize: 16),),
+
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Image(
+                  image: AssetImage(dietPlanModel.img),
+                  fit: BoxFit.cover,
+                  width: 100,
+                  height: 100,
+                ),
+              ),
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

@@ -29,8 +29,8 @@ class _DietPlanControllerState  extends State<DietPlanController>{
     switch(widget.subRoute){
 
       case RouteConstants.planSelectSubRoute:{
-        final userBiometrics = widget.arguments as UserBiometrics;
-        page = SelectPlan(userBiometrics: userBiometrics);
+
+        page = SelectPlan();
       }
       break;
 
