@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/screens/dashboard_change.dart';
+import 'package:my_diet_guide/screens/web_screens/web_signup.dart';
 import '../../common/route_constants.dart';
 import '../../controllers/Controller.dart';
 import '../../widgets/background_image.dart';
@@ -282,7 +283,7 @@ class _WebLoginState extends State<WebLogin> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_){
-                                  return SignUp();
+                                  return WebSignUp();
                                 }
                             ));
                           },

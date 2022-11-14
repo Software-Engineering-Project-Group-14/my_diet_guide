@@ -9,6 +9,7 @@ import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/dashboard_change.dart';
 import 'package:my_diet_guide/screens/signup.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
+import 'package:my_diet_guide/screens/web_screens/web_signup.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/palatte.dart';
 import '../controllers/Controller.dart';
