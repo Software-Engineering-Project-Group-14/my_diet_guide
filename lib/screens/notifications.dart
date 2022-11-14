@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/models/Notification.dart';
+import 'package:my_diet_guide/widgets/liteRollingSwitch.dart';
 import 'package:my_diet_guide/widgets/timePicker.dart';
 
 import '../core/services/local_notification_service.dart';
@@ -15,44 +16,58 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-  TimeOfDay _breakfastTime = TimeOfDay.now();
-  TimeOfDay _lunchTime = TimeOfDay.now();
-  TimeOfDay _dinnerTime = TimeOfDay.now();
+  late TimeOfDay _breakfastTime;
+  late TimeOfDay _lunchTime;
+  late TimeOfDay _dinnerTime;
+
   late NotificationService breakfastService;
+  late NotificationService lunchService;
+  late NotificationService dinnerService;
+
   @override
   void initState() {
     super.initState();
-    NotificationService.init();
-    listenNotifications();
+    // listenNotifications();
     //breakfast notification
-     breakfastService = NotificationService(
-      1,
-      'Breakfast Time',
-      'It\'s time to eat breakfast',
-      'Eat breakfast',
-    );
+     breakfastService = NotificationService.breakfastService;
+     _breakfastTime = breakfastService.time;
+    //lunch notification
+    lunchService = NotificationService.lunchService;
+    _lunchTime = lunchService.time;
+    //dinner notification
+    dinnerService = NotificationService.dinnerService;
+    _dinnerTime = dinnerService.time;
   }
 
-  void listenNotifications() =>
-      NotificationService.onNotification.stream.listen(onClickedNotification);
+  // void listenNotifications() =>
+  //     breakfastService.onNotification.stream.listen(onClickedNotification);
+  //
+  // void onClickedNotification(String? payload) =>
+  //     Navigator.of(context).push(MaterialPageRoute(builder: (_) => Notifications()));
 
-  void onClickedNotification(String? payload) =>
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => Notifications()));
+  void _showTimePicker(String time){ //setting time according to the button pressed
 
-  void _showTimePicker(TimeOfDay time){ //setting time according to the button pressed
-    showTimePicker(context: context,
-        initialTime: TimeOfDay.now())
-        .then((value) => setState(() {
-      if(_breakfastTime == time){
-        _breakfastTime = value!;
-      }
-      else if(_lunchTime == time){
-        _lunchTime = value!;
-      }
-      else if(_dinnerTime == time){
-        _dinnerTime = value!;
-      }
-    }));
+    if(time == "breakfastTime"){
+      showTimePicker(context: context, initialTime: _breakfastTime).
+        then((value) => setState(() {
+          _breakfastTime = value!;
+          breakfastService.time = _breakfastTime;
+        }));
+    }
+    else if(time == "lunchTime"){
+      showTimePicker(context: context, initialTime: _lunchTime).
+        then((value) => setState(() {
+          _lunchTime = value!;
+          lunchService.time = _lunchTime;
+        }));
+    }
+    else if(time == "dinnerTime"){
+      showTimePicker(context: context, initialTime: _dinnerTime).
+        then((value) => setState(() {
+          _dinnerTime = value!;
+          dinnerService.time = _dinnerTime;
+        }));
+    }
   }
 
   @override
@@ -68,16 +83,33 @@ class _NotificationsState extends State<Notifications> {
           ),
         ),
         body: SafeArea(
-          child: Center(
+
             child: SingleChildScrollView(
               child: Column(
                 children: [
+
+                  SizedBox(height: 150,),
+                  //breakfast notification
+                  Row(
+                    children: [
+                      SizedBox(width: 20,),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: Text("set breakfast time",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+
+                    //breakfast time
                     GestureDetector(
                       onTap: () {
-                        _showTimePicker(_breakfastTime);
+                        _showTimePicker("breakfastTime");
                       },
                       child: Text(
                         _breakfastTime.format(context).toString(),
@@ -87,44 +119,95 @@ class _NotificationsState extends State<Notifications> {
                     ),
 
                     SizedBox(width: 20,),
-
-                    // LiteRollingSwitch(
-                    //   value:true,
-                    //   textOn: "On",
-                    //   textOff: "Off",
-                    //   colorOn: Colors.greenAccent,
-                    //   colorOff: Colors.redAccent,
-                    //   iconOn: Icons.done,
-                    //   iconOff: Icons.remove_circle_outline,
-                    //   textSize: 18,
-                    //   onChanged: (bool position){
-                    //     print("button is $position");
-                    //   }, onTap: (){
-                    //   print("button is tapped12345");
-                    //   breakfastService.setNotification(_breakfastTime);
-                    // }, onDoubleTap: (){
-                    //
-                    // },onSwipe: (){
-                    //   print("swipe");
-                    // },
-                    // ),
-                    // TimePicker(),
-                    ElevatedButton(onPressed: () async{
-                      NotificationService.showScheduledNotification(
-                        id: 1,
-                        title: 'Breakfast Time',
-                        body: 'It\'s time to eat breakfast',
-                        payload: 'Eat breakfast',
-                          scheduledDate: TimeOfDay.now());
-                    }, child: Text('Set Notification'))
+                    (breakfastService.notificationState)?
+                    LiteRollingSwitchDefined(notificationService: breakfastService, time: _breakfastTime, value: true,)
+                        : LiteRollingSwitchDefined(notificationService: breakfastService, time: _breakfastTime, value: false,),
                   ],
                 ),
+
+                  SizedBox(height: 50,),
+
+                  //lunch notification
+                  Row(
+                    children: [
+                      SizedBox(width: 20,),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: Text("set lunch time",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+
+                      //breakfast time
+                      GestureDetector(
+                        onTap: () {
+                          _showTimePicker("lunchTime");
+                        },
+                        child: Text(
+                          _lunchTime.format(context).toString(),
+                          style: TextStyle(color: Colors.white,
+                              fontSize: 50),
+                        ),
+                      ),
+
+                      SizedBox(width: 20,),
+
+                      (lunchService.notificationState)?
+                      LiteRollingSwitchDefined(notificationService: lunchService, time: _lunchTime, value: true,)
+                          : LiteRollingSwitchDefined(notificationService: lunchService, time: _lunchTime, value: false,),
+                    ],
+                  ),
+
+                  SizedBox(height: 50,),
+
+                  //dinner notification
+                  Row(
+                    children: [
+                      SizedBox(width: 20,),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: Text("set dinner time",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+
+                      //breakfast time
+                      GestureDetector(
+                        onTap: () {
+                          _showTimePicker("dinnerTime");
+                        },
+                        child: Text(
+                          _dinnerTime.format(context).toString(),
+                          style: TextStyle(color: Colors.white,
+                              fontSize: 50),
+                        ),
+                      ),
+
+                      SizedBox(width: 20,),
+
+                      (dinnerService.notificationState)?
+                      LiteRollingSwitchDefined(notificationService: dinnerService, time: _dinnerTime, value: true,)
+                          : LiteRollingSwitchDefined(notificationService: dinnerService, time: _dinnerTime, value: false,),
+                    ],
+                  ),
+
                 ],
               ),
             ),
           ),
         ),
-      ),
     ]);
   }
 }

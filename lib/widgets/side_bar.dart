@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/screens/change_plan.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
+import 'package:my_diet_guide/screens/notifications.dart';
 import 'package:my_diet_guide/screens/rate.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
@@ -72,7 +73,9 @@ class NavigationDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.notifications, size: 30, color: Colors.white,),
                 title: Text("Notifications", style: TextStyle(fontSize: 19, color: Colors.white,),),
-                onTap: (){},
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Notifications()));
+                },
               ),
               ListTile(
                 leading: Icon(Icons.edit_calendar_outlined, size: 30, color: Colors.white,),
