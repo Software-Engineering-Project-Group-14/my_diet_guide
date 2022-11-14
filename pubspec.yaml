@@ -44,8 +44,6 @@ dependencies:
   font_awesome_flutter: ^10.2.1
   age_calculator: ^1.0.0
   intl: ^0.17.0
-  fake_cloud_firestore: ^2.0.1
-  firebase_auth_mocks: ^0.9.1
   flutter_local_notifications: ^12.0.3
   timezone: ^0.9.0
   rxdart: ^0.27.5
