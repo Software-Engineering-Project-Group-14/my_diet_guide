@@ -4,17 +4,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_diet_guide/models/UserBiometrics.dart';
-import 'package:my_diet_guide/screens/check_bmi.dart';
-import 'package:my_diet_guide/screens/login.dart';
-import 'package:my_diet_guide/screens/rate.dart';
-import 'package:my_diet_guide/screens/signup.dart';
-import 'package:my_diet_guide/screens/user_dashboard.dart';
-import 'package:my_diet_guide/screens/view_diet.dart';
-import 'package:my_diet_guide/screens/view_diet_details.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
+import 'package:my_diet_guide/controllers/BMI_controller.dart';
+import 'package:my_diet_guide/controllers/DietPlan_controller.dart';
+import 'package:my_diet_guide/controllers/Diet_controller.dart';
+import 'package:my_diet_guide/controllers/Home_controller.dart';
+import 'package:my_diet_guide/controllers/Rate_controller.dart';
+import 'package:my_diet_guide/controllers/user_controller.dart';
+import 'package:my_diet_guide/screens/forgot_password.dart';
 
-import 'models/DietPlan.dart';
 
+import 'controllers/Controller.dart';
+import 'controllers/UserBiometrics_controller.dart';
 
 
 Future<void> main() async {
@@ -31,15 +32,21 @@ Future<void> main() async {
   //runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
 
   const MyApp({Key? key, required this.auth, required this.firestore}) : super(key: key);
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Controller.init(auth: widget.auth, firestore: widget.firestore);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "My Diet Guide",
@@ -48,24 +55,34 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
       ),
-      home: StreamBuilder(
-        stream: auth.authStateChanges(),
-        builder: (context, snapshot){
-          if(snapshot.hasData){
-            UserBiometrics.updateCalculatedCurrentWeight(firestore: firestore,user_id: auth.currentUser!.uid) ;
-            return UserDashboard(firestore: firestore, auth: auth);
-          }else{
-            //return Login();
-            return Login(firestore: firestore, auth: auth);
-          }
-        },
-      ),
+      initialRoute: RouteConstants.homeRoute,
       routes: {
-        //'/diet_details': (context) => DietDetails(),
-        //'/view_diet_details' : (context) => ViewDietPlan(),
-        '/check_bmi' : (context) => CheckBMI(),
-        '/sign_up' : (context) => SignUp()
+
+        RouteConstants.homeRoute: (context)=>HomeController(context: context,),
+        RouteConstants.forgotPasswordRoute: (context)=>ForgotPassword(),
+
+        RouteConstants.planViewRoute: (context) => DietPlanController(context: context,),
+        RouteConstants.planChangeRoute:(context) => DietPlanController(context: context,),
+        RouteConstants.planSelectRoute:(context) => DietPlanController(context: context,),
+
+        RouteConstants.userDetailsViewRoute: (context)=>UserDetailsController(context: context,),
+        RouteConstants.userDetailsCreateRoute: (context)=>UserDetailsController(context: context,),
+        RouteConstants.userDetailsUpdateRoute: (context)=>UserDetailsController(context: context,),
+
+        RouteConstants.bioCreateRoute: (context)=>UserBiometricsController(context: context,),
+        RouteConstants.bioUpdateRoute: (context)=>UserBiometricsController(context: context,),
+
+        RouteConstants.bmiCheckRoute: (context)=>BMIController(context: context,),
+
+        RouteConstants.rateRoute: (context)=>RateController(context: context),
+
+        RouteConstants.dietViewRoute: (context)=>DietController(context: context,),
+
       },
+      onUnknownRoute: (settings){
+        throw Exception('Unknown route: ${ModalRoute.of(context)!.settings.name}');
+      },
+
     );
   }
 }

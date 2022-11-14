@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class User {
+import 'Model.dart';
+
+class User extends Model{
   String user_id;
   final String firstName;
   final String lastName;

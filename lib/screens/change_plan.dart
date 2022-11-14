@@ -7,16 +7,15 @@ import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
 
+import '../controllers/Controller.dart';
 import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
-import '../widgets/side_bar.dart';
+//import '../widgets/side_bar.dart';
 
 class ChangePlan extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
 
-  const ChangePlan({Key? key, required this.firestore, required this.auth}) : super(key: key);
+  const ChangePlan({Key? key}) : super(key: key);
 
   @override
   State<ChangePlan> createState() => _ChangePlanState();
@@ -24,13 +23,13 @@ class ChangePlan extends StatefulWidget {
 
 class _ChangePlanState extends State<ChangePlan> {
 
-  late Stream<DietPlanModel> currentPlanStream;
+  late Stream<DietPlanModel?> currentPlanStream;
   late Stream<UserBiometrics> userBiometricsStream;
 
   @override
   void initState() {
-    currentPlanStream = DietPlanModel.getDietPlanForUser(firestore:widget.firestore , user_id:widget.auth.currentUser!.uid).asStream();
-    userBiometricsStream = UserBiometrics.getUserBiometrics(firestore:widget.firestore , user_id:widget.auth.currentUser!.uid).asStream();
+    currentPlanStream = DietPlanModel.getDietPlanForUser(user_id:Controller.auth!.currentUser!.uid).asStream();
+    userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:Controller.auth!.currentUser!.uid).asStream();
     super.initState();
   }
 
@@ -46,16 +45,16 @@ class _ChangePlanState extends State<ChangePlan> {
             title: Text("Change my diet plan"),
             toolbarHeight: 80
         ),
-        drawer: NavigationDrawer(),
+       // drawer: NavigationDrawer(),
         body: SingleChildScrollView(
           child: Stack(
               children: [
                 BlurredBackground(),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: StreamBuilder<DietPlanModel>(
+                  child: StreamBuilder<DietPlanModel?>(
                     stream: currentPlanStream,
-                    builder: (context, AsyncSnapshot<DietPlanModel> snapshot) {
+                    builder: (context, AsyncSnapshot<DietPlanModel?> snapshot) {
                       if (snapshot.hasError) {
                         return const Text(
                           'Something went wrong',
@@ -70,7 +69,14 @@ class _ChangePlanState extends State<ChangePlan> {
                         );
                       }
                       //print("\nCurrent plan snapshot");
-
+                      if (snapshot.data == null) {
+                        return const Text(
+                          'No diet plan is selected by user',
+                          style: TextStyle(
+                              color: Colors.white
+                          ),
+                        );
+                      }
                       DietPlanModel currentPlan = snapshot.data!;
                       //  final currentPlan = snapshot.data;
                       //  print(currentPlan);
@@ -121,7 +127,6 @@ class _ChangePlanState extends State<ChangePlan> {
 
                                 UserBiometrics userBiometrics = snapshot.data!;
                                 Stream<QuerySnapshot> recommendedplanStream = DietPlanModel.getPlanStream(
-                                    firestore: widget.firestore,
                                     dietary_preference: userBiometrics.dietaryPreference,
                                     age_group: DietPlanModel.getAgeGroup(userBiometrics.age),
                                     gender: userBiometrics.gender,
@@ -190,8 +195,7 @@ class _ChangePlanState extends State<ChangePlan> {
                                                 child: PlanCard(dietPlanModel: entry.value),
                                                 onTap: () async {
                                                   bool success = await entry.value.select(
-                                                      firestore: widget.firestore,
-                                                      user_id: widget.auth.currentUser!.uid
+                                                      user_id: Controller.auth!.currentUser!.uid
                                                   );
                                                   String msg = "";
                                                   if(success)
@@ -217,7 +221,8 @@ class _ChangePlanState extends State<ChangePlan> {
                                                             onPressed: () {
                                                               Navigator.of(context).pop();
                                                               if(success){
-                                                                Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
+                                                                Navigator.pushNamed(context, '/');
+                                                                //Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
                                                               }
                                                             },
                                                           ),
@@ -246,7 +251,6 @@ class _ChangePlanState extends State<ChangePlan> {
               ]
           ),
         ),
-        bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth),
       ),
     );
 

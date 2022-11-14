@@ -4,9 +4,13 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:my_diet_guide/models/Calorie_Calculator.dart';
+import 'package:my_diet_guide/common/messgae_constants.dart';
+import 'package:my_diet_guide/common/plan_constants.dart';
 
-class DietPlanModel{
+import 'Meal.dart';
+import 'Model.dart';
+
+class DietPlanModel extends Model{
   late String planId;
   late String img;
   late String dietary_preference;
@@ -17,6 +21,7 @@ class DietPlanModel{
   late String breakfast_id;
   late String lunch_id;
   late String dinner_id;
+  late double calorie_gain_per_plan_per_week;
   double diffValue = 0;
 
   DietPlanModel({
@@ -29,6 +34,7 @@ class DietPlanModel{
     required this.breakfast_id,
     required this.lunch_id,
     required this.dinner_id,
+    required this.calorie_gain_per_plan_per_week
   }){
     img = dietary_preference+".png";
   }
@@ -61,14 +67,13 @@ class DietPlanModel{
 
   // Get all the plans for given parametres
   static Stream<QuerySnapshot> getPlanStream({
-    required firestore,
     required String dietary_preference,
     required String age_group,
     required String gender,
     required String intensity,
     required String activeness
   }){
-    return firestore.collection('diet_plan')
+    return Model.firestore!.collection('diet_plan')
         .where('dietary_preference', isEqualTo: dietary_preference)
         .where("age_group", isEqualTo: age_group)
         .where("gender", isEqualTo: gender)
@@ -76,8 +81,8 @@ class DietPlanModel{
   }
 
   // Get all the plans
-  static Stream<QuerySnapshot> getCurrentPlanStream({required firestore}){
-    return firestore.collection('diet_plan').snapshots();
+  static Stream<QuerySnapshot> getCurrentPlanStream(){
+    return Model.firestore!.collection('diet_plan').snapshots();
   }
 
   // Get sorted recommeneded plans for given parametres
@@ -107,7 +112,8 @@ class DietPlanModel{
           age_group: cur.get('age_group'),
           breakfast_id: cur.get('breakfast_id'),
           lunch_id: cur.get('lunch_id'),
-          dinner_id: cur.get('dinner_id')
+          dinner_id: cur.get('dinner_id'), 
+          calorie_gain_per_plan_per_week: cur.get('calorie_gain_per_plan_per_week')
       );
       //print(curPlan);
       recommendedPlans.add(curPlan);
@@ -153,42 +159,48 @@ class DietPlanModel{
   }
 
   // Get the subscribed diet plan for given user
-  static Future<DietPlanModel> getDietPlanForUser({required firestore,required String user_id})async{
-    DocumentSnapshot ds = await firestore.collection("user").doc(user_id).get();
-    Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
-    String planId = data["current_plan"];
-    ds = await firestore.collection("diet_plan").doc(planId).get();
-    data = ds.data() as Map<String, dynamic>;
-    return DietPlanModel(
-        planId: planId,
-        dietary_preference: data["dietary_preference"],
-        gender: data["gender"],
-        intensity: data["intensity"],
-        activeness: data["activeness"],
-        age_group: data["age_group"],
-        breakfast_id: data["breakfast_id"],
-        lunch_id: data["lunch_id"],
-        dinner_id: data["dinner_id"]
-    );
+  static Future<DietPlanModel?> getDietPlanForUser({required String user_id})async{
+    try{
+      DocumentSnapshot ds = await Model.firestore!.collection("user").doc(user_id).get();
+      Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
+      String planId = data["current_plan"];
+      ds = await Model.firestore!.collection("diet_plan").doc(planId).get();
+      data = ds.data() as Map<String, dynamic>;
+      return DietPlanModel(
+          planId: planId,
+          dietary_preference: data["dietary_preference"],
+          gender: data["gender"],
+          intensity: data["intensity"],
+          activeness: data["activeness"],
+          age_group: data["age_group"],
+          breakfast_id: data["breakfast_id"],
+          lunch_id: data["lunch_id"],
+          dinner_id: data["dinner_id"],
+          calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week']
+      );
+    }catch(error){
+      return null;
+    }
   }
 
   // Assigns this diet plan for given user, returns true if success false otherwise
   // Used for select plan and change plan
-  Future<bool> select({required firestore,required String user_id}) async{
+  Future<bool> select({required String user_id}) async{
     try{
-      await FirebaseFirestore.instance.collection('user')
-          .doc(user_id).set({
-        'current_plan':planId
-      }, SetOptions(merge: true));
-      return true;
+      final doc = Model.firestore!.collection('user').doc(user_id);
+      final ds = await doc.get();
+      if(ds.data() != null){
+        await doc.set({'current_plan':planId}, SetOptions(merge: true));
+        return true;
+      }
+      return false;
     }catch(error){
       return false;
     }
   }
 
   // Add plan setting relevant meal ids and returns new plan id or null if fails
-  static Future<DietPlanModel?> add({
-    required firestore,
+  static Future<Map<String, dynamic>> add({
     required activeness,
     required age_group,
     required dietary_preference,
@@ -197,47 +209,94 @@ class DietPlanModel{
     required breakfastMeal,
     required lunchMeal,
     required dinnerMeal}) async{
-    try{
-      DocumentSnapshot ds = await firestore.collection("diet_plan").doc("nextPlanId").get();
-      double nextPlanId = ds["id"].toDouble();
-      print("Next plan id got = ${nextPlanId}");
-      double Sum = 0;
-      double x,y,z = 0;
-      x = await firestore.collection('breakfast').doc(breakfastMeal).get();
-      y = await firestore.collection('lunch').doc(lunchMeal).get();
-      z = await firestore.collection('dinner').doc(dinnerMeal).get();
-      Sum += x.toDouble() + y.toDouble() + z.toDouble();
-      await firestore.collection("diet_plan").doc(nextPlanId.toString())
-          .set({
-        "activeness": activeness,
-        "age_group": age_group,
-        "dietary_preference": dietary_preference,
-        "gender": gender,
-        "intensity": intensity,
-        "breakfast_id": breakfastMeal,
-        "lunch_id": lunchMeal,
-        "dinner_id": dinnerMeal,
-        "calorie_gain_per_plan_per_week": Sum
-      });
-      //print("Diet plan added");
-      await firestore.collection("diet_plan").doc("nextPlanId").set(
-          {"id":nextPlanId+1}, SetOptions(merge: true));
-      //print("Next plan id incremented = ${nextPlanId+1}");
+    bool success ;
+    int? nextPlanId;
+    String? msg;
+    Meal? mealb = await Meal.get(breakfastMeal, 'breakfast');
+    Meal? meall = await Meal.get(lunchMeal, 'lunch');
+    Meal? meald = await Meal.get(dinnerMeal, 'dinner');
+    if(!PlanConstants.activenessValues.contains(activeness)){
+      success = false;
+      msg = MessageConstants.invalidActiveness;
+    }else if(!PlanConstants.intensityValues.contains(intensity)){
+      success = false;
+      msg = MessageConstants.invalidIntensity;
+    } else if(!PlanConstants.age_groupValues.contains(age_group)){
+      success = false;
+      msg = MessageConstants.invalidAgeGroup;
+    } else if(!PlanConstants.dietary_preferenceValues.contains(dietary_preference)){
+      success = false;
+      msg = MessageConstants.invalidDietaryPreference;
+    } else if(mealb==null){
+      success = false;
+      msg = MessageConstants.invalidBreakfastId;
+    } else if(meall==null){
+      success = false;
+      msg = MessageConstants.invalidLunchId;
+    } else if(meald==null){
+      success = false;
+      msg = MessageConstants.invalidDinnerId;
+    }else{
+        DocumentSnapshot ds = await Model.firestore!.collection("diet_plan").doc("nextPlanId").get();
+        if(ds.data()==null){
+          nextPlanId = 1;
+        }else{
+          nextPlanId = ds["id"];
+        }
+        double Sum = 0;
+        double x,y,z = 0;
+        ds = await Model.firestore!.collection('breakfast').doc(breakfastMeal).get();
+        x = ds['calorie_gain_per_meal_per_week'].toDouble();
+        ds = await Model.firestore!.collection('lunch').doc(lunchMeal).get();
+        y = ds['calorie_gain_per_meal_per_week'].toDouble();
+        ds = await Model.firestore!.collection('dinner').doc(dinnerMeal).get();
+        z = ds['calorie_gain_per_meal_per_week'].toDouble();
+        Sum += x.toDouble() + y.toDouble() + z.toDouble();
+        await Model.firestore!.collection("diet_plan").doc(nextPlanId.toString())
+            .set({
+          "activeness": activeness,
+          "age_group": age_group,
+          "dietary_preference": dietary_preference,
+          "gender": gender,
+          "intensity": intensity,
+          "breakfast_id": breakfastMeal,
+          "lunch_id": lunchMeal,
+          "dinner_id": dinnerMeal,
+          "calorie_gain_per_plan_per_week": Sum
+        });
+        //print("Diet plan added");
+        await Model.firestore!.collection("diet_plan").doc("nextPlanId").set(
+            {"id":nextPlanId!+1}, SetOptions(merge: true));
+        //print("Next plan id incremented = ${nextPlanId+1}");
+        success = true;
+    }
 
+    return {
+      'success':success,
+      'id':nextPlanId,
+      'msg':msg
+    };
+  }
+
+  static Future<DietPlanModel?> get(String planId)async{
+    try{
+      DocumentSnapshot ds = await Model.firestore!.collection("diet_plan").doc(planId).get();
       return DietPlanModel(
-          planId: (nextPlanId+1).toString(),
-          activeness: activeness,
-          age_group: age_group,
-          dietary_preference: dietary_preference,
-          gender: gender,
-          intensity: intensity,
-          breakfast_id: breakfastMeal,
-          lunch_id: lunchMeal,
-          dinner_id: dinnerMeal
+          planId: planId,
+          dietary_preference: ds["dietary_preference"],
+          gender: ds["gender"],
+          intensity: ds["intensity"],
+          activeness: ds["activeness"],
+          age_group: ds["age_group"],
+          breakfast_id: ds["breakfast_id"],
+          lunch_id: ds["lunch_id"],
+          dinner_id: ds["dinner_id"],
+          calorie_gain_per_plan_per_week: ds["calorie_gain_per_plan_per_week"]
       );
     }catch(error){
       return null;
     }
+
   }
 
 

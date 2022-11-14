@@ -5,15 +5,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/widgets/rate_card.dart';
 
+import '../controllers/Controller.dart';
 import '../models/Rate.dart';
 import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
 
 class Rate extends StatefulWidget{
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
 
-  const Rate({super.key, required this.firestore, required this.auth});
+  const Rate({super.key});
 
 
   @override
@@ -32,7 +31,7 @@ class _RateState extends State<Rate> {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> rateStream = RateModel.getRateStream(firestore: widget.firestore);
+    final Stream<QuerySnapshot> rateStream = RateModel.getRateStream();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.teal.shade900,
@@ -175,11 +174,11 @@ class _RateState extends State<Rate> {
                                 onPressed: () async {
                                   //print(starValue);
                                   //print(feedbackText);
-                                  if(widget.auth.currentUser != null || _formKey.currentState!.validate()){
+                                  if(Controller.auth!.currentUser != null || _formKey.currentState!.validate()){
                                     RateModel rateObject = RateModel(
-                                      starValue, widget.auth.currentUser!.email, feedbackText,
+                                      starValue, Controller.auth!.currentUser!.email, feedbackText,
                                     );
-                                    bool result = await rateObject.add(firestore: widget.firestore);
+                                    bool result = await rateObject.add();
                                     if(result){
                                       showDialog(
                                         context: context,
@@ -254,7 +253,7 @@ class _RateState extends State<Rate> {
             )
           ]
         ),
-        bottomNavigationBar: BottomBar(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth,),
+        bottomNavigationBar: BottomBar(user_id: Controller.auth!.currentUser!.uid),
       ),
     );
 

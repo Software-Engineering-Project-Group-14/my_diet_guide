@@ -1,17 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/models/Calorie_Calculator.dart';
-import 'package:my_diet_guide/screens/select_plan.dart';
-import 'package:my_diet_guide/screens/user_dashboard.dart';
-import 'package:my_diet_guide/widgets/text_box_02.dart';
 import '../models/UserBiometrics.dart';
 import '../widgets/background_image.dart';
 
 class UserBiometricsForm extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final String email;
   final String password;
   final String firstName;
@@ -22,8 +18,6 @@ class UserBiometricsForm extends StatefulWidget {
 
   const UserBiometricsForm({
     Key? key,
-    required this.firestore,
-    required this.auth,
     required this.email,
     required this.password,
     required this.firstName,
@@ -102,6 +96,22 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
         intensity!
     );
 
+    Navigator.pushNamed(context, RouteConstants.planSelectRoute,
+        arguments: UserBiometrics(
+            user_id: userId,
+            gender: widget.gender,
+            weight: int.parse(weight),
+            height: int.parse(height),
+            targetWeight: int.parse(targetWeight),
+            dietaryPreference: dietaryPreference!,
+            activeness: activeness!,
+            intensity: intensity!,
+            age:widget.age,
+            calculated_current_weight: int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(weight), widget.age.toDouble(), activeness!),
+            last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+          )
+    );
+/*
     Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPlan(
       firestore: widget.firestore,
         auth: widget.auth,
@@ -118,7 +128,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
           calculated_current_weight: int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(weight), widget.age.toDouble(), activeness!),
           last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
         )
-    )));
+    )));*/
   }
 
 

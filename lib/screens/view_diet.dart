@@ -6,16 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/view_diet_details.dart';
 import 'package:my_diet_guide/widgets/view_diet_card.dart';
 
+import '../controllers/Controller.dart';
 import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
 
 class ViewDietPlan extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final String user_id;
 
-  const ViewDietPlan({Key? key, required this.user_id, required this.firestore, required this.auth}) : super(key: key);
+  const ViewDietPlan({Key? key, required this.user_id}) : super(key: key);
 
 
 
@@ -117,25 +116,25 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
 
         SizedBox(height: 20),
         //monday
-        ViewDietCard(day: 'Monday', user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+        ViewDietCard(day: 'Monday', user_id: widget.user_id),
 
         //tuesday
-        ViewDietCard(day: 'Tuesday', user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+        ViewDietCard(day: 'Tuesday', user_id: widget.user_id,),
 
         //wednesday
-        ViewDietCard(day: 'Wednesday', user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+        ViewDietCard(day: 'Wednesday', user_id: widget.user_id,),
 
         //thursday
-        ViewDietCard(day: 'Thursday', user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+        ViewDietCard(day: 'Thursday', user_id: widget.user_id,),
 
         //Friday
-        ViewDietCard(day: 'Friday', user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+        ViewDietCard(day: 'Friday', user_id: widget.user_id, ),
 
         //saturday
-        ViewDietCard(day: 'Saturday', user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+        ViewDietCard(day: 'Saturday', user_id: widget.user_id,),
 
         //sunday
-        ViewDietCard(day: 'Sunday' , user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+        ViewDietCard(day: 'Sunday' , user_id: widget.user_id,),
         SizedBox(height: 20,),
 
 
@@ -183,7 +182,7 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
             ),
           ),]
         ),
-        bottomNavigationBar: BottomBar(user_id: widget.user_id, firestore: widget.firestore, auth: widget.auth),
+        bottomNavigationBar: BottomBar(user_id: widget.user_id,),
       ),
     ]
     );

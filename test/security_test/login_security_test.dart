@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:my_diet_guide/controllers/Controller.dart';
 import 'package:my_diet_guide/screens/login.dart';
 
 void main() {
@@ -15,9 +16,9 @@ void main() {
 
       auth.createUserWithEmailAndPassword(
           email: 'userrr@gmail.com', password: 'password1234');
-
+      Controller.init(firestore: firestore, auth: auth);
       await widgetTester.pumpWidget(
-          MaterialApp(home: Login(firestore: firestore, auth: auth)));
+          MaterialApp(home: Login()));
 
       await widgetTester.enterText(
           find.byKey(Key('email')), 'userrr@gmail.com');
@@ -34,8 +35,9 @@ void main() {
     testWidgets('Empty email & password', (WidgetTester widgetTester) async {
       final firestore = FakeFirebaseFirestore();
       final auth = MockFirebaseAuth();
+      Controller.init(firestore: firestore, auth: auth);
       await widgetTester.pumpWidget(
-          MaterialApp(home: Login(firestore: firestore, auth: auth)));
+          MaterialApp(home: Login()));
 
       await widgetTester.tap(find.byKey(Key("login-button")));
       await widgetTester.pump();
@@ -45,8 +47,9 @@ void main() {
     testWidgets('Only Empty Email', (WidgetTester widgetTester) async {
       final firestore = FakeFirebaseFirestore();
       final auth = MockFirebaseAuth();
+      Controller.init(firestore: firestore, auth: auth);
       await widgetTester.pumpWidget(
-          MaterialApp(home: Login(firestore: firestore, auth: auth)));
+          MaterialApp(home: Login()));
 
       final emailFormField = find.byKey(const Key('email'));
       final passwordFormField = find.byKey(const Key('password'));
@@ -63,8 +66,9 @@ void main() {
     testWidgets('Only Empty Password', (WidgetTester widgetTester) async {
       final firestore = FakeFirebaseFirestore();
       final auth = MockFirebaseAuth();
+      Controller.init(firestore: firestore, auth: auth);
       await widgetTester.pumpWidget(
-          MaterialApp(home: Login(firestore: firestore, auth: auth)));
+          MaterialApp(home: Login()));
 
       final emailFormField = find.byKey(const Key('email'));
       final passwordFormField = find.byKey(const Key('password'));
@@ -82,8 +86,9 @@ void main() {
     testWidgets('Invalid email', (WidgetTester widgetTester) async {
       final firestore = FakeFirebaseFirestore();
       final auth = MockFirebaseAuth();
+      Controller.init(firestore: firestore, auth: auth);
       await widgetTester.pumpWidget(
-          MaterialApp(home: Login(firestore: firestore, auth: auth)));
+          MaterialApp(home: Login()));
 
       await widgetTester.enterText(find.byKey(Key('email')), 'userr#gmail.com');
       await widgetTester.tap(find.byKey(Key("login-button")));
@@ -94,11 +99,11 @@ void main() {
     testWidgets('Invalid User Credentials', (widgetTester) async {
       final firestore = FakeFirebaseFirestore();
       final auth = MockFirebaseAuth();
-
+      Controller.init(firestore: firestore, auth: auth);
       auth.createUserWithEmailAndPassword(email: 'userrr@gmail.com', password: 'password1234');
 
       await widgetTester.pumpWidget(
-          MaterialApp(home: Login(firestore: firestore, auth: auth)));
+          MaterialApp(home: Login()));
 
       await widgetTester.enterText(
           find.byKey(Key('email')), 'wronguser@gmail.com');

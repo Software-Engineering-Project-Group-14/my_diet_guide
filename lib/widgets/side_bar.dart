@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/screens/change_plan.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
 import 'package:my_diet_guide/screens/notifications.dart';
@@ -81,21 +82,24 @@ class NavigationDrawer extends StatelessWidget {
                 leading: Icon(Icons.edit_calendar_outlined, size: 30, color: Colors.white,),
                 title: Text("Change Diet Plan", style: TextStyle(fontSize: 19, color: Colors.white,),),
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
+                  //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChangePlan(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
+                  Navigator.pushNamed(context, RouteConstants.planChangeRoute);
                 },
               ),
               ListTile(
                 leading: Icon(Icons.monitor_weight_outlined, size: 30, color: Colors.white,),
                 title: Text("Check BMI", style: TextStyle(fontSize: 19, color: Colors.white,),),
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CheckBMI()));
+                  //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CheckBMI()));
+                  Navigator.pushNamed(context, RouteConstants.bmiCheckRoute);
                 },
               ),
               ListTile(
                 leading: Icon(Icons.star_rate, size: 30, color: Colors.white,),
                 title: Text("Rate My Diet Guide", style: TextStyle(fontSize: 19, color: Colors.white,),),
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Rate(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
+                  Navigator.pushNamed(context, RouteConstants.rateRoute);
+                  //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Rate(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,)));
                 },
               ),
               // ListTile(

@@ -1,4 +1,6 @@
-class BMIModel{
+import 'Model.dart';
+
+class BMIModel extends Model{
   late double currentHeight;
   late double currentWeight;
 

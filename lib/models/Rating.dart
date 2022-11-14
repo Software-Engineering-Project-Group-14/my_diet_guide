@@ -1,5 +1,7 @@
 
-class Rating {
+import 'Model.dart';
+
+class Rating extends Model {
   final String email;
   final String rate;
   final String review;

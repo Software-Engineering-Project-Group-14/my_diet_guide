@@ -1,9 +1,7 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_diet_guide/widgets/rate_details_card.dart';
 
 import '../widgets/blurred_background_image.dart';
 

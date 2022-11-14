@@ -2,23 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
 
+import '../controllers/Controller.dart';
 import '../models/UserBiometrics.dart';
 
 class SelectPlan extends StatefulWidget {
 
-  final FirebaseFirestore firestore;
-  final FirebaseAuth auth;
   final UserBiometrics userBiometrics;
 
   const SelectPlan({Key? key,
     required this.userBiometrics,
-    required this.firestore,
-    required this.auth}) : super(key: key);
+}) : super(key: key);
 
   @override
   State<SelectPlan> createState() => _SelectPlanState();
@@ -44,7 +43,6 @@ class _SelectPlanState extends State<SelectPlan> {
     userGender = widget.userBiometrics.gender;
     userId = widget.userBiometrics.user_id;
     recommendedPlanStream = DietPlanModel.getPlanStream(
-        firestore: widget.firestore,
         dietary_preference: userDietaryPreference,
         age_group: userAgeGroup,
         gender: userGender,
@@ -120,8 +118,7 @@ class _SelectPlanState extends State<SelectPlan> {
                               child: PlanCard(dietPlanModel: planModel),
                               onTap: () async {
                                 bool success = await planModel.select(
-                                    firestore: widget.firestore,
-                                    user_id: widget.auth.currentUser!.uid
+                                    user_id: Controller.auth!.currentUser!.uid
                                 );
                                 String msg = "";
                                 if(!success){
@@ -146,7 +143,8 @@ class _SelectPlanState extends State<SelectPlan> {
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                             if(success){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
+                                              //Navigator.push(context, MaterialPageRoute(builder: (context) => UserDashboard(firestore: widget.firestore, auth: widget.auth)));
+                                              Navigator.pushNamed(context, RouteConstants.homeRoute);
                                             }
                                           },
                                         ),

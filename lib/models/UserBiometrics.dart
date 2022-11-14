@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/models/Calorie_Calculator.dart';
 
-class UserBiometrics{
+import 'Model.dart';
+
+class UserBiometrics extends Model{
 
   final String user_id;
   final String gender;
@@ -59,8 +61,8 @@ class UserBiometrics{
   );
 
   // Get user bio metrics for given user
-  static Future<UserBiometrics> getUserBiometrics({required firestore,required String user_id})async{
-    DocumentSnapshot ds = await firestore.collection("user biometrics").doc(user_id).get();
+  static Future<UserBiometrics> getUserBiometrics({required String user_id})async{
+    DocumentSnapshot ds = await Model.firestore!.collection("user biometrics").doc(user_id).get();
     Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
     return UserBiometrics(
         user_id: user_id,
@@ -78,15 +80,15 @@ class UserBiometrics{
   }
 
   // Update calculated wright for givn user
-  static void updateCalculatedCurrentWeight({required firestore,required String user_id}) async{
-    UserBiometrics userBiometrics = await getUserBiometrics(firestore: firestore, user_id: user_id);
+  static void updateCalculatedCurrentWeight({required String user_id}) async{
+    UserBiometrics userBiometrics = await getUserBiometrics(user_id: user_id);
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
     int dayDiffrence = today.difference(userBiometrics.last_calorie_calculated_date).inDays;
     if(dayDiffrence > 0){
       userBiometrics.calculated_current_weight -= CalorieCalculator.calorieBurnInKg(userBiometrics.gender, userBiometrics.height.toDouble(), userBiometrics.weight.toDouble(), userBiometrics.age.toDouble(), userBiometrics.activeness, dayDiffrence);
       userBiometrics.last_calorie_calculated_date =   today;
-      final userBioDoc = firestore.collection('user biometrics').doc(user_id);
+      final userBioDoc = Model.firestore!.collection('user biometrics').doc(user_id);
       userBioDoc.update({
         'calculated_current_weight': userBiometrics.calculated_current_weight,
         'last_calorie_calculated_date': userBiometrics.last_calorie_calculated_date

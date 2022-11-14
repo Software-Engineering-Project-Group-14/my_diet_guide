@@ -1,27 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/models/UserBiometrics.dart';
-import 'package:my_diet_guide/screens/signup.dart';
-import 'package:my_diet_guide/widgets/background_image.dart';
-import 'package:my_diet_guide/widgets/palatte.dart';
-import '../controllers/Controller.dart';
-import 'forgot_password.dart';
+import 'package:my_diet_guide/screens/web_screens/web_login.dart';
 
-class Login extends StatefulWidget{
+import '../../common/route_constants.dart';
+import '../../controllers/Controller.dart';
+import '../../widgets/background_image.dart';
+import '../signup.dart';
 
-  const Login({super.key});
+class AdminLogin extends StatefulWidget {
+  const AdminLogin({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
-
+  State<AdminLogin> createState() => _AdminLoginState();
 }
 
-class _LoginState extends State<Login> {
+class _AdminLoginState extends State<AdminLogin> {
 
   final _formKey = GlobalKey<FormState>();
 
@@ -51,20 +45,25 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context){
+    final currentWidth = MediaQuery.of(context).size.width;
+
     return Stack(
-      children: [
-        BackgroundImage(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Center(
+        children: [
+          BackgroundImage(),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
                     Text(
-                      'My Diet Guide',
-                      style: HeadingTitle
+                        'My Diet Guide',
+                        style: TextStyle(
+                            fontSize: 65,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                        )
                     ),
 
 
@@ -77,6 +76,7 @@ class _LoginState extends State<Login> {
 
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 40),
+                            width: 600,
                             child: Column(
                               children: [
                                 Container(
@@ -87,30 +87,30 @@ class _LoginState extends State<Login> {
                                   child: TextFormField(
                                     key: Key("email"),
                                     style: TextStyle(
-                                      fontSize: 22,
+                                      fontSize: 32,
                                       color: Colors.white,
                                     ),
                                     keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
-                                      errorStyle: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.red[1000]
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(vertical: 20),
-                                      border: InputBorder.none,
-                                      hintText: 'Email',
-                                      hintStyle: TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.white
-                                      ),
-                                      prefixIcon: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 20),
-                                        child: Icon(
-                                          FontAwesomeIcons.solidEnvelope,
-                                          color: Colors.white,
-                                          size: 30,
+                                        errorStyle: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.red[1000]
                                         ),
-                                      )
+                                        contentPadding: EdgeInsets.symmetric(vertical: 20),
+                                        border: InputBorder.none,
+                                        hintText: 'Email',
+                                        hintStyle: TextStyle(
+                                            fontSize: 32,
+                                            color: Colors.white
+                                        ),
+                                        prefixIcon: Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 20),
+                                          child: Icon(
+                                            FontAwesomeIcons.solidEnvelope,
+                                            color: Colors.white,
+                                            size: 40,
+                                          ),
+                                        )
                                     ),
                                     validator: (text){
                                       if (text == null || text.isEmpty){
@@ -135,6 +135,7 @@ class _LoginState extends State<Login> {
 
 
                           Container(
+                            width: 600,
                             padding: EdgeInsets.symmetric(horizontal: 40),
                             child: Column(
                               children: [
@@ -143,50 +144,50 @@ class _LoginState extends State<Login> {
                                     color: Colors.grey.shade600.withOpacity(0.6),
                                     borderRadius: BorderRadius.circular(16),
                                   ),
-                                    child: TextFormField(
-                                      key: Key("password"),
-                                      style: TextStyle(
-                                        fontSize: 22,
+                                  child: TextFormField(
+                                    key: Key("password"),
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      color: Colors.white,
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    obscureText: true,
+                                    decoration: InputDecoration(
+                                      errorStyle: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.red[1000]
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(vertical: 20),
+                                      border: InputBorder.none,
+                                      hintText: 'Password',
+                                      hintStyle: TextStyle(
+                                        fontSize: 32,
                                         color: Colors.white,
                                       ),
-                                      keyboardType: TextInputType.text,
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                        errorStyle: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.red[1000]
-                                        ),
-                                        contentPadding: EdgeInsets.symmetric(vertical: 20),
-                                        border: InputBorder.none,
-                                        hintText: 'Password',
-                                        hintStyle: TextStyle(
-                                          fontSize: 22,
+                                      prefixIcon: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                                        child: Icon(
+                                          FontAwesomeIcons.lock,
                                           color: Colors.white,
-                                        ),
-                                        prefixIcon: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                                          child: Icon(
-                                            FontAwesomeIcons.lock,
-                                            color: Colors.white,
-                                            size: 30,
-                                          ),
+                                          size: 40,
                                         ),
                                       ),
-                                      validator: (text){
-                                        if (text == null || text.isEmpty){
-                                          return 'Can\'t be empty';
-                                        }
-                                        return null;
-                                      },
-                                      onChanged: (val) {
-                                        setState(() => password = val);
-                                      },
                                     ),
+                                    validator: (text){
+                                      if (text == null || text.isEmpty){
+                                        return 'Can\'t be empty';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (val) {
+                                      setState(() => password = val);
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                          
+
 
 
                           SizedBox(height: 10,),
@@ -194,22 +195,21 @@ class _LoginState extends State<Login> {
 
 
                           // forgot password
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40.0),
+                          Container(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GestureDetector(
                                   child: Text("forgot password?",
                                     style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white
                                     ),
                                   ),
                                   onTap: (){
                                     Navigator.pushNamed(context, RouteConstants.forgotPasswordRoute);
-                                   // Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context){
                                     //  return ForgotPassword();
                                     //}));
                                   },
@@ -218,7 +218,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
 
-                          SizedBox(height: 50,),
+                          SizedBox(height: 75,),
 
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -230,6 +230,7 @@ class _LoginState extends State<Login> {
                                 }
                               },
                               child: Container(
+                                width: 520,
                                 padding: const EdgeInsets.all(20),
                                 decoration: BoxDecoration(
                                   color: Colors.teal.shade900,
@@ -237,11 +238,11 @@ class _LoginState extends State<Login> {
                                 ),
                                 child: const Center(
                                   child: Text(
-                                    'Log In',
+                                    'Admin Log In',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight:FontWeight.bold,
-                                      fontSize: 20,
+                                      fontSize: 28,
                                     ),
                                   ),
                                 ),
@@ -267,41 +268,50 @@ class _LoginState extends State<Login> {
                       ),
                     ),
 
-                    const SizedBox(height: 0),
 
-                    // not a member? register now
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Not a member?',
-                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_){
-                                  return SignUp();
-                                }
-                            ));
-                          },
-                          child: Text(' Register Now',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.teal.shade900,
+                    SizedBox(height: 40,),
+
+
+                    Container(
+                      padding: EdgeInsets.only(right: currentWidth*0.025),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (_){
+                                    return WebLogin();
+                                  }
+                              ));
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.teal.shade900,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'User ?',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight:FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
 
                   ],
                 ),
               ),
+            ),
           ),
-        ),
-      ]
+        ]
     );
   }
 }
-
