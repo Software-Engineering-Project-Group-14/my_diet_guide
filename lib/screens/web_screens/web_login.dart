@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/web_screens/admin_login.dart';
 
 import '../../common/route_constants.dart';
@@ -9,14 +10,14 @@ import '../../widgets/background_image.dart';
 import '../../widgets/palatte.dart';
 import '../signup.dart';
 
-class WebLogin extends StatefulWidget {
-  const WebLogin({Key? key}) : super(key: key);
+class UserLogin extends StatefulWidget {
+  const UserLogin({Key? key}) : super(key: key);
 
   @override
-  State<WebLogin> createState() => _WebLoginState();
+  State<UserLogin> createState() => _UserLoginState();
 }
 
-class _WebLoginState extends State<WebLogin> {
+class _UserLoginState extends State<UserLogin> {
   final _formKey = GlobalKey<FormState>();
 
   String _error = '';
@@ -27,13 +28,15 @@ class _WebLoginState extends State<WebLogin> {
 
   Future signIn() async {
     try{
-      await Controller.auth!.signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
+      await Controller.auth!.signInWithEmailAndPassword(email: email, password: password);
       setState(() {
         _error = "Success";
       });
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_){
+            return UserDashboard();
+          }
+      ));
 
     }catch(error){
       //print(error.toString());
