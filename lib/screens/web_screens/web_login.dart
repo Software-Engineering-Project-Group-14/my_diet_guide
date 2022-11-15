@@ -1,12 +1,11 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_diet_guide/screens/web_screens/admin_login.dart';
-
+import 'package:my_diet_guide/screens/dashboard_change.dart';
+import 'package:my_diet_guide/screens/web_screens/web_signup.dart';
 import '../../common/route_constants.dart';
 import '../../controllers/Controller.dart';
 import '../../widgets/background_image.dart';
-import '../../widgets/palatte.dart';
 import '../signup.dart';
 
 class WebLogin extends StatefulWidget {
@@ -27,13 +26,15 @@ class _WebLoginState extends State<WebLogin> {
 
   Future signIn() async {
     try{
-      await Controller.auth!.signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
+      await Controller.auth!.signInWithEmailAndPassword(email: email, password: password);
       setState(() {
         _error = "Success";
       });
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_){
+            return DashboardChange();
+          }
+      ));
 
     }catch(error){
       //print(error.toString());
@@ -87,7 +88,7 @@ class _WebLoginState extends State<WebLogin> {
                                   child: TextFormField(
                                     key: Key("email"),
                                     style: TextStyle(
-                                      fontSize: 32,
+                                      fontSize: 26,
                                       color: Colors.white,
                                     ),
                                     keyboardType: TextInputType.emailAddress,
@@ -100,7 +101,7 @@ class _WebLoginState extends State<WebLogin> {
                                         border: InputBorder.none,
                                         hintText: 'Email',
                                         hintStyle: TextStyle(
-                                            fontSize: 32,
+                                            fontSize: 26,
                                             color: Colors.white
                                         ),
                                         prefixIcon: Padding(
@@ -108,7 +109,7 @@ class _WebLoginState extends State<WebLogin> {
                                           child: Icon(
                                             FontAwesomeIcons.solidEnvelope,
                                             color: Colors.white,
-                                            size: 40,
+                                            size:32,
                                           ),
                                         )
                                     ),
@@ -147,7 +148,7 @@ class _WebLoginState extends State<WebLogin> {
                                   child: TextFormField(
                                     key: Key("password"),
                                     style: TextStyle(
-                                      fontSize: 32,
+                                      fontSize: 26,
                                       color: Colors.white,
                                     ),
                                     keyboardType: TextInputType.text,
@@ -161,7 +162,7 @@ class _WebLoginState extends State<WebLogin> {
                                       border: InputBorder.none,
                                       hintText: 'Password',
                                       hintStyle: TextStyle(
-                                        fontSize: 32,
+                                        fontSize: 26,
                                         color: Colors.white,
                                       ),
                                       prefixIcon: Padding(
@@ -169,7 +170,7 @@ class _WebLoginState extends State<WebLogin> {
                                         child: Icon(
                                           FontAwesomeIcons.lock,
                                           color: Colors.white,
-                                          size: 40,
+                                          size: 32,
                                         ),
                                       ),
                                     ),
@@ -202,7 +203,7 @@ class _WebLoginState extends State<WebLogin> {
                                 GestureDetector(
                                   child: Text("forgot password?",
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white
                                     ),
@@ -238,11 +239,11 @@ class _WebLoginState extends State<WebLogin> {
                                 ),
                                 child: const Center(
                                   child: Text(
-                                    'Log In',
+                                    'Log in',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight:FontWeight.bold,
-                                      fontSize: 28,
+                                      fontSize: 24,
                                     ),
                                   ),
                                 ),
@@ -275,14 +276,14 @@ class _WebLoginState extends State<WebLogin> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Not a member?',
+                          'Not a member?  ',
                           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 18),
                         ),
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_){
-                                  return SignUp();
+                                  return WebSignUp();
                                 }
                             ));
                           },
@@ -298,42 +299,42 @@ class _WebLoginState extends State<WebLogin> {
                     ),
 
 
-                    SizedBox(height: 40,),
-
-
-                    Container(
-                      padding: EdgeInsets.only(right: currentWidth*0.025),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_){
-                                    return AdminLogin();
-                                  }
-                              ));
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.teal.shade900,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Admin ?',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight:FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // SizedBox(height: 40,),
+                    //
+                    //
+                    // Container(
+                    //   padding: EdgeInsets.only(right: currentWidth*0.025),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.end,
+                    //     children: [
+                    //       GestureDetector(
+                    //         onTap: (){
+                    //           Navigator.of(context).push(MaterialPageRoute(
+                    //               builder: (_){
+                    //                 return AdminLogin();
+                    //               }
+                    //           ));
+                    //         },
+                    //         child: Container(
+                    //           padding: const EdgeInsets.all(10),
+                    //           decoration: BoxDecoration(
+                    //             color: Colors.teal.shade900,
+                    //             borderRadius: BorderRadius.circular(8),
+                    //           ),
+                    //           child: const Center(
+                    //             child: Text(
+                    //               'Admin ?',
+                    //               style: TextStyle(
+                    //                 color: Colors.white,
+                    //                 fontWeight:FontWeight.bold,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
 
                   ],
                 ),

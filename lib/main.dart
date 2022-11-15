@@ -62,8 +62,8 @@ class _MyAppState extends State<MyApp> {
         RouteConstants.forgotPasswordRoute: (context)=>ForgotPassword(),
 
         RouteConstants.planViewRoute: (context) => DietPlanController(context: context,),
-        RouteConstants.planChangeRoute:(context) => DietPlanController(context: context,),
         RouteConstants.planSelectRoute:(context) => DietPlanController(context: context,),
+        RouteConstants.planViewSelectRoute:(context) => DietPlanController(context: context,),
 
         RouteConstants.userDetailsViewRoute: (context)=>UserDetailsController(context: context,),
         RouteConstants.userDetailsCreateRoute: (context)=>UserDetailsController(context: context,),
@@ -77,6 +77,7 @@ class _MyAppState extends State<MyApp> {
         RouteConstants.rateRoute: (context)=>RateController(context: context),
 
         RouteConstants.dietViewRoute: (context)=>DietController(context: context,),
+        RouteConstants.dietViewSelectRoute: (context)=>DietController(context: context)
 
       },
       onUnknownRoute: (settings){

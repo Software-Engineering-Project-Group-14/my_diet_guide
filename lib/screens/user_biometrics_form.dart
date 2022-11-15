@@ -96,39 +96,8 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
         intensity!
     );
 
-    Navigator.pushNamed(context, RouteConstants.planSelectRoute,
-        arguments: UserBiometrics(
-            user_id: userId,
-            gender: widget.gender,
-            weight: int.parse(weight),
-            height: int.parse(height),
-            targetWeight: int.parse(targetWeight),
-            dietaryPreference: dietaryPreference!,
-            activeness: activeness!,
-            intensity: intensity!,
-            age:widget.age,
-            calculated_current_weight: int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(weight), widget.age.toDouble(), activeness!),
-            last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
-          )
-    );
-/*
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPlan(
-      firestore: widget.firestore,
-        auth: widget.auth,
-        userBiometrics: UserBiometrics(
-          user_id: userId,
-          gender: widget.gender,
-          weight: int.parse(weight),
-          height: int.parse(height),
-          targetWeight: int.parse(targetWeight),
-          dietaryPreference: dietaryPreference!,
-          activeness: activeness!,
-          intensity: intensity!,
-          age:widget.age,
-          calculated_current_weight: int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(weight), widget.age.toDouble(), activeness!),
-          last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
-        )
-    )));*/
+    Navigator.pushNamed(context, RouteConstants.planSelectRoute,);
+
   }
 
 

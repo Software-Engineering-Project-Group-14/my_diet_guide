@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:my_diet_guide/common/messgae_constants.dart';
 import 'package:my_diet_guide/common/plan_constants.dart';
 
+import '../common/image_path_constants.dart';
 import 'Meal.dart';
 import 'Model.dart';
 
@@ -36,7 +37,7 @@ class DietPlanModel extends Model{
     required this.dinner_id,
     required this.calorie_gain_per_plan_per_week
   }){
-    img = dietary_preference+".png";
+    img = "${ImagePathConstants.prefix}/${ImagePathConstants.dietPlan}/$dietary_preference.png";
   }
 
   @override
@@ -75,8 +76,6 @@ class DietPlanModel extends Model{
   }){
     return Model.firestore!.collection('diet_plan')
         .where('dietary_preference', isEqualTo: dietary_preference)
-        .where("age_group", isEqualTo: age_group)
-        .where("gender", isEqualTo: gender)
         .snapshots();
   }
 
@@ -159,28 +158,50 @@ class DietPlanModel extends Model{
   }
 
   // Get the subscribed diet plan for given user
-  static Future<DietPlanModel?> getDietPlanForUser({required String user_id})async{
-    try{
+  static Future<Map<String, dynamic>> getDietPlanForUser({required String user_id})async{
+    bool? success;
+    DietPlanModel? dietPlanModel;
+    String? msg;
+    // try{
       DocumentSnapshot ds = await Model.firestore!.collection("user").doc(user_id).get();
       Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
+    if(!data.keys.contains("current_plan")){
+      success=false;
+      msg = MessageConstants.NoRegisteredPlan;
+    }else{
       String planId = data["current_plan"];
       ds = await Model.firestore!.collection("diet_plan").doc(planId).get();
-      data = ds.data() as Map<String, dynamic>;
-      return DietPlanModel(
-          planId: planId,
-          dietary_preference: data["dietary_preference"],
-          gender: data["gender"],
-          intensity: data["intensity"],
-          activeness: data["activeness"],
-          age_group: data["age_group"],
-          breakfast_id: data["breakfast_id"],
-          lunch_id: data["lunch_id"],
-          dinner_id: data["dinner_id"],
-          calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week']
-      );
-    }catch(error){
-      return null;
+      if(ds.data()==null){
+        success=false;
+        msg = MessageConstants.NoRegisteredPlan;
+      }else{
+        data = ds.data() as Map<String, dynamic>;
+        dietPlanModel = DietPlanModel(
+            planId: planId,
+            dietary_preference: data["dietary_preference"],
+            gender: data["gender"],
+            intensity: data["intensity"],
+            activeness: data["activeness"],
+            age_group: data["age_group"],
+            breakfast_id: data["breakfast_id"],
+            lunch_id: data["lunch_id"],
+            dinner_id: data["dinner_id"],
+            calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week']
+        );
+        success = true;
+      }
     }
+
+    // }catch(error){
+    //   return {
+    //    'success': false
+    //   };
+    //  }
+    return {
+      'success': success,
+      'dietPlan': dietPlanModel,
+      'msg': msg
+    };
   }
 
   // Assigns this diet plan for given user, returns true if success false otherwise

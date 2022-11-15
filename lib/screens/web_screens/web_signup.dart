@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
+import 'package:my_diet_guide/screens/web_screens/web_user_details_form.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/palatte.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class WebSignUp extends StatefulWidget {
+  const WebSignUp({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<WebSignUp> createState() => _WebSignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _WebSignUpState extends State<WebSignUp> {
 
   final _formKey = GlobalKey<FormState>();
 
@@ -23,17 +24,16 @@ class _SignUpState extends State<SignUp> {
 
 
   //function for sign up a user
-  //function for sign up a user
   Future signUpFunc() async {
     if (passwordConfirmed()) {
-      Navigator.pushNamed(context, RouteConstants.userDetailsCreateRoute,
-          arguments: <String, String>{
-            'email': email,
-            'password': password
-          }
-      );
-     // Navigator.push(context, MaterialPageRoute(builder: (context) =>
-       //   UserDetailsForm(email: email, password: password)));
+      // Navigator.pushNamed(context, RouteConstants.userDetailsCreateRoute,
+      //     arguments: <String, String>{
+      //       'email': email,
+      //       'password': password
+      //     }
+      // );
+      Navigator.push(context, MaterialPageRoute(builder: (context) =>
+        WebUserDetailsForm(email: email, password: password)));
     }
   }
 
@@ -80,12 +80,16 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text('Sign Up',
-                          style: HeadingTitle
+                          style: TextStyle(
+                            fontSize: 60,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                          )
                       ),
                     ),
 
 
-                    SizedBox(height: 25,),
+                    SizedBox(height: 45,),
 
 
                     Form(
@@ -97,11 +101,11 @@ class _SignUpState extends State<SignUp> {
                               color: Colors.grey.shade600.withOpacity(0.6),
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            width: 300,
+                            width: 500,
                             child: Center(
                               child: TextFormField(
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 26,
                                   color: Colors.white,
                                 ),
                                 decoration: InputDecoration(
@@ -114,7 +118,7 @@ class _SignUpState extends State<SignUp> {
                                     border: InputBorder.none,
                                     hintText: 'Email',
                                     hintStyle: TextStyle(
-                                        fontSize: 22,
+                                        fontSize: 26,
                                         color: Colors.white
                                     ),
                                     prefixIcon: Padding(
@@ -122,7 +126,7 @@ class _SignUpState extends State<SignUp> {
                                       child: Icon(
                                         FontAwesomeIcons.solidEnvelope,
                                         color: Colors.white,
-                                        size: 30,
+                                        size: 32,
                                       ),
                                     )
                                 ),
@@ -149,12 +153,12 @@ class _SignUpState extends State<SignUp> {
                               color: Colors.grey.shade600.withOpacity(0.6),
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            width: 300,
+                            width: 500,
                             child: Center(
                               child: TextFormField(
                                 obscureText: true,
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 26,
                                   color: Colors.white,
                                 ),
                                 decoration: InputDecoration(
@@ -167,7 +171,7 @@ class _SignUpState extends State<SignUp> {
                                   border: InputBorder.none,
                                   hintText: 'Password',
                                   hintStyle: TextStyle(
-                                      fontSize: 22,
+                                      fontSize: 26,
                                       color: Colors.white
                                   ),
                                   prefixIcon: Padding(
@@ -175,7 +179,7 @@ class _SignUpState extends State<SignUp> {
                                     child: Icon(
                                       FontAwesomeIcons.lock,
                                       color: Colors.white,
-                                      size: 30,
+                                      size: 32,
                                     ),
                                   ),
                                 ),
@@ -199,12 +203,12 @@ class _SignUpState extends State<SignUp> {
                               color: Colors.grey.shade600.withOpacity(0.6),
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            width: 300,
+                            width: 500,
                             child: Center(
                               child: TextFormField(
                                 obscureText: true,
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 26,
                                   color: Colors.white,
                                 ),
                                 decoration: InputDecoration(
@@ -217,7 +221,7 @@ class _SignUpState extends State<SignUp> {
                                   border: InputBorder.none,
                                   hintText: 'Confirm Password',
                                   hintStyle: TextStyle(
-                                      fontSize: 22,
+                                      fontSize: 26,
                                       color: Colors.white
                                   ),
                                   prefixIcon: Padding(
@@ -225,7 +229,7 @@ class _SignUpState extends State<SignUp> {
                                     child: Icon(
                                       FontAwesomeIcons.lock,
                                       color: Colors.white,
-                                      size: 30,
+                                      size: 32,
                                     ),
                                   ),
                                 ),
@@ -243,7 +247,7 @@ class _SignUpState extends State<SignUp> {
                           ),
 
 
-                          SizedBox(height: 40,),
+                          SizedBox(height: 70,),
 
 
                           //Sign Up button
@@ -251,7 +255,7 @@ class _SignUpState extends State<SignUp> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
-                                width: 350,
+                                width: 550,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 25.0),
@@ -270,7 +274,7 @@ class _SignUpState extends State<SignUp> {
                                         child: Text('Sign Up',
                                           style: TextStyle(color: Colors.white,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 20),),
+                                              fontSize: 25),),
                                       ),
                                     ),
                                   ),
@@ -287,29 +291,30 @@ class _SignUpState extends State<SignUp> {
 
 
 
-                    SizedBox(height: 35,),
+                    SizedBox(height: 25,),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Already a member?',
-                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 18),
                         ),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, RouteConstants.homeRoute);
-                         //   Navigator.of(context).push(MaterialPageRoute(
-                          //      builder: (_){
-                          //        return Login(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance);
-                          //      }
-                         //   )
-                           // );
+                            //   Navigator.of(context).push(MaterialPageRoute(
+                            //      builder: (_){
+                            //        return Login(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance);
+                            //      }
+                            //   )
+                            // );
                           },
                           child: Text('    Log in',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.teal.shade900,
+                              fontSize: 18
                             ),
                           ),
                         ),

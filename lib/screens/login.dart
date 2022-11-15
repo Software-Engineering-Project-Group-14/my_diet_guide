@@ -6,7 +6,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/models/UserBiometrics.dart';
+import 'package:my_diet_guide/screens/dashboard_change.dart';
 import 'package:my_diet_guide/screens/signup.dart';
+import 'package:my_diet_guide/screens/user_dashboard.dart';
+import 'package:my_diet_guide/screens/web_screens/web_signup.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/palatte.dart';
 import '../controllers/Controller.dart';
@@ -40,6 +43,14 @@ class _LoginState extends State<Login> {
       setState(() {
         _error = "Success";
       });
+
+
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_){
+            return DashboardChange();
+          }
+      ));
+
 
     }catch(error){
       //print(error.toString());
