@@ -247,7 +247,7 @@ class _WebSignUpState extends State<WebSignUp> {
                           ),
 
 
-                          SizedBox(height: 60,),
+                          SizedBox(height: 70,),
 
 
                           //Sign Up button
