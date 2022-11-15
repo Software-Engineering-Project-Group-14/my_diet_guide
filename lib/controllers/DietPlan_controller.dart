@@ -5,12 +5,14 @@ import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/controllers/Controller.dart';
 import 'package:my_diet_guide/screens/loading_page.dart';
 import 'package:my_diet_guide/screens/view_plan_when_select.dart';
+import 'package:my_diet_guide/screens/web_screens/web_change_plan.dart';
 
 import '../common/messgae_constants.dart';
 import '../models/DietPlan.dart';
 import '../screens/change_plan.dart';
 import '../screens/select_plan.dart';
 import '../screens/view_diet.dart';
+import '../screens/web_screens/web_select_plan.dart';
 
 
 class DietPlanController extends Controller {
@@ -48,9 +50,26 @@ class _DietPlanControllerState  extends State<DietPlanController>{
                 );
               }
               if(!snapshot.data!['success']){
-                return SelectPlan();
+                return LayoutBuilder(
+                    builder: (context, constraints){
+                      if(constraints.maxWidth < 600){
+                        return SelectPlan();
+                      }else{
+                        return WebSelectPlan();
+                      }
+                    }
+                );
               }else{
-                return ChangePlan(currentPlan: snapshot.data!['dietPlan'],);
+                return LayoutBuilder(
+                    builder: (context, constraints){
+                      if(constraints.maxWidth < 600){
+                        return ChangePlan(currentPlan: snapshot.data!['dietPlan'],);
+                      }else{
+                        return WebChangePlan(currentPlan: snapshot.data!['dietPlan'],);
+                      }
+                    }
+                );
+               // return ChangePlan(currentPlan: snapshot.data!['dietPlan'],);
               }
             }
         );

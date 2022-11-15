@@ -1,18 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/models/DietPlan.dart';
-import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
-import 'package:my_diet_guide/widgets/plan_card.dart';
 import 'package:my_diet_guide/widgets/recommended_plans.dart';
 
 import '../controllers/Controller.dart';
-import '../models/UserBiometrics.dart';
 import '../widgets/bottom_bar.dart';
-import '../widgets/plan_card.dart';
 import '../widgets/side_bar.dart';
 
 class SelectPlan extends StatefulWidget {

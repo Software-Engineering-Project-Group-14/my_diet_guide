@@ -51,39 +51,41 @@ class _ChangePlanState extends State<ChangePlan> {
             children: [
 
               const BlurredBackground(),
-              Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child:
-                  Column(
-                    //mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Current plan",
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 20,
-                                      color: Colors.white
+              SingleChildScrollView(
+                child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child:
+                    Column(
+                      //mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(25.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Current plan",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 20,
+                                        color: Colors.white
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Expanded(child: PlanCard(dietPlanModel:widget.currentPlan, planSelect: true, nonGesture: true,))
-                              ],
-                            )
-                          ],
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(child: PlanCard(dietPlanModel:widget.currentPlan, planSelect: true, nonGesture: true,))
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      RecommendedPlans(currentPlanId: widget.currentPlan.planId,)
-                    ],
-                  )
+                        RecommendedPlans(currentPlanId: widget.currentPlan.planId,)
+                      ],
+                    )
+                ),
               ),
             ]
 

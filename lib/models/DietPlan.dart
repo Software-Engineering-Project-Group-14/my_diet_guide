@@ -76,8 +76,6 @@ class DietPlanModel extends Model{
   }){
     return Model.firestore!.collection('diet_plan')
         .where('dietary_preference', isEqualTo: dietary_preference)
-        .where("age_group", isEqualTo: age_group)
-        .where("gender", isEqualTo: gender)
         .snapshots();
   }
 

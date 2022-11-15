@@ -37,6 +37,11 @@ class PlanCard extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text('Plan ${dietPlanModel.planId}', style: const TextStyle(fontSize: 19, color: Colors.white, fontWeight: FontWeight.bold), textAlign: TextAlign.left,),
                   ),
+
+                ],
+              ),
+              Row(
+                children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(dietPlanModel.dietary_preference, style: const TextStyle(fontSize: 16, color: Colors.white), textAlign: TextAlign.left,),
@@ -44,19 +49,6 @@ class PlanCard extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 20,),
-
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Text("Intensity : ${dietPlanModel.intensity} ", style: TextStyle(color: Colors.white, fontSize: 16),),
-
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20,),
               !nonGesture? Row(
                 children: [
                   GestureDetector(
@@ -66,11 +58,14 @@ class PlanCard extends StatelessWidget {
                         );
 
                       },
-                      child: Text(
-                        "See More",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "See More",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16
+                          ),
                         ),
                       )
                   ),
@@ -83,7 +78,7 @@ class PlanCard extends StatelessWidget {
                       String msg = "";
                       String? successMsg;
                       if(planSelect){
-                        successMsg = "Plan selected successfully";;
+                        successMsg = "Plan selected successfully";
                       }else{
                         successMsg = "Plan changed successfully";
                       }
@@ -119,11 +114,14 @@ class PlanCard extends StatelessWidget {
                         },
                       );
                     },
-                    child: Text(
-                      "Select",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Select",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16),
+                      ),
                     ),
                   )
                 ],
