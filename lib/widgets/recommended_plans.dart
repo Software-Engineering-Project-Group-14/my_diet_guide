@@ -62,16 +62,20 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
           );
           return Column(
             children: [
-              Row(
-                children: [
-                  Text(
-                    "Other recommended plans",
-                    style: GoogleFonts.poppins(
-                        fontSize: 22,
-                        color: Colors.white
-                    ),
-                  )
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Recommended plans",
+                      style: GoogleFonts.poppins(
+                          fontSize: 22,
+                          color: Colors.white
+                      ),
+                    )
+                  ],
+                ),
               ),
               StreamBuilder<QuerySnapshot>(
                 stream: recommendedplanStream,

@@ -62,17 +62,20 @@ class _ChangePlanState extends State<ChangePlan> {
                           padding: const EdgeInsets.all(25.0),
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Current plan",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 20,
-                                        color: Colors.white
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Current plan",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 20,
+                                          color: Colors.white
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               Row(
                                 children: [

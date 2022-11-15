@@ -51,6 +51,7 @@ class PlanCard extends StatelessWidget {
 
               !nonGesture? Row(
                 children: [
+
                   GestureDetector(
                       onTap: (){
                         Navigator.pushNamed(context, RouteConstants.planViewSelectRoute,
@@ -63,7 +64,7 @@ class PlanCard extends StatelessWidget {
                         child: Text(
                           "See More",
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.lightBlue,
                               fontSize: 16
                           ),
                         ),
@@ -114,13 +115,18 @@ class PlanCard extends StatelessWidget {
                         },
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Select",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Select",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16),
+                        ),
                       ),
                     ),
                   )
@@ -133,7 +139,7 @@ class PlanCard extends StatelessWidget {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.all(10),
                 child: Image(
                   image: AssetImage(dietPlanModel.img),
                   fit: BoxFit.cover,
