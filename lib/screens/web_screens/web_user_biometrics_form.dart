@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/route_constants.dart';
 import '../../models/Calorie_Calculator.dart';
 import '../../widgets/background_image.dart';
 
@@ -80,38 +81,9 @@ class _WebUserBiometricsFormState extends State<WebUserBiometricsForm> {
         activeness!,
         intensity!
     );
+    Navigator.pushNamed(context, RouteConstants.planSelectRoute);
 
-    // Navigator.pushNamed(context, RouteConstants.planSelectRoute,
-    //     arguments: UserBiometrics(
-    //       user_id: userId,
-    //       gender: widget.gender,
-    //       weight: int.parse(weight),
-    //       height: int.parse(height),
-    //       targetWeight: int.parse(targetWeight),
-    //       dietaryPreference: dietaryPreference!,
-    //       activeness: activeness!,
-    //       intensity: intensity!,
-    //       age:widget.age,
-    //       calculated_current_weight: int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(weight), widget.age.toDouble(), activeness!),
-    //       last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
-    //     )
-    // );
 
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPlan(
-    //     userBiometrics: UserBiometrics(
-    //       user_id: userId,
-    //       gender: widget.gender,
-    //       weight: int.parse(weight),
-    //       height: int.parse(height),
-    //       targetWeight: int.parse(targetWeight),
-    //       dietaryPreference: dietaryPreference!,
-    //       activeness: activeness!,
-    //       intensity: intensity!,
-    //       age:widget.age,
-    //       calculated_current_weight: int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(weight), widget.age.toDouble(), activeness!),
-    //       last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
-    //     )
-    // )));
   }
 
 
