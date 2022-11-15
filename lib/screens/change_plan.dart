@@ -14,8 +14,9 @@ import '../widgets/side_bar.dart';
 
 class ChangePlan extends StatefulWidget {
 
+  final DietPlanModel currentPlan;
 
-  const ChangePlan({Key? key}) : super(key: key);
+  const ChangePlan({Key? key, required this.currentPlan, }) : super(key: key);
 
   @override
   State<ChangePlan> createState() => _ChangePlanState();
@@ -23,12 +24,10 @@ class ChangePlan extends StatefulWidget {
 
 class _ChangePlanState extends State<ChangePlan> {
 
-  late Stream<Map<String, dynamic>> currentPlanStream;
   late Stream<UserBiometrics> userBiometricsStream;
 
   @override
   void initState() {
-    currentPlanStream = DietPlanModel.getDietPlanForUser(user_id:"6gDkTTdr4jXWMtq5ZEJngXx7PjP2").asStream();
     userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:"6gDkTTdr4jXWMtq5ZEJngXx7PjP2").asStream();
     super.initState();
   }
@@ -53,68 +52,43 @@ class _ChangePlanState extends State<ChangePlan> {
 
               const BlurredBackground(),
               Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: StreamBuilder<Map<String, dynamic>>(
-                    stream: currentPlanStream,
-                    builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                      String? msg;
-                      bool? success;
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot.hasError || snapshot.data == null) {
-                        success=false;
-                        msg = MessageConstants.errorMessage;
-                        return Text(
-                          msg,
-                          style: const TextStyle(
-                              color: Colors.white
-                          ),
-                        );
-                      }
-                      success = snapshot.data!['success'];
-                      msg = snapshot.data!['msg'];
-                      DietPlanModel currentPlan = snapshot.data!['dietPlan'];
-                      return Column(
-                        //mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Column(
+                  padding: const EdgeInsets.all(10.0),
+                  child:
+                  Column(
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Current plan",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 20,
-                                          color: Colors.white
-                                      ),
-                                    ),
-                                  ],
+                                Text(
+                                  "Current plan",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                      color: Colors.white
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    Expanded(child: PlanCard(dietPlanModel:currentPlan))
-                                  ],
-                                )
                               ],
                             ),
-                          ),
-                          RecommendedPlans(currentPlanId: snapshot.data!['dietPlan'].planId,)
-                        ],
-                      );
-                    }
-                ),
+                            Row(
+                              children: [
+                                Expanded(child: PlanCard(dietPlanModel:widget.currentPlan, planSelect: true, nonGesture: true,))
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      RecommendedPlans(currentPlanId: widget.currentPlan.planId,)
+                    ],
+                  )
               ),
-
             ]
 
         ),
-        bottomNavigationBar: BottomBar(key: Key('bottom-bar'),user_id: "6gDkTTdr4jXWMtq5ZEJngXx7PjP2"),
+        bottomNavigationBar: BottomBar(key: Key('bottom-bar'),user_id: Controller.auth!.currentUser!.uid),
       ),
     );
 

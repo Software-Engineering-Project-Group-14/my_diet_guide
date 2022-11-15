@@ -1,9 +1,13 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/controllers/Controller.dart';
+import 'package:my_diet_guide/screens/loading_page.dart';
+import 'package:my_diet_guide/screens/view_plan_when_select.dart';
 
-import '../models/UserBiometrics.dart';
+import '../common/messgae_constants.dart';
+import '../models/DietPlan.dart';
 import '../screens/change_plan.dart';
 import '../screens/select_plan.dart';
 import '../screens/view_diet.dart';
@@ -29,8 +33,27 @@ class _DietPlanControllerState  extends State<DietPlanController>{
     switch(widget.subRoute){
 
       case RouteConstants.planSelectSubRoute:{
-
-        page = SelectPlan();
+        page = StreamBuilder<Map<String, dynamic>>(
+            stream: DietPlanModel.getDietPlanForUser(user_id:Controller.auth!.currentUser!.uid).asStream(),
+            builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot){
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const LoadingPage();
+              }
+              if (snapshot.hasError || snapshot.data==null || !snapshot.data!['success'] && snapshot.data!['msg']!=MessageConstants.NoRegisteredPlan) {
+                return const Text(
+                  MessageConstants.errorMessage,
+                  style: TextStyle(
+                      color: Colors.white
+                  ),
+                );
+              }
+              if(!snapshot.data!['success']){
+                return SelectPlan();
+              }else{
+                return ChangePlan(currentPlan: snapshot.data!['dietPlan'],);
+              }
+            }
+        );
       }
       break;
 
@@ -39,8 +62,10 @@ class _DietPlanControllerState  extends State<DietPlanController>{
       }
       break;
 
-      case RouteConstants.planChangeSubRoute:{
-        page = ChangePlan();
+      case RouteConstants.planViewSelectSubRoute:{
+
+        final dietPlanModel = widget.arguments as DietPlanModel;
+        page = ViewPlanSelect(dietPlanModel: dietPlanModel);
       }
       break;
 

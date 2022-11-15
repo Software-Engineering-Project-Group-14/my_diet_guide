@@ -70,7 +70,7 @@ class Dish extends Model{
             name: ds["name"],
             description: ds["description"],
             dietary_preference: ds["dietary_preference"],
-            mealType: ds["mealType"],
+            mealType: ds["meal"].toString().toLowerCase(),
             calorie_gain_per_meal: ds["calorie_gain_per_meal"]
         );
     }catch(error){
@@ -78,6 +78,28 @@ class Dish extends Model{
     }
 
   }
+
+  static Future<Map<String, Dish>> getByDay({
+    required String day,
+    required String breakfast_id,
+    required String lunch_id,
+    required String dinner_id,
+  })async{
+    day = day.toLowerCase();
+    Map<String, Dish> dishes = {};
+    DocumentSnapshot ds = await Model.firestore!.collection('breakfast').doc(breakfast_id).get();
+    String dishName = ds['${day}_dish_id'];
+    dishes['dishBreakfast'] = (await Dish.get(dishName))!;
+    ds = await Model.firestore!.collection('lunch').doc(lunch_id).get();
+    dishName = ds['${day}_dish_id'];
+    dishes['dishLunch'] = (await Dish.get(dishName))!;
+    ds = await Model.firestore!.collection('dinner').doc(dinner_id).get();
+    dishName = ds['${day}_dish_id'];
+    dishes['dishDinner'] = (await Dish.get(dishName))!;
+    return dishes;
+  }
+
+
 
 
 }

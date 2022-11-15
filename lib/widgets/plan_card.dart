@@ -1,13 +1,18 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
+
+import '../controllers/Controller.dart';
 
 class PlanCard extends StatelessWidget {
 
   final DietPlanModel dietPlanModel;
+  final bool planSelect;
+  final bool nonGesture;
 
-  const PlanCard({Key? key, required this.dietPlanModel}) : super(key: key);
+  const PlanCard({Key? key, required this.dietPlanModel, required this.planSelect, required this.nonGesture}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +56,78 @@ class PlanCard extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 20,),
+              !nonGesture? Row(
+                children: [
+                  GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(context, RouteConstants.planViewSelectRoute,
+                            arguments: dietPlanModel
+                        );
+
+                      },
+                      child: Text(
+                        "See More",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16
+                        ),
+                      )
+                  ),
+                  SizedBox(width: 10,),
+                  GestureDetector(
+                    onTap: () async {
+                      bool success = await dietPlanModel.select(
+                          user_id:   Controller.auth!.currentUser!.uid
+                      );
+                      String msg = "";
+                      String? successMsg;
+                      if(planSelect){
+                        successMsg = "Plan selected successfully";;
+                      }else{
+                        successMsg = "Plan changed successfully";
+                      }
+                      if(success)
+                        msg = successMsg;
+                      else
+                        msg = "An error occurred. Please try again.";
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          String? dialogBoxMessage;
+                          if(planSelect){
+                            dialogBoxMessage = "Plan Select";
+                          }else{
+                            dialogBoxMessage = "Plan Change";
+                          }
+                          return AlertDialog(
+                            title: Text(dialogBoxMessage),
+                            content: Text(msg),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('OK'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  if(success){
+                                    Navigator.pushNamed(context, '/');
+                                  }
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Text(
+                      "Select",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16),
+                    ),
+                  )
+                ],
+              ):const Text('')
             ],
           ),
           ClipRRect(

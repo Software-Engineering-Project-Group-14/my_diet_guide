@@ -55,7 +55,7 @@ class _SelectPlanState extends State<SelectPlan> {
             )
           ],
         ),
-        bottomNavigationBar: BottomBar(key: Key('bottom-bar'),user_id: "6gDkTTdr4jXWMtq5ZEJngXx7PjP2"),
+        bottomNavigationBar: BottomBar(key: Key('bottom-bar'),user_id: Controller.auth!.currentUser!.uid),
 
       ),
     );

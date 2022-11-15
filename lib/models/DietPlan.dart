@@ -167,27 +167,33 @@ class DietPlanModel extends Model{
     // try{
       DocumentSnapshot ds = await Model.firestore!.collection("user").doc(user_id).get();
       Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
-      String planId = data["current_plan"];
-      ds = await Model.firestore!.collection("diet_plan").doc(planId).get();
-    if(ds.data()==null){
+    if(!data.keys.contains("current_plan")){
       success=false;
       msg = MessageConstants.NoRegisteredPlan;
     }else{
-      data = ds.data() as Map<String, dynamic>;
-      dietPlanModel = DietPlanModel(
-          planId: planId,
-          dietary_preference: data["dietary_preference"],
-          gender: data["gender"],
-          intensity: data["intensity"],
-          activeness: data["activeness"],
-          age_group: data["age_group"],
-          breakfast_id: data["breakfast_id"],
-          lunch_id: data["lunch_id"],
-          dinner_id: data["dinner_id"],
-          calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week']
-      );
-      success = true;
+      String planId = data["current_plan"];
+      ds = await Model.firestore!.collection("diet_plan").doc(planId).get();
+      if(ds.data()==null){
+        success=false;
+        msg = MessageConstants.NoRegisteredPlan;
+      }else{
+        data = ds.data() as Map<String, dynamic>;
+        dietPlanModel = DietPlanModel(
+            planId: planId,
+            dietary_preference: data["dietary_preference"],
+            gender: data["gender"],
+            intensity: data["intensity"],
+            activeness: data["activeness"],
+            age_group: data["age_group"],
+            breakfast_id: data["breakfast_id"],
+            lunch_id: data["lunch_id"],
+            dinner_id: data["dinner_id"],
+            calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week']
+        );
+        success = true;
+      }
     }
+
     // }catch(error){
     //   return {
     //    'success': false
