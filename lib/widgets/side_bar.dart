@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
+import 'package:my_diet_guide/screens/calenderScreen.dart';
 import 'package:my_diet_guide/screens/change_plan.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
 import 'package:my_diet_guide/screens/notifications.dart';
@@ -66,11 +67,13 @@ class NavigationDrawer extends StatelessWidget {
           Wrap(
             runSpacing: 16,
             children: [
-              // ListTile(
-              //   leading: Icon(Icons.calendar_month, size: 30, color: Colors.white,),
-              //   title: Text("Calender", style: TextStyle(fontSize: 19, color: Colors.white),),
-              //   onTap: (){},
-              // ),
+              ListTile(
+                leading: Icon(Icons.calendar_month, size: 30, color: Colors.white,),
+                title: Text("Calender", style: TextStyle(fontSize: 19, color: Colors.white),),
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DietCalender()));
+                },
+              ),
               ListTile(
                 leading: Icon(Icons.notifications, size: 30, color: Colors.white,),
                 title: Text("Notifications", style: TextStyle(fontSize: 19, color: Colors.white,),),

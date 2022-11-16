@@ -121,7 +121,7 @@ class UserDashBody extends StatelessWidget {
             final breakfastDishId = snapshot.data;
             return breakfastDishId==null ? Center(child: Text("No User!"),) : buildBreakfastMealCard(breakfastDishId!);
           } else if (snapshot.hasError){
-            return Text('Something went wrong!');
+            return Text('No internet connection');
           } else {
             return Center(
               child: CircularProgressIndicator(),
@@ -201,7 +201,7 @@ class UserDashBody extends StatelessWidget {
             final lunchDishId = snapshot.data;
             return lunchDishId==null ? Center(child: Text("No User!"),) : buildLunchMealCard(lunchDishId!);
           } else if (snapshot.hasError){
-            return Text('Something went wrong!');
+            return Text('No internet connection');
           } else {
             return Center(
               child: CircularProgressIndicator(),
@@ -222,7 +222,7 @@ class UserDashBody extends StatelessWidget {
             final dinnerDishId = snapshot.data;
             return dinnerDishId==null ? Center(child: Text("No User!"),) : buildDinnerMealCard(dinnerDishId!);
           } else if (snapshot.hasError){
-            return Text('Something went wrong!');
+            return Text('No internet connection');
           } else {
             return Center(
               child: CircularProgressIndicator(),

@@ -82,6 +82,8 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
     String userId = FirebaseAuth.instance.currentUser!.uid;
 
+
+
     addUserDetails(userId, widget.firstName, widget.lastName, widget.email, widget.bday);
 
     addUserBiometrics(
@@ -129,6 +131,18 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
           last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
         )
     )));*/
+  }
+
+
+  Future addUserType(String userId) async {
+    final appUserType = FirebaseFirestore.instance.collection('app_users').doc(userId);
+
+    final json = {
+      'u_id': userId,
+      'type': 'user',
+    };
+
+    await appUserType.set(json);
   }
 
 
