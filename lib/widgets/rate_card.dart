@@ -29,23 +29,61 @@ class _RateCardState extends State<RateCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      borderOnForeground: true,
-      elevation: 10,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            leading: StarRatingBar(starValue: rateModel.rate,),
-            title: Text(
-                "${rateModel.email}",
-                style: TextStyle(color: Colors.green)),
-            subtitle: Text(
-              "${rateModel.review}",
-              style: TextStyle(color: Colors.orangeAccent),
-            ),
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Colors.white24, Colors.white10],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight
           ),
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(width: 2, color: Colors.white10)
+      ),
+      child: Row(
+
+        children: [
+
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: StarRatingBar(starValue: rateModel.rate,),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                      "${rateModel.email}",
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 20
+                      )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 200,
+                        child: Text(
+                          "${rateModel.review}",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+
+                          ),
+                          overflow: TextOverflow.visible,
+                          textAlign: TextAlign.justify,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+
         ],
       ),
     );
