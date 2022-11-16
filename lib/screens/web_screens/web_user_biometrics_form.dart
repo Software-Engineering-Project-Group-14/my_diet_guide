@@ -74,9 +74,9 @@ class _WebUserBiometricsFormState extends State<WebUserBiometricsForm> {
         userId,
         widget.age,
         widget.gender,
-        int.parse(weight),
-        int.parse(height),
-        int.parse(targetWeight),
+        double.parse(weight),
+        double.parse(height),
+        double.parse(targetWeight),
         dietaryPreference!,
         activeness!,
         intensity!
@@ -117,7 +117,7 @@ class _WebUserBiometricsFormState extends State<WebUserBiometricsForm> {
 
 
 
-  Future addUserBiometrics(String userId, int age, String gender, int weight, int height, int targetWeight, String dietaryPreference, String activeness, String intensity) async {
+  Future addUserBiometrics(String userId, int age, String gender, double weight, double height, double targetWeight, String dietaryPreference, String activeness, String intensity) async {
     final userBiometricsDoc = FirebaseFirestore.instance.collection('user biometrics').doc(userId);
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
