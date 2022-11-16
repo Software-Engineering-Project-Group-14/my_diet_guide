@@ -90,47 +90,16 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
         userId,
         widget.age,
         widget.gender,
-        int.parse(weight),
-        int.parse(height),
-        int.parse(targetWeight),
+        double.parse(weight),
+        double.parse(height),
+        double.parse(targetWeight),
         dietaryPreference!,
         activeness!,
         intensity!
     );
 
-    Navigator.pushNamed(context, RouteConstants.planSelectRoute,
-        arguments: UserBiometrics(
-            user_id: userId,
-            gender: widget.gender,
-            weight: int.parse(weight),
-            height: int.parse(height),
-            targetWeight: int.parse(targetWeight),
-            dietaryPreference: dietaryPreference!,
-            activeness: activeness!,
-            intensity: intensity!,
-            age:widget.age,
-            calculated_current_weight: int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(weight), widget.age.toDouble(), activeness!),
-            last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
-          )
-    );
-/*
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPlan(
-      firestore: widget.firestore,
-        auth: widget.auth,
-        userBiometrics: UserBiometrics(
-          user_id: userId,
-          gender: widget.gender,
-          weight: int.parse(weight),
-          height: int.parse(height),
-          targetWeight: int.parse(targetWeight),
-          dietaryPreference: dietaryPreference!,
-          activeness: activeness!,
-          intensity: intensity!,
-          age:widget.age,
-          calculated_current_weight: int.parse(weight)-CalorieCalculator.calorieBurnPerDayInKg(widget.gender, double.parse(height), double.parse(weight), widget.age.toDouble(), activeness!),
-          last_calorie_calculated_date: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
-        )
-    )));*/
+    Navigator.pushNamed(context, RouteConstants.planSelectRoute,);
+
   }
 
 
@@ -162,7 +131,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
 
 
-  Future addUserBiometrics(String userId, int age, String gender, int weight, int height, int targetWeight, String dietaryPreference, String activeness, String intensity) async {
+  Future addUserBiometrics(String userId, int age, String gender, double weight, double height, double targetWeight, String dietaryPreference, String activeness, String intensity) async {
     final userBiometricsDoc = FirebaseFirestore.instance.collection('user biometrics').doc(userId);
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);

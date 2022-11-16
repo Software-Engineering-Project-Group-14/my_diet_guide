@@ -51,11 +51,30 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   fake_cloud_firestore: ^2.0.1
   firebase_auth_mocks: ^0.9.1
+<<<<<<< HEAD
   syncfusion_flutter_calendar: ^20.3.57
+=======
+  flutter_launcher_icons: ^0.10.0
+>>>>>>> 1bc4cf7c9d00688d4613fe785b84ae6cd5c69944
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/app_logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/app_logo.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/app_logo.png"
+    icon_size: 48 # min:48, max:256, default: 48
 
   # Testing
   test: ^1.21.1

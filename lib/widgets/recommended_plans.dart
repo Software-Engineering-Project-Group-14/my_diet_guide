@@ -24,7 +24,7 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
 
   @override
   void initState() {
-    userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:"6gDkTTdr4jXWMtq5ZEJngXx7PjP2").asStream();
+    userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:Controller.auth!.currentUser!.uid).asStream();    super.initState();
     super.initState();
   }
 
@@ -62,16 +62,20 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
           );
           return Column(
             children: [
-              Row(
-                children: [
-                  Text(
-                    "Other recommended plans",
-                    style: GoogleFonts.poppins(
-                        fontSize: 22,
-                        color: Colors.white
-                    ),
-                  )
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Recommended plans",
+                      style: GoogleFonts.poppins(
+                          fontSize: 22,
+                          color: Colors.white
+                      ),
+                    )
+                  ],
+                ),
               ),
               StreamBuilder<QuerySnapshot>(
                 stream: recommendedplanStream,
@@ -124,54 +128,7 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
                         //  print(planModel);
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
-                          child: GestureDetector(
-                            key: Key("recommend-plan-card-${entry.key}"),
-                            child: PlanCard(dietPlanModel: entry.value),
-                            onTap: () async {
-                              bool success = await entry.value.select(
-                                //user_id: Controller.auth!.currentUser!.uid
-                                  user_id:   "6gDkTTdr4jXWMtq5ZEJngXx7PjP2"
-                              );
-                              String msg = "";
-                              String? successMsg;
-                              if(widget.currentPlanId == null){
-                                successMsg = "Plan selected successfully";;
-                              }else{
-                                successMsg = "Plan changed successfully";
-                              }
-                              if(success)
-                                msg = successMsg;
-                              else
-                                msg = "An error occurred. Please try again.";
-                              showDialog<void>(
-                                context: context,
-                                barrierDismissible: false, // user must tap button!
-                                builder: (BuildContext context) {
-                                  String? dialogBoxMessage;
-                                  if(widget.currentPlanId == null){
-                                    dialogBoxMessage = "Plan Select";
-                                  }else{
-                                    dialogBoxMessage = "Plan Change";
-                                  }
-                                  return AlertDialog(
-                                    title: Text(dialogBoxMessage),
-                                    content: Text(msg),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('OK'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          if(success){
-                                            Navigator.pushNamed(context, '/');
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                          ),
+                          child: PlanCard(dietPlanModel: entry.value, planSelect: widget.currentPlanId==null, nonGesture: false,),
                         );
                       }).toList().cast(),
                     );
