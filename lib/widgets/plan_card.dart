@@ -16,6 +16,8 @@ class PlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("xxxx");
+    print(dietPlanModel.imgPath);
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -201,7 +203,7 @@ class PlanCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Image(
-                  image: AssetImage(dietPlanModel.img),
+                  image: AssetImage(dietPlanModel.imgPath),
                   fit: BoxFit.cover,
                   width: 100,
                   height: 100,

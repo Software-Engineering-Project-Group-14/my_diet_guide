@@ -13,7 +13,6 @@ import 'Model.dart';
 
 class DietPlanModel extends Model{
   late String planId;
-  late String img;
   late String dietary_preference;
   late String gender;
   late String intensity;
@@ -23,6 +22,7 @@ class DietPlanModel extends Model{
   late String lunch_id;
   late String dinner_id;
   late double calorie_gain_per_plan_per_week;
+  late String imgPath;
   double diffValue = 0;
 
   DietPlanModel({
@@ -35,10 +35,9 @@ class DietPlanModel extends Model{
     required this.breakfast_id,
     required this.lunch_id,
     required this.dinner_id,
-    required this.calorie_gain_per_plan_per_week
-  }){
-    img = "${ImagePathConstants.prefix}/${ImagePathConstants.dietPlan}/$dietary_preference.png";
-  }
+    required this.calorie_gain_per_plan_per_week,
+    required this.imgPath
+  });
 
   @override
   String toString(){
@@ -112,7 +111,8 @@ class DietPlanModel extends Model{
           breakfast_id: cur.get('breakfast_id'),
           lunch_id: cur.get('lunch_id'),
           dinner_id: cur.get('dinner_id'), 
-          calorie_gain_per_plan_per_week: cur.get('calorie_gain_per_plan_per_week')
+          calorie_gain_per_plan_per_week: cur.get('calorie_gain_per_plan_per_week'),
+          imgPath: cur.get("plan_image")
       );
       //print(curPlan);
       recommendedPlans.add(curPlan);
@@ -186,7 +186,8 @@ class DietPlanModel extends Model{
             breakfast_id: data["breakfast_id"],
             lunch_id: data["lunch_id"],
             dinner_id: data["dinner_id"],
-            calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week']
+            calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week'],
+            imgPath: data["plan_image"]
         );
         success = true;
       }
@@ -312,7 +313,8 @@ class DietPlanModel extends Model{
           breakfast_id: ds["breakfast_id"],
           lunch_id: ds["lunch_id"],
           dinner_id: ds["dinner_id"],
-          calorie_gain_per_plan_per_week: ds["calorie_gain_per_plan_per_week"]
+          calorie_gain_per_plan_per_week: ds["calorie_gain_per_plan_per_week"],
+          imgPath: ds["plan_image"]
       );
     }catch(error){
       return null;

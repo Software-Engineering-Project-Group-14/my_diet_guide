@@ -214,7 +214,7 @@ class WebPlanCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(30),
                 child: Image(
-                  image: AssetImage(dietPlanModel.img),
+                  image: AssetImage(dietPlanModel.imgPath),
                   fit: BoxFit.cover,
                   width: 200,
                   height: 200,
