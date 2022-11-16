@@ -8,6 +8,7 @@ import 'package:my_diet_guide/common/messgae_constants.dart';
 import 'package:my_diet_guide/common/plan_constants.dart';
 
 import '../common/image_path_constants.dart';
+import 'Dish.dart';
 import 'Meal.dart';
 import 'Model.dart';
 
@@ -265,6 +266,8 @@ class DietPlanModel extends Model{
         }else{
           nextPlanId = ds["id"];
         }
+        final breakfastId = ds["breakfast_id"];
+        final breakfast = await Meal.get(breakfastId, 'breakfast');
         double Sum = 0;
         double x,y,z = 0;
         ds = await Model.firestore!.collection('breakfast').doc(breakfastMeal).get();
@@ -284,7 +287,8 @@ class DietPlanModel extends Model{
           "breakfast_id": breakfastMeal,
           "lunch_id": lunchMeal,
           "dinner_id": dinnerMeal,
-          "calorie_gain_per_plan_per_week": Sum
+          "calorie_gain_per_plan_per_week": Sum,
+          "plan_image": Dish.getImagePath(name: breakfast!.monday_dish_id, dietary_preference: ds["dietary_preference"], mealType: 'breakfast')
         });
         //print("Diet plan added");
         await Model.firestore!.collection("diet_plan").doc("nextPlanId").set(

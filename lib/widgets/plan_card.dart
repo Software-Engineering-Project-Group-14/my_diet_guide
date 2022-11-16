@@ -16,8 +16,6 @@ class PlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("xxxx");
-    print(dietPlanModel.imgPath);
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
