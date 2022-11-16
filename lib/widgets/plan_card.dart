@@ -64,7 +64,7 @@ class PlanCard extends StatelessWidget {
                         child: Text(
                           "See More",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.grey,
                               fontSize: 16
                           ),
                         ),
@@ -184,7 +184,7 @@ class PlanCard extends StatelessWidget {
                         child: Text(
                           "Select",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                               fontSize: 16),
                         ),
                       ),

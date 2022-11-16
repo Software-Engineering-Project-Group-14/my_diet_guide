@@ -37,12 +37,14 @@ class _SelectPlanState extends State<SelectPlan> {
         body: Stack(
           children: [
             BackgroundImage(),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  RecommendedPlans()
-                ],
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    RecommendedPlans()
+                  ],
+                ),
               ),
             )
           ],
