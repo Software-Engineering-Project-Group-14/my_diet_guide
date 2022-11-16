@@ -82,7 +82,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
 
     String userId = FirebaseAuth.instance.currentUser!.uid;
 
-
+    addUserType(userId);
 
     addUserDetails(userId, widget.firstName, widget.lastName, widget.email, widget.bday);
 
