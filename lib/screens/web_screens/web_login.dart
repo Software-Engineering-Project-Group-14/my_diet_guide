@@ -94,7 +94,7 @@ class _WebLoginState extends State<WebLogin> {
                                     keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
                                         errorStyle: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 40,
                                             color: Colors.red[1000]
                                         ),
                                         contentPadding: EdgeInsets.symmetric(vertical: 20),
@@ -155,7 +155,7 @@ class _WebLoginState extends State<WebLogin> {
                                     obscureText: true,
                                     decoration: InputDecoration(
                                       errorStyle: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 40,
                                           color: Colors.red[1000]
                                       ),
                                       contentPadding: EdgeInsets.symmetric(vertical: 20),
@@ -264,7 +264,7 @@ class _WebLoginState extends State<WebLogin> {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
                         _error,
-                        style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        style: TextStyle(color: Colors.red, fontSize: 40.0),
                         key: Key("error-message"),
                       ),
                     ),

@@ -28,13 +28,27 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       showDialog(
         context: context,
         builder: (context){
-          return const AlertDialog(
+          return AlertDialog(
             content: Text(
-                'Password rest link sent. Check your email',
+                'Password reset link sent. Check your email',
                 style: TextStyle(
-                  color: Colors.white
+                  color: Colors.black,
+                  fontSize: 20
                 ),
             ),
+            actions: [
+              TextButton(
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "OK",
+                    style: TextStyle(
+                        fontSize: 25
+                    ),
+                  )
+              )
+            ],
           );
         },
       );
@@ -56,13 +70,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: true,
+      minimum: EdgeInsets.only(top: 20),
       child: Scaffold(
         backgroundColor: Colors.teal.shade900,
         appBar: AppBar(
           backgroundColor: Colors.teal.shade900,
           elevation: 0,
           title: const Text('Reset Password'),
-          toolbarHeight: 100,
         ),
         body: Stack(
           children: [
@@ -75,7 +90,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     'Enter Your Email and we will send you a password resetting mail',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white
+                      color: Colors.white,
+                      fontSize: 16
                     ),
                   ),
                 ),
@@ -87,7 +103,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
                         child: TextFormField(
+                          style: TextStyle(
+                            fontSize: 22
+                          ),
                           decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                              fontSize: 20
+                            ),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: const BorderSide(color: Colors.white)
@@ -118,14 +140,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.deepPurple,
+                                primary: Colors.teal.shade900,
                                 fixedSize: const Size(300, 50)
                             ),
                             child: Text(
                                 'Reset Password',
                                 style: GoogleFonts.aBeeZee(
                                     fontSize: 20,
-                                    color: Colors.black
+                                    color: Colors.white
                                 )
                             ),
                             onPressed: () async {
@@ -138,7 +160,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       const SizedBox(height: 12.0),
                       Text(
                         _error,
-                        style: const TextStyle(color: Colors.red, fontSize: 14.0),
+                        style: const TextStyle(color: Colors.red, fontSize: 20.0),
 
                       ),
                     ],

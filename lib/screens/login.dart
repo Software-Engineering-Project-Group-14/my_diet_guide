@@ -104,7 +104,7 @@ class _LoginState extends State<Login> {
                                     keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
                                       errorStyle: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 20,
                                         color: Colors.red[1000]
                                       ),
                                       contentPadding: EdgeInsets.symmetric(vertical: 20),
@@ -164,7 +164,7 @@ class _LoginState extends State<Login> {
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         errorStyle: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 20,
                                             color: Colors.red[1000]
                                         ),
                                         contentPadding: EdgeInsets.symmetric(vertical: 20),

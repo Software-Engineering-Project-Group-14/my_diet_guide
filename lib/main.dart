@@ -15,6 +15,7 @@ import 'package:my_diet_guide/screens/forgot_password.dart';
 
 
 import 'controllers/Controller.dart';
+import 'controllers/Forgot_Password_controller.dart';
 import 'controllers/UserBiometrics_controller.dart';
 
 
@@ -59,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
 
         RouteConstants.homeRoute: (context)=>HomeController(context: context,),
-        RouteConstants.forgotPasswordRoute: (context)=>ForgotPassword(),
+        RouteConstants.forgotPasswordRoute: (context)=>ForgotPasswordController(context: context),
 
         RouteConstants.planViewRoute: (context) => DietPlanController(context: context,),
         RouteConstants.planSelectRoute:(context) => DietPlanController(context: context,),
