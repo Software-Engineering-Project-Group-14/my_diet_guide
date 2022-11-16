@@ -31,7 +31,7 @@ class Dish extends Model{
     required String dietary_preference,
     required String mealType,
   } ){
-    String imgPath = "${ImagePathConstants.prefix}/${ImagePathConstants.dish}/${dietary_preference[0].toUpperCase()}${dietary_preference.substring(1)}/$mealType/$name${ImagePathConstants.suffix}";
+    String imgPath = "${ImagePathConstants.prefix}/${ImagePathConstants.dish}/$dietary_preference/${mealType[0].toUpperCase()}${mealType.substring(1)}/$name${ImagePathConstants.suffix}";
     return imgPath;
   }
 
