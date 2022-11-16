@@ -64,7 +64,7 @@ class PlanCard extends StatelessWidget {
                         child: Text(
                           "See More",
                           style: TextStyle(
-                              color: Colors.lightBlue,
+                              color: Colors.black,
                               fontSize: 16
                           ),
                         ),
@@ -73,51 +73,111 @@ class PlanCard extends StatelessWidget {
                   SizedBox(width: 10,),
                   GestureDetector(
                     onTap: () async {
-                      bool success = await dietPlanModel.select(
-                          user_id:   Controller.auth!.currentUser!.uid
-                      );
-                      String msg = "";
-                      String? successMsg;
-                      if(planSelect){
-                        successMsg = "Plan selected successfully";
-                      }else{
-                        successMsg = "Plan changed successfully";
-                      }
-                      if(success)
-                        msg = successMsg;
-                      else
-                        msg = "An error occurred. Please try again.";
-                      showDialog<void>(
-                        context: context,
-                        barrierDismissible: false, // user must tap button!
-                        builder: (BuildContext context) {
-                          String? dialogBoxMessage;
-                          if(planSelect){
-                            dialogBoxMessage = "Plan Select";
-                          }else{
-                            dialogBoxMessage = "Plan Change";
-                          }
-                          return AlertDialog(
-                            title: Text(dialogBoxMessage),
-                            content: Text(msg),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('OK'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  if(success){
-                                    Navigator.pushNamed(context, '/');
-                                  }
-                                },
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context){
+                            return AlertDialog(
+                              title: Text(
+                                "Confirmation",
+                                style: TextStyle(
+                                  fontSize: 24
+                                ),
                               ),
-                            ],
-                          );
-                        },
+                              content: Text(
+                                "Do you want to set this as your diet plan?",
+                                style: TextStyle(
+                                  fontSize: 19
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: Text(
+                                    "Yes",
+                                    style: TextStyle(
+                                      fontSize: 22
+                                    ),
+                                  ),
+                                  onPressed: ()async{
+                                    bool success = await dietPlanModel.select(
+                                        user_id:   Controller.auth!.currentUser!.uid
+                                    );
+                                    String msg = "";
+                                    String? successMsg;
+                                    if(planSelect){
+                                      successMsg = "Plan selected successfully";
+                                    }else{
+                                      successMsg = "Plan changed successfully";
+                                    }
+                                    if(success)
+                                      msg = successMsg;
+                                    else
+                                      msg = "An error occurred. Please try again.";
+                                    Navigator.of(context).pop();
+                                    showDialog<void>(
+                                      context: context,
+                                      barrierDismissible: false, // user must tap button!
+                                      builder: (BuildContext context) {
+                                        String? actionMessage;
+                                        if(planSelect){
+                                          actionMessage = "Plan Select";
+                                        }else{
+                                          actionMessage = "Plan Change";
+                                        }
+                                        return AlertDialog(
+                                          title: Text(
+                                              actionMessage,
+                                            style: TextStyle(
+                                              fontSize: 24
+                                            ),
+                                          ),
+                                          content: Text(
+                                              msg,
+                                            style: TextStyle(
+                                              fontSize: 19
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text(
+                                                  'OK',
+                                                style: TextStyle(
+                                                  fontSize: 22
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                if(success){
+                                                  Navigator.pushNamed(context, '/');
+                                                }
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text(
+                                      "No",
+                                    style: TextStyle(
+                                      fontSize: 22
+                                    ),
+                                  ),
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          }
                       );
+
                     },
+
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.blueAccent
+                        color: Colors.teal.shade900
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

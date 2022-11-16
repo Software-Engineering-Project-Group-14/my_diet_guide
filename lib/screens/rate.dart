@@ -180,42 +180,95 @@ class _RateState extends State<Rate> {
                               onPressed: () async {
                                 //print(starValue);
                                 //print(feedbackText);
-                                if(Controller.auth!.currentUser != null || _formKey.currentState!.validate()){
-                                  RateModel rateObject = RateModel(
-                                    starValue, Controller.auth!.currentUser!.email, feedbackText,
-                                  );
-                                  bool result = await rateObject.add();
-                                  if(result){
-                                    setState(() {
-                                      feedbackText = "";
-                                    });
-                                    showDialog(
-                                      context: context,
-                                      builder: (context){
-                                        return AlertDialog(
-                                          key: Key("review-add-alert-dialog"),
-                                          content: Text(
-                                              'Your review added.'
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return AlertDialog(
+                                        title: Text(
+                                          "Confirmation",
+                                          style: TextStyle(
+                                              fontSize: 24
                                           ),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: const Text('OK'),
-                                              onPressed: () {
-
-                                                Navigator.of(context).pop();
-                                                  Navigator.pushNamed(context, RouteConstants.rateRoute);
-                                                }
+                                        ),
+                                        content: Text(
+                                          "Do you wish to continue as ${Controller.auth!.currentUser!.email}?",
+                                          style: TextStyle(
+                                              fontSize: 19
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            child: Text(
+                                              "Yes",
+                                              style: TextStyle(
+                                                  fontSize: 22
+                                              ),
                                             ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  }else{
-                                    setState(() {
-                                      error = 'Could not add review. Please try again.';
-                                    });
-                                  }
-                                }
+                                            onPressed: ()async{
+                                              if(Controller.auth!.currentUser != null || _formKey.currentState!.validate()){
+                                                RateModel rateObject = RateModel(
+                                                  starValue, Controller.auth!.currentUser!.email, feedbackText,
+                                                );
+                                                bool result = await rateObject.add();
+                                                if(result){
+                                                  setState(() {
+                                                    feedbackText = "";
+                                                  });
+                                                  Navigator.of(context).pop();
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context){
+                                                      return AlertDialog(
+                                                        key: Key("review-add-alert-dialog"),
+                                                        content: Text(
+                                                            'Your review added.',
+                                                          style: TextStyle(
+                                                            fontSize: 20
+                                                          ),
+                                                        ),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                              child: const Text(
+                                                                  'OK',
+                                                                style: TextStyle(
+                                                                  fontSize: 22
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+
+                                                                Navigator.of(context).pop();
+                                                                Navigator.pushNamed(context, RouteConstants.rateRoute);
+                                                              }
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                }else{
+                                                  setState(() {
+                                                    error = 'Could not add review. Please try again.';
+                                                  });
+                                                }
+                                              }
+
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text(
+                                              "No",
+                                              style: TextStyle(
+                                                  fontSize: 22
+                                              ),
+                                            ),
+                                            onPressed: (){
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                );
+
                               }
                           ),
                         ),
