@@ -602,7 +602,7 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: uid);
       expect(val, true);
@@ -613,7 +613,7 @@ void main() async{
       final firestore = FakeFirebaseFirestore();
       Model.init(auth: MockFirebaseAuth(), firestore: firestore);
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: "adsasdds");
       expect(val, false);
@@ -646,7 +646,7 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: uid);
       expect(val, true);
@@ -682,7 +682,7 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: uid);
       expect(val, true);
@@ -722,7 +722,7 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: uid);
       expect(val, true);
@@ -756,7 +756,7 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       final ret =  await DietPlanModel.getDietPlanForUser(user_id: uid);
       DietPlanModel? dietPlanModel = ret['dietPlan'];
       expect(dietPlanModel, null);
@@ -786,7 +786,7 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       final ret =  await DietPlanModel.getDietPlanForUser(user_id: uid);
       DietPlanModel? dietPlanModel = ret['dietPlan'];
       expect(dietPlanModel, null);
