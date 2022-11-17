@@ -28,7 +28,7 @@ class _ChangePlanState extends State<ChangePlan> {
 
   @override
   void initState() {
-    userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:"6gDkTTdr4jXWMtq5ZEJngXx7PjP2").asStream();
+   // userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:"6gDkTTdr4jXWMtq5ZEJngXx7PjP2").asStream();
     super.initState();
   }
 
@@ -86,6 +86,7 @@ class _ChangePlanState extends State<ChangePlan> {
                           ),
                         ),
                         RecommendedPlans(currentPlanId: widget.currentPlan.planId,)
+
                       ],
                     )
                 ),

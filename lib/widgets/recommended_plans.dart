@@ -24,7 +24,7 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
 
   @override
   void initState() {
-    userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:Controller.auth!.currentUser!.uid).asStream();    super.initState();
+    userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:Controller.auth!.currentUser!.uid).asStream();
     super.initState();
   }
 
@@ -40,7 +40,6 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
               child: CircularProgressIndicator(),
             );
           }
-
           if (snapshot.hasError) {
             success=false;
             msg = MessageConstants.errorMessage;
@@ -51,7 +50,6 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
               ),
             );
           }
-
           UserBiometrics userBiometrics = snapshot.data!;
           Stream<QuerySnapshot> recommendedplanStream = DietPlanModel.getPlanStream(
               dietary_preference: userBiometrics.dietaryPreference,
@@ -86,7 +84,6 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
                       child: CircularProgressIndicator(),
                     );
                   }
-
                   if (snapshot.hasError) {
                     success=false;
                     msg = MessageConstants.errorMessage;
@@ -97,7 +94,6 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
                       ),
                     );
                   }
-
                   List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(
                       snapshot: snapshot,
                       age_group: DietPlanModel.getAgeGroup(userBiometrics.age),

@@ -8,9 +8,9 @@ class UserBiometrics extends Model{
 
   final String user_id;
   final String gender;
-  final int weight;
-  final int height;
-  final int targetWeight;
+  final double weight;
+  final double height;
+  final double targetWeight;
   final String dietaryPreference;
   final String activeness;
   final String intensity;
