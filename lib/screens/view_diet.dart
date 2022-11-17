@@ -7,6 +7,7 @@ import 'package:my_diet_guide/screens/view_diet_details.dart';
 import 'package:my_diet_guide/widgets/view_diet_card.dart';
 
 import '../controllers/Controller.dart';
+import '../models/ViewDiet.dart';
 import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
 
@@ -27,26 +28,6 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
   late String dietary_preference;
   late String intensity;
   late String activeness;
-
-
-
-  Future<Map<String, dynamic>> getInfo() async {
-    final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(widget.user_id);
-    final bioSnapshot = await userBioDoc.get();
-
-    if(bioSnapshot.exists){
-      dietary_preference = bioSnapshot['dietary preference'];
-      intensity = bioSnapshot['intensity'];
-      activeness = bioSnapshot['activeness'];
-    }
-
-    return{
-      'dietary_preference':dietary_preference,
-      'intensity': intensity,
-      'activeness': activeness
-    };
-  }
-
 
 
   Widget viewBiometrics(Map<String, dynamic> map){
@@ -147,6 +128,7 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
 
   @override
   Widget build(BuildContext context) {
+    ViewDiet viewDiet = ViewDiet(user_id: widget.user_id);
     return Stack(
       children: [
 
@@ -165,7 +147,7 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
             SafeArea(
             child: SingleChildScrollView(
               child: FutureBuilder<Map<String, dynamic>>(
-                future: getInfo(),
+                future: viewDiet.getInfo(),
                   builder: (context, snapshot){
                     if(snapshot.hasData){
                       final map = snapshot.data;
