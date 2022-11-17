@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/recommended_plans.dart';
 
+import '../../models/DietPlan.dart';
 import '../../widgets/web_widgets/web_recommended_plans.dart';
 
 
 class WebSelectPlan extends StatefulWidget {
 
+  final List<DietPlanModel> recommendedPlans;
 
-  const WebSelectPlan({Key? key,
+  const WebSelectPlan({Key? key, required this.recommendedPlans,
   }) : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ class _WebSelectPlanState extends State<WebSelectPlan> {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  WebRecommendedPlans()
+                  WebRecommendedPlans(recommendedPlans: widget.recommendedPlans,)
                 ],
               ),
             ),
