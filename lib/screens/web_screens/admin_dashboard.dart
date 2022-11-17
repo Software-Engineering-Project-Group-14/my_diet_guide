@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/screens/login.dart';
 import 'package:my_diet_guide/screens/web_screens/web_login.dart';
 import 'package:my_diet_guide/widgets/side_bar.dart';
@@ -82,7 +83,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 40),
                                     child: GestureDetector(
-                                      onTap: () async {},
+                                      onTap: () async {
+                                        Navigator.pushNamed(context, RouteConstants.planAddRoute);
+                                      },
                                       child: Center(
                                         child: Container(
                                           width: 250,
@@ -111,7 +114,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 40),
                                     child: GestureDetector(
-                                      onTap: () async {},
+                                      onTap: () async {
+                                        Navigator.pushNamed(context, RouteConstants.planUpdateRoute);
+                                      },
                                       child: Center(
                                         child: Container(
                                           width: 250,

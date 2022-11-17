@@ -19,8 +19,14 @@ class RouteConstants {
   static const String planSelectSubRoute = 'select';
   static const String planViewSubRoute = 'view';
   static const String planViewSelectSubRoute = 'viewSelect';
+  static const String planAddSubRoute = 'add';
+  static const String planUpdateSubRoute = 'update';
+  static const String planDeleteSubRoute = 'delete';
   static const String planSelectRoute = '/$planRoute/$planSelectSubRoute';
   static const String planViewRoute = '/$planRoute/$planViewSubRoute';
+  static const String planUpdateRoute = '/$planRoute/$planUpdateSubRoute';
+  static const String planAddRoute = '/$planRoute/$planAddSubRoute';
+  static const String planDeleteRoute = '/$planRoute/$planDeleteSubRoute';
   static const String planViewSelectRoute = '/$planRoute/$planViewSelectSubRoute';
 
   static const String bioRoute = '/bio/';

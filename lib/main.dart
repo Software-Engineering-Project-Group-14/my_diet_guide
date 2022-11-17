@@ -76,6 +76,10 @@ class _MyAppState extends State<MyApp> {
               DietPlanController(context: context,),
           RouteConstants.planViewSelectRoute: (context) =>
               DietPlanController(context: context,),
+          RouteConstants.planAddRoute: (context) =>
+              DietPlanController(context: context,),
+          RouteConstants.planUpdateRoute: (context) =>
+              DietPlanController(context: context,),
 
           RouteConstants.userDetailsViewRoute: (context) =>
               UserDetailsController(context: context,),

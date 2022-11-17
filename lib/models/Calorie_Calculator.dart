@@ -2,6 +2,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_diet_guide/common/plan_constants.dart';
 
 import 'Model.dart';
 
@@ -65,11 +66,11 @@ class CalorieCalculator extends Model{
   
   // Converts given calorie to weight (loss) in kgs
   static double calorieToKg(double calorie){
-    return calorie/7700;
+    return calorie/PlanConstants.caloriePerKg;
   }
 
   static double kgToClorie(double kg){
-    return kg*7700;
+    return kg*PlanConstants.caloriePerKg;
   }
 
   // Updates calorie sum per given meal per week

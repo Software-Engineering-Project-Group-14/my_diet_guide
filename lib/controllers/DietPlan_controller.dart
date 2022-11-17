@@ -4,6 +4,8 @@ import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/controllers/Controller.dart';
 import 'package:my_diet_guide/screens/loading_page.dart';
 import 'package:my_diet_guide/screens/view_plan_when_select.dart';
+import 'package:my_diet_guide/screens/web_screens/add_diet_plan.dart';
+import 'package:my_diet_guide/screens/web_screens/update_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/web_change_plan.dart';
 
 import '../models/DietPlan.dart';
@@ -103,6 +105,17 @@ class _DietPlanControllerState  extends State<DietPlanController>{
         page = ViewPlanSelect(dietPlanModel: dietPlanModel);
       }
       break;
+
+      case RouteConstants.planAddSubRoute:{
+        page = AddDietPlan();
+      }
+      break;
+
+      case RouteConstants.planUpdateSubRoute:{
+        page = UpdateDietPlan();
+      }
+      break;
+
 
       default:{
         throw Exception('Unknown route: ${RouteConstants.planRoute}${widget.subRoute} ');
