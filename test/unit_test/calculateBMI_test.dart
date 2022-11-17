@@ -1,4 +1,5 @@
-import 'package:test/test.dart';
+
+import 'package:flutter_test/flutter_test.dart';
 import 'package:my_diet_guide/models/BMI.dart';
 
 

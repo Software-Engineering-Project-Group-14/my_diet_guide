@@ -250,7 +250,7 @@ class DietPlanModel extends Model{
       }else{
         nextPlanId = ds["id"];
       }
-      final breakfastId = ds["breakfast_id"];
+      final breakfastId = breakfastMeal;
       final breakfast = await Meal.get(breakfastId, 'breakfast');
       double Sum = 0;
       double x,y,z = 0;
