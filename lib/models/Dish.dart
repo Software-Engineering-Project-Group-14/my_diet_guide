@@ -70,7 +70,7 @@ class Dish extends Model{
             name: ds["name"],
             description: ds["description"],
             dietary_preference: ds["dietary_preference"],
-            mealType: ds["mealType"].toString().toLowerCase(),
+            mealType: ds["meal"].toString().toLowerCase(),
             calorie_gain_per_meal: ds["calorie_gain_per_meal"].toDouble()
         );
     }catch(error){
