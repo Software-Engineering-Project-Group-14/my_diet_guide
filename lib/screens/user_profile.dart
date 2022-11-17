@@ -29,9 +29,10 @@ class _UserProfileState extends State<UserProfile> {
   late String bday;
   late int age;
   late String gender;
-  late int weight;
-  late int height;
-  late int targetWeight;
+  late double weight;
+  late double height;
+  late double targetWeight;
+  late double currentWeight;
   late String dietaryPreference;
   late String activeness;
   late String intensity;
@@ -73,9 +74,73 @@ class _UserProfileState extends State<UserProfile> {
     DateTime dob = DateTime(byear, bmonth, bdate);
     age = AgeCalculator.age(dob).years;
 
+    return FutureBuilder<Map<String, dynamic>>(
+      future: readUserBiometrics(firstName, lastName, bday, age),
+      builder: (context, snapshot){
+        if(snapshot.hasData){
+          final data = snapshot.data;
+          return data==null ? Center(child: Text("No User!"),) : buildUserBiometrics(data);
+        } else if (snapshot.hasError){
+          return Center(child: Text('Something went wrong!'));
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      }
+    );
+  }
+
+
+
+  Future<Map<String, dynamic>> readUserBiometrics(String firstName, String lastName, String bday, int age) async{
+    final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(Controller.auth!.currentUser!.uid);
+    final snapshot2 = await userBioDoc.get();
+
+    if(snapshot2.exists){
+      gender = snapshot2.data()!['gender'];
+      weight = snapshot2.data()!['weight'];
+      height = snapshot2.data()!['height'];
+      targetWeight = snapshot2.data()!['target weight'];
+      currentWeight = snapshot2.data()!['calculated_current_weight'];
+      dietaryPreference = snapshot2.data()!['dietary preference'];
+      activeness = snapshot2.data()!['activeness'];
+      intensity = snapshot2.data()!['intensity'];
+    }
+
+    return {
+      'first name': firstName,
+      'last name': lastName,
+      'bday': bday,
+      'age': age,
+      'gender': gender,
+      'weight': weight,
+      'height': height,
+      'target weight': targetWeight,
+      'current weight': currentWeight,
+      'dietary preference': dietaryPreference,
+      'activeness': activeness,
+      'intensity': intensity
+    };
+  }
+
+
+
+  Widget buildUserBiometrics(Map<String, dynamic> map) {
+    firstName = map['first name'];
+    lastName = map['last name'];
+    bday = map['bday'];
+    age = map['age'];
+    gender= map['gender'];
+    weight= map['weight'];
+    height= map['height'];
+    targetWeight= map['target weight'];
+    dietaryPreference= map['dietary preference'];
+    activeness= map['activeness'];
+    intensity= map['intensity'];
 
     return Column(
-      key: Key("user-details"),
+      key: Key('user-biometrics'),
       children: [
         SizedBox(height: 30,),
 
@@ -101,54 +166,7 @@ class _UserProfileState extends State<UserProfile> {
           child: Text("Age : $age years", style: TextStyle(fontSize: 19, color: Colors.white),),
         ),
 
-        SizedBox(height: 10,),
-
-      ],
-    );
-  }
-
-
-
-  Future<Map<String, dynamic>> readUserBiometrics() async{
-    final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(Controller.auth!.currentUser!.uid);
-    final snapshot2 = await userBioDoc.get();
-
-    if(snapshot2.exists){
-      gender = snapshot2.data()!['gender'];
-      weight = snapshot2.data()!['weight'];
-      height = snapshot2.data()!['height'];
-      targetWeight = snapshot2.data()!['target weight'];
-      dietaryPreference = snapshot2.data()!['dietary preference'];
-      activeness = snapshot2.data()!['activeness'];
-      intensity = snapshot2.data()!['intensity'];
-    }
-
-    return {
-      'gender': gender,
-      'weight': weight,
-      'height': height,
-      'target weight': targetWeight,
-      'dietary preference': dietaryPreference,
-      'activeness': activeness,
-      'intensity': intensity
-    };
-  }
-
-
-
-  Widget buildUserBiometrics(Map<String, dynamic> map) {
-    gender= map['gender'];
-    weight= map['weight'];
-    height= map['height'];
-    targetWeight= map['target weight'];
-    dietaryPreference= map['dietary preference'];
-    activeness= map['activeness'];
-    intensity= map['intensity'];
-
-    return Column(
-      key: Key('user-biometrics'),
-      children: [
-        SizedBox(height: 10,),
+        SizedBox(height: 20,),
 
         Container(
           alignment: Alignment.topLeft,
@@ -161,7 +179,7 @@ class _UserProfileState extends State<UserProfile> {
         Container(
           alignment: Alignment.topLeft,
           padding: EdgeInsets.only(left: 20, right: 20),
-          child: Text("Weight : $weight kg", style: TextStyle(fontSize: 19, color: Colors.white),),
+          child: Text("Weight before diet: $weight kg", style: TextStyle(fontSize: 19, color: Colors.white),),
         ),
 
         SizedBox(height: 20,),
@@ -169,7 +187,7 @@ class _UserProfileState extends State<UserProfile> {
         Container(
           alignment: Alignment.topLeft,
           padding: EdgeInsets.only(left: 20, right: 20),
-          child: Text("Height : $height cm", style: TextStyle(fontSize: 19, color: Colors.white),),
+          child: Text("Current Weight: ${currentWeight.toStringAsFixed(3)} kg", style: TextStyle(fontSize: 19, color: Colors.white),),
         ),
 
         SizedBox(height: 20,),
@@ -178,6 +196,14 @@ class _UserProfileState extends State<UserProfile> {
           alignment: Alignment.topLeft,
           padding: EdgeInsets.only(left: 20, right: 20),
           child: Text("Target Weight : $targetWeight kg", style: TextStyle(fontSize: 19, color: Colors.white),),
+        ),
+
+        SizedBox(height: 20,),
+
+        Container(
+          alignment: Alignment.topLeft,
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Text("Height : $height cm", style: TextStyle(fontSize: 19, color: Colors.white),),
         ),
 
         SizedBox(height: 20,),
@@ -263,34 +289,6 @@ class _UserProfileState extends State<UserProfile> {
                                 if(snapshot.hasData){
                                   final data = snapshot.data;
                                   return data==null ? Center(child: Text("No User!"),) : buildUser(data);
-                                } else if (snapshot.hasError){
-                                  return Center(child: Text('Something went wrong!'));
-                                } else {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-
-                          Container(
-                            width: 360,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    colors: [Colors.white24, Colors.white10],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight
-                                ),
-                                //borderRadius: BorderRadius.circular(28),
-                                border: Border.all(width: 2, color: Colors.white10)
-                            ),
-                            child: FutureBuilder<Map<String,dynamic>>(
-                              future: readUserBiometrics(),
-                              builder: (context, snapshot){
-                                if(snapshot.hasData){
-                                  final data = snapshot.data;
-                                  return data==null ? Center(child: Text("No User!"),) : buildUserBiometrics(data);
                                 } else if (snapshot.hasError){
                                   return Center(child: Text('Something went wrong!'));
                                 } else {

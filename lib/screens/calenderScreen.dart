@@ -25,7 +25,6 @@ class _DietCalenderState extends State<DietCalender> {
     final userSnapshot = await userDoc.get();
 
     String current_plan = userSnapshot.data()!['current_plan'];
-    print('current plan id: ' + current_plan);
 
     return current_plan;
   }
@@ -65,23 +64,15 @@ class _DietCalenderState extends State<DietCalender> {
     print(userBioSnapshot.data()!);
 
     String gender = userBioSnapshot.data()!['gender'];
-    print('gender :'+ gender);
     String activeness = userBioSnapshot.data()!['activeness'];
-    print('activeness :'+ activeness);
     double weight = userBioSnapshot.data()!['weight'];
-    print('weight :'+ weight.toString());
     double height = userBioSnapshot.data()!['height'];
-    print('height :'+ height.toString());
     int age = userBioSnapshot.data()!['age'];
-    print('age :'+ age.toString());
     double target_weight = userBioSnapshot.data()!['target weight'];
-    print('target weight :'+ target_weight.toString());
     double current_weight = userBioSnapshot.data()!['calculated_current_weight'];
-    print('calculated_current_weight :'+ current_weight.toString());
 
 
     double weight_loss_per_day = CalorieCalculator.calorieBurnPerDayInKg(gender, height, weight, age.toDouble(), activeness);
-    print('weight_loss_per_day : '+ weight_loss_per_day.toString());
 
     return{
       'target_weight': target_weight,
@@ -124,63 +115,97 @@ class _DietCalenderState extends State<DietCalender> {
 
     // check if this is a positive value
     double mean_weight_loss_per_day = weight_loss_per_day - weight_gain_per_day;
+    print('mean weight loss per day : '+ mean_weight_loss_per_day.toString());
 
     int no_of_days_to_diet = ((current_weight- target_weight)/mean_weight_loss_per_day).ceil();
-    print('mean weight loss per day : '+ mean_weight_loss_per_day.toString());
-    print('weight to be lost : ' + (current_weight- target_weight).toString());
-    print("target weight : "+ target_weight.toString());
-    print("current weight : "+ current_weight.toString());
-    print("no_of_days : "+ ((current_weight - target_weight)/0.2).toString());
     print("no_of_days_to_diet : " + no_of_days_to_diet.toString());
+
     return no_of_days_to_diet;
   }
 
 
 
   Widget createCalendar(int no_of_days_to_diet){
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(28),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.white24, Colors.white10],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Center(
+            child: Text(
+              'Diet Calendar',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32
+              ),
+            )
+          ),
+        ),
+
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                height: 400,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.white24, Colors.white10],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight
+                    ),
+                    borderRadius: BorderRadius.circular(28),
+                    border: Border.all(width: 2, color: Colors.white10)
                 ),
-                borderRadius: BorderRadius.circular(28),
-                border: Border.all(width: 2, color: Colors.white10)
-            ),
-            child: SfCalendar(
-              view: CalendarView.month,
-              dataSource: MeetingDataSource(getAppointments(no_of_days_to_diet)),
-              initialSelectedDate: DateTime.now(),
-              initialDisplayDate: DateTime.now(),
-              appointmentBuilder: (context, calendarAppointmentDetails) {
-                return Container();
-              },
-              appointmentTextStyle: TextStyle(color: Colors.white, fontSize: 5),
-              cellBorderColor: Colors.transparent,
-              headerStyle: CalendarHeaderStyle(textStyle: TextStyle(color: Colors.white)),
-              monthViewSettings: MonthViewSettings(
-                  showAgenda: true,
-                  agendaStyle: AgendaStyle(
-                      appointmentTextStyle: TextStyle(fontSize: 20, color: Colors.white),
-                      backgroundColor: Colors.teal.shade900
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
+                  child: SfCalendar(
+                    view: CalendarView.month,
+                    dataSource: MeetingDataSource(getAppointments(no_of_days_to_diet)),
+                    initialSelectedDate: DateTime.now(),
+                    initialDisplayDate: DateTime.now(),
+                    appointmentBuilder: (context, calendarAppointmentDetails) {
+                      return Container();
+                    },
+                    appointmentTextStyle: TextStyle(color: Colors.white, fontSize: 5),
+                    cellBorderColor: Colors.transparent,
+                    headerStyle: CalendarHeaderStyle(textStyle: TextStyle(color: Colors.white, fontSize: 16)),
+                    monthViewSettings: MonthViewSettings(
+                        showAgenda: false,
+                        agendaStyle: AgendaStyle(
+                            appointmentTextStyle: TextStyle(fontSize: 20, color: Colors.white),
+                            backgroundColor: Colors.teal.shade900
+                        ),
+                        appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
+                        showTrailingAndLeadingDates: false,
+                        monthCellStyle: MonthCellStyle(
+                          textStyle: TextStyle(color: Colors.white),
+                        )
+                    ),
                   ),
-                  appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
-                  showTrailingAndLeadingDates: false,
-                  monthCellStyle: MonthCellStyle(
-                    textStyle: TextStyle(color: Colors.white),
-                  )
+                ),
               ),
             ),
           ),
         ),
-      ),
+
+
+        SizedBox(height: 20,),
+
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 35),
+          child: Text(
+            "You have $no_of_days_to_diet more days to complete your diet to achieve your target weight",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+        ),
+
+      ],
     );
   }
 
@@ -205,20 +230,22 @@ class _DietCalenderState extends State<DietCalender> {
           BlurredBackground(),
 
 
-          FutureBuilder<String>(
-            future: getPlanId(user_id),
-            builder: (context, snapshot){
-              if (snapshot.hasData){
-                final plan_id = snapshot.data;
-                return plan_id==null ? Center(child: Text("No User!"),) : goToUserBiometrics(user_id, plan_id);
-              } else if(snapshot.hasError){
-                return Text("No User Details", style: TextStyle(color: Colors.white));
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+          SingleChildScrollView(
+            child: FutureBuilder<String>(
+              future: getPlanId(user_id),
+              builder: (context, snapshot){
+                if (snapshot.hasData){
+                  final plan_id = snapshot.data;
+                  return plan_id==null ? Center(child: Text("No User!"),) : goToUserBiometrics(user_id, plan_id);
+                } else if(snapshot.hasError){
+                  return Text("No User Details", style: TextStyle(color: Colors.white));
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
               }
-            }
+            ),
           ),
 
 
@@ -242,7 +269,7 @@ List<Appointment> getAppointments(int no_of_days_to_diet){
   meetings.add(Appointment(
     startTime: startTime,
     endTime: endTime,
-    color: Colors.teal.shade900,
+    color: Colors.orange.shade400,
     subject: 'Diet',
     isAllDay: true,
     recurrenceRule: "FREQ=DAILY;COUNT=$no_of_days_to_diet",

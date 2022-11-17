@@ -383,6 +383,8 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                               validator: (text){
                                 if(text == null || text.isEmpty){
                                   return 'Cannot be empty';
+                                } else if(double.parse(text) >= double.parse(weight)){
+                                  return 'Target weight should be less than your current weight';
                                 }
                                 return null;
                               },
