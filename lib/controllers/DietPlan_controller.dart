@@ -7,8 +7,11 @@ import 'package:my_diet_guide/screens/view_plan_when_select.dart';
 import 'package:my_diet_guide/screens/web_screens/add_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/update_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/web_change_plan.dart';
+import 'package:my_diet_guide/screens/web_screens/web_view_plan_select.dart';
 
 import '../models/DietPlan.dart';
+import '../models/Dish.dart';
+import '../models/Meal.dart';
 import '../models/UserBiometrics.dart';
 import '../screens/change_plan.dart';
 import '../screens/login.dart';
@@ -48,6 +51,45 @@ class _DietPlanControllerState  extends State<DietPlanController>{
     ret['recommendedPlans'] = recommendedplan;
     return ret;
   }
+  
+  Future<Map<String, Map<String, Dish?>>> getAllDish(DietPlanModel dietPlanModel) async{
+    Map<String, Map<String, Dish?>> dietDetails = {};
+    Meal? breakfast = await Meal.get(dietPlanModel.breakfast_id, 'breakfast');
+    Meal? lunch = await Meal.get(dietPlanModel.lunch_id, 'lunch');
+    Meal? dinner = await Meal.get(dietPlanModel.dinner_id, 'dinner');
+    dietDetails['monday'] = {};
+    dietDetails['monday']!['breakfast'] = await Dish.get(breakfast!.monday_dish_id);
+    dietDetails['monday']!['lunch'] = await Dish.get(lunch!.monday_dish_id);
+    dietDetails['monday']!['dinner'] = await Dish.get(dinner!.monday_dish_id);
+    dietDetails['tuesday'] = {};
+    dietDetails['tuesday']!['breakfast'] = await Dish.get(breakfast.tuesday_dish_id);
+    dietDetails['tuesday']!['lunch'] = await Dish.get(lunch.tuesday_dish_id);
+    dietDetails['tuesday']!['dinner'] = await Dish.get(dinner.tuesday_dish_id);
+    dietDetails['wednesday'] = {};
+    dietDetails['wednesday']!['breakfast'] = await Dish.get(breakfast.wednesday_dish_id);
+    dietDetails['wednesday']!['lunch'] = await Dish.get(lunch.wednesday_dish_id);
+    dietDetails['wednesday']!['dinner'] = await Dish.get(dinner.wednesday_dish_id);
+    dietDetails['thursday'] = {};
+    dietDetails['thursday']!['breakfast'] = await Dish.get(breakfast.thursday_dish_id);
+    dietDetails['thursday']!['lunch'] = await Dish.get(lunch.thursday_dish_id);
+    dietDetails['thursday']!['dinner'] = await Dish.get(dinner.thursday_dish_id);
+    dietDetails['friday'] = {};
+    dietDetails['friday']!['breakfast'] = await Dish.get(breakfast.friday_dish_id);
+    dietDetails['friday']!['lunch'] = await Dish.get(lunch.friday_dish_id);
+    dietDetails['friday']!['dinner'] = await Dish.get(dinner.friday_dish_id);
+    dietDetails['saturday'] = {};
+    dietDetails['saturday']!['breakfast'] = await Dish.get(breakfast.saturday_dish_id);
+    dietDetails['saturday']!['lunch'] = await Dish.get(lunch.saturday_dish_id);
+    dietDetails['saturday']!['dinner'] = await Dish.get(dinner.saturday_dish_id);
+    dietDetails['sunday'] = {};
+    dietDetails['sunday']!['breakfast'] = await Dish.get(breakfast.sunday_dish_id);
+    dietDetails['sunday']!['lunch'] = await Dish.get(lunch.sunday_dish_id);
+    dietDetails['sunday']!['dinner'] = await Dish.get(dinner.sunday_dish_id);
+    return dietDetails;
+  }
+  
+  
+  
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -116,7 +158,32 @@ class _DietPlanControllerState  extends State<DietPlanController>{
             case RouteConstants.planViewSelectSubRoute:{
 
               final dietPlanModel = widget.arguments as DietPlanModel;
-              page = ViewPlanSelect(dietPlanModel: dietPlanModel);
+              
+              page = LayoutBuilder(builder: (context, constraints){
+                if(constraints.maxWidth < 600){
+                  return  ViewPlanSelect(dietPlanModel: dietPlanModel);
+                } else {
+
+                  return StreamBuilder(
+                      stream: getAllDish(dietPlanModel).asStream(),
+                      builder: (BuildContext context,AsyncSnapshot<Map<String, Map<String, Dish?>>> snapshot){
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const LoadingPage();
+                        }
+                        if (snapshot.hasError || snapshot.data==null) {
+                          return Text(
+                            snapshot.error.toString(),
+                            style: TextStyle(
+                                color: Colors.white
+                            ),
+                          );
+                        }
+                        final dietDetails = snapshot.data;
+                        return WebViewPlanWhenSelect(dietDetails: dietDetails!);
+
+                  });
+                }
+              });
             }
             break;
 
