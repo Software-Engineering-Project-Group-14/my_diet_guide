@@ -112,7 +112,7 @@ class DietPlanModel extends Model{
           breakfast_id: cur.get('breakfast_id'),
           lunch_id: cur.get('lunch_id'),
           dinner_id: cur.get('dinner_id'), 
-          calorie_gain_per_plan_per_week: cur.get('calorie_gain_per_plan_per_week'),
+          calorie_gain_per_plan_per_week: cur.get('calorie_gain_per_plan_per_week').toDouble(),
           imgPath: cur.get("plan_image")
       );
       //print(curPlan);
@@ -187,7 +187,7 @@ class DietPlanModel extends Model{
             breakfast_id: data["breakfast_id"],
             lunch_id: data["lunch_id"],
             dinner_id: data["dinner_id"],
-            calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week'],
+            calorie_gain_per_plan_per_week: data['calorie_gain_per_plan_per_week'].toDouble(),
             imgPath: data["plan_image"]
         );
         success = true;
@@ -317,7 +317,7 @@ class DietPlanModel extends Model{
           breakfast_id: ds["breakfast_id"],
           lunch_id: ds["lunch_id"],
           dinner_id: ds["dinner_id"],
-          calorie_gain_per_plan_per_week: ds["calorie_gain_per_plan_per_week"],
+          calorie_gain_per_plan_per_week: ds["calorie_gain_per_plan_per_week"].toDouble(),
           imgPath: ds["plan_image"]
       );
     }catch(error){
