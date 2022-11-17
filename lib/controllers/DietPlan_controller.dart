@@ -11,8 +11,10 @@ import 'package:my_diet_guide/screens/web_screens/web_change_plan.dart';
 import '../models/DietPlan.dart';
 import '../models/UserBiometrics.dart';
 import '../screens/change_plan.dart';
+import '../screens/login.dart';
 import '../screens/select_plan.dart';
 import '../screens/view_diet.dart';
+import '../screens/web_screens/web_login.dart';
 import '../screens/web_screens/web_select_plan.dart';
 
 
@@ -45,86 +47,99 @@ class _DietPlanControllerState  extends State<DietPlanController>{
     ret['recommendedPlans'] = recommendedplan;
     return ret;
   }
-
   @override
   Widget build(BuildContext context) {
-    final auth = Controller.auth;
-    late Widget page;
-    switch(widget.subRoute){
+    return StreamBuilder(
+      stream: Controller.auth!.authStateChanges(),
+      builder: (context, snapshot){
+        if(snapshot.hasData){
+          final auth = Controller.auth;
+          late Widget page;
+          switch(widget.subRoute){
 
 
-      case RouteConstants.planSelectSubRoute:{
-        page = StreamBuilder<Map<String, dynamic>>(
-            stream: getData().asStream(),
-            builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot){
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const LoadingPage();
-              }
-              if (snapshot.hasError || snapshot.data==null) {
-                return Text(
-                  snapshot.error.toString(),
-                  style: TextStyle(
-                      color: Colors.white
-                  ),
-                );
-              }
-              if(snapshot.data!['currentPlan']==null){
-                return LayoutBuilder(
-                    builder: (context, constraints){
-                      if(constraints.maxWidth < 600){
-                        return SelectPlan(recommendedPlans: snapshot.data!['recommendedPlans'],);
-                      }else{
-                        return WebSelectPlan(recommendedPlans: snapshot.data!['recommendedPlans'],);
-                      }
+            case RouteConstants.planSelectSubRoute:{
+              page = StreamBuilder<Map<String, dynamic>>(
+                  stream: getData().asStream(),
+                  builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot){
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const LoadingPage();
                     }
-                );
-              }else{
-                return LayoutBuilder(
-                    builder: (context, constraints){
-                      if(constraints.maxWidth < 600){
-                        return ChangePlan(currentPlan: snapshot.data!['currentPlan'], recommendedPlans: snapshot.data!['recommendedPlans'],);
-                      }else{
-                        return WebChangePlan(currentPlan: snapshot.data!['currentPlan'],recommendedPlans: snapshot.data!['recommendedPlans'],);
-                      }
+                    if (snapshot.hasError || snapshot.data==null) {
+                      return Text(
+                        snapshot.error.toString(),
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      );
                     }
-                );
-              }
+                    if(snapshot.data!['currentPlan']==null){
+                      return LayoutBuilder(
+                          builder: (context, constraints){
+                            if(constraints.maxWidth < 600){
+                              return SelectPlan(recommendedPlans: snapshot.data!['recommendedPlans'],);
+                            }else{
+                              return WebSelectPlan(recommendedPlans: snapshot.data!['recommendedPlans'],);
+                            }
+                          }
+                      );
+                    }else{
+                      return LayoutBuilder(
+                          builder: (context, constraints){
+                            if(constraints.maxWidth < 600){
+                              return ChangePlan(currentPlan: snapshot.data!['currentPlan'], recommendedPlans: snapshot.data!['recommendedPlans'],);
+                            }else{
+                              return WebChangePlan(currentPlan: snapshot.data!['currentPlan'],recommendedPlans: snapshot.data!['recommendedPlans'],);
+                            }
+                          }
+                      );
+                    }
+                  }
+              );
             }
-        );
-      }
-      break;
+            break;
 
-      case RouteConstants.planViewSubRoute:{
-        page = ViewDietPlan(user_id: auth!.currentUser!.uid);
-      }
-      break;
+            case RouteConstants.planViewSubRoute:{
+              page = ViewDietPlan(user_id: auth!.currentUser!.uid);
+            }
+            break;
 
-      case RouteConstants.planViewSelectSubRoute:{
+            case RouteConstants.planViewSelectSubRoute:{
 
-        final dietPlanModel = widget.arguments as DietPlanModel;
-        page = ViewPlanSelect(dietPlanModel: dietPlanModel);
-      }
-      break;
+              final dietPlanModel = widget.arguments as DietPlanModel;
+              page = ViewPlanSelect(dietPlanModel: dietPlanModel);
+            }
+            break;
 
-      case RouteConstants.planAddSubRoute:{
-        page = AddDietPlan();
-      }
-      break;
+            case RouteConstants.planAddSubRoute:{
+              page = AddDietPlan();
+            }
+            break;
 
-      case RouteConstants.planUpdateSubRoute:{
-        page = UpdateDietPlan();
-      }
-      break;
+            case RouteConstants.planUpdateSubRoute:{
+              page = UpdateDietPlan();
+            }
+            break;
 
 
-      default:{
-        throw Exception('Unknown route: ${RouteConstants.planRoute}${widget.subRoute} ');
-      }
+            default:{
+              throw Exception('Unknown route: ${RouteConstants.planRoute}${widget.subRoute} ');
+            }
 
-    }
+          }
 
-    return page;
-
+          return page;
+        }else{
+          return LayoutBuilder(builder: (context, constraints){
+            if(constraints.maxWidth < 600){
+              return Login();
+            } else {
+              return WebLogin();
+            }
+          });
+        }
+      },
+    );
   }
 
 

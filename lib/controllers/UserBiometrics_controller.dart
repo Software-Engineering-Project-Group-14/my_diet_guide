@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/controllers/Controller.dart';
 
+import '../screens/login.dart';
 import '../screens/update_user_biometrics_form.dart';
 import '../screens/user_biometrics_form.dart';
+import '../screens/web_screens/web_login.dart';
 
 class UserBiometricsController extends Controller {
 
@@ -16,46 +18,61 @@ class UserBiometricsController extends Controller {
 }
 
 class _UserBiometricsControllerState extends State<UserBiometricsController> {
-
   @override
   Widget build(BuildContext context) {
-    late Widget page;
-    switch(widget.subRoute){
+    return StreamBuilder(
+      stream: Controller.auth!.authStateChanges(),
+      builder: (context, snapshot){
+        if(snapshot.hasData){
+          late Widget page;
+          switch(widget.subRoute){
 
-      case RouteConstants.bioCreateSubRoute:{
-        final args = widget.arguments as Map<String, dynamic>;
-        page = UserBiometricsForm(
-            email: args['email'],
-            password: args['password'],
-            firstName: args['firstName'],
-            lastName: args['lastName'],
-            age: args['age'],
-            bday: args['bday'],
-            gender: args['gender']
-        );
-      }
-      break;
+            case RouteConstants.bioCreateSubRoute:{
+              final args = widget.arguments as Map<String, dynamic>;
+              page = UserBiometricsForm(
+                  email: args['email'],
+                  password: args['password'],
+                  firstName: args['firstName'],
+                  lastName: args['lastName'],
+                  age: args['age'],
+                  bday: args['bday'],
+                  gender: args['gender']
+              );
+            }
+            break;
 
-      case RouteConstants.bioUpdateSubRoute:{
-        final args = widget.arguments as Map<String, dynamic>;
-        page =UpdateBiometricsForm(
-          user_id: args['user_id']!,
-          firstName: args['firstName']!,
-          lastName: args['lastName']!,
-          bday: args['bday']!,
-          gender: args['gender']!,
-          age: args['age']!,
-        );
+            case RouteConstants.bioUpdateSubRoute:{
+              final args = widget.arguments as Map<String, dynamic>;
+              page =UpdateBiometricsForm(
+                user_id: args['user_id']!,
+                firstName: args['firstName']!,
+                lastName: args['lastName']!,
+                bday: args['bday']!,
+                gender: args['gender']!,
+                age: args['age']!,
+              );
 
-      }
-      break;
+            }
+            break;
 
-      default:{
-        throw Exception('Unknown route: ${RouteConstants.bioRoute}${widget.subRoute} ');
-      }
+            default:{
+              throw Exception('Unknown route: ${RouteConstants.bioRoute}${widget.subRoute} ');
+            }
 
-    }
+          }
 
-    return page;
+          return page;
+        }else{
+          return LayoutBuilder(builder: (context, constraints){
+            if(constraints.maxWidth < 600){
+              return Login();
+            } else {
+              return WebLogin();
+            }
+          });
+        }
+      },
+    );
   }
+
 }
