@@ -25,6 +25,7 @@ class _DietCalenderState extends State<DietCalender> {
     final userSnapshot = await userDoc.get();
 
     String current_plan = userSnapshot.data()!['current_plan'];
+    print('current plan id: ' + current_plan);
 
     return current_plan;
   }
@@ -40,7 +41,7 @@ class _DietCalenderState extends State<DietCalender> {
             return Center(child: Text("No User!"),);
           } else {
             double target_weight = json['target_weight'];
-            double current_weight = json['calculated_current_weight'];
+            double current_weight = json['current_weight'];
             double weight_loss_per_day = json['weight_loss_per_day'];
             return goToPlan(plan_id, target_weight, current_weight, weight_loss_per_day);
           }
@@ -57,18 +58,30 @@ class _DietCalenderState extends State<DietCalender> {
 
 
   Future<Map<String, dynamic>> getUserBiometrics(String user_id) async {
+    print('user_id : '+ user_id);
     final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(user_id);
     final userBioSnapshot = await userBioDoc.get();
 
-    String gender = userBioSnapshot.data()!['gender'];
-    String activeness = userBioSnapshot.data()!['activeness'];
-    double weight = userBioSnapshot.data()!['weight'];
-    double height = userBioSnapshot.data()!['height'];
-    double age = userBioSnapshot.data()!['age'];
-    double target_weight = userBioSnapshot.data()!['target weight'];
-    double current_weight = userBioSnapshot.data()!['calculated_current_weight'];
+    print(userBioSnapshot.data()!);
 
-    double weight_loss_per_day = CalorieCalculator.calorieBurnPerDayInKg(gender, height, weight, age, activeness);
+    String gender = userBioSnapshot.data()!['gender'];
+    print('gender :'+ gender);
+    String activeness = userBioSnapshot.data()!['activeness'];
+    print('activeness :'+ activeness);
+    double weight = userBioSnapshot.data()!['weight'];
+    print('weight :'+ weight.toString());
+    double height = userBioSnapshot.data()!['height'];
+    print('height :'+ height.toString());
+    int age = userBioSnapshot.data()!['age'];
+    print('age :'+ age.toString());
+    double target_weight = userBioSnapshot.data()!['target weight'];
+    print('target weight :'+ target_weight.toString());
+    double current_weight = userBioSnapshot.data()!['calculated_current_weight'];
+    print('calculated_current_weight :'+ current_weight.toString());
+
+
+    double weight_loss_per_day = CalorieCalculator.calorieBurnPerDayInKg(gender, height, weight, age.toDouble(), activeness);
+    print('weight_loss_per_day : '+ weight_loss_per_day.toString());
 
     return{
       'target_weight': target_weight,
@@ -106,13 +119,19 @@ class _DietCalenderState extends State<DietCalender> {
     final planDoc = FirebaseFirestore.instance.collection('diet_plan').doc(plan_id);
     final planSnapshot = await planDoc.get();
 
-    double calorie_gain_per_week = planSnapshot.data()!['calorie_gain_per_plan_per_week'];
-    double weight_gain_per_day = CalorieCalculator.calorieToKg(calorie_gain_per_week)/7;
+    int calorie_gain_per_week = planSnapshot.data()!['calorie_gain_per_plan_per_week'];
+    double weight_gain_per_day = CalorieCalculator.calorieToKg(calorie_gain_per_week.toDouble())/7;
 
     // check if this is a positive value
     double mean_weight_loss_per_day = weight_loss_per_day - weight_gain_per_day;
 
     int no_of_days_to_diet = ((current_weight- target_weight)/mean_weight_loss_per_day).ceil();
+    print('mean weight loss per day : '+ mean_weight_loss_per_day.toString());
+    print('weight to be lost : ' + (current_weight- target_weight).toString());
+    print("target weight : "+ target_weight.toString());
+    print("current weight : "+ current_weight.toString());
+    print("no_of_days : "+ ((current_weight - target_weight)/0.2).toString());
+    print("no_of_days_to_diet : " + no_of_days_to_diet.toString());
     return no_of_days_to_diet;
   }
 
