@@ -156,7 +156,7 @@ class _WebRateState extends State<WebRate> {
                                     'Submit',
                                     style: GoogleFonts.aBeeZee(
                                         fontSize: 30,
-                                        color: Colors.black
+                                        color: Colors.white
                                     )
                                 ),
                                 onPressed: () async {
