@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_diet_guide/common/messgae_constants.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
-import 'package:my_diet_guide/models/UserBiometrics.dart';
 import 'package:my_diet_guide/widgets/plan_card.dart';
 import 'package:my_diet_guide/widgets/recommended_plans.dart';
 
@@ -15,23 +13,15 @@ import '../widgets/side_bar.dart';
 class ChangePlan extends StatefulWidget {
 
   final DietPlanModel currentPlan;
+  final List<DietPlanModel> recommendedPlans;
 
-  const ChangePlan({Key? key, required this.currentPlan, }) : super(key: key);
+  const ChangePlan({Key? key, required this.currentPlan, required this.recommendedPlans, }) : super(key: key);
 
   @override
   State<ChangePlan> createState() => _ChangePlanState();
 }
 
 class _ChangePlanState extends State<ChangePlan> {
-
-  late Stream<UserBiometrics> userBiometricsStream;
-
-  @override
-  void initState() {
-   // userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:"6gDkTTdr4jXWMtq5ZEJngXx7PjP2").asStream();
-    super.initState();
-  }
-
 
   @override
   Widget build(BuildContext context)  {
@@ -85,7 +75,7 @@ class _ChangePlanState extends State<ChangePlan> {
                             ],
                           ),
                         ),
-                        RecommendedPlans(currentPlanId: widget.currentPlan.planId,)
+                        RecommendedPlans(currentPlanId: widget.currentPlan.planId, recommendedPlans: widget.recommendedPlans,)
 
                       ],
                     )

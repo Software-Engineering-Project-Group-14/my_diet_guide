@@ -3,6 +3,8 @@ import 'dart:math';
 
 class PlanConstants{
 
+  static const caloriePerKg = 7700;
+
   static const List<String> activenessValues = [
     "Not very active",
     "Moderately active",
@@ -14,6 +16,11 @@ class PlanConstants{
     "Standard",
     "Difficult"
   ];
+  static const Map<String, int> numWeeksForIntensity = {
+    "Easy":2,
+    "Standard":5,
+    "Difficult":8
+  };
 
   static const List<String> age_groupValues = [
     "0-12",

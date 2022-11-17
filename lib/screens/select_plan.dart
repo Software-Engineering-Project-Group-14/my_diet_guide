@@ -4,13 +4,15 @@ import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/recommended_plans.dart';
 
 import '../controllers/Controller.dart';
+import '../models/DietPlan.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/side_bar.dart';
 
 class SelectPlan extends StatefulWidget {
 
+  final List<DietPlanModel> recommendedPlans;
 
-  const SelectPlan({Key? key,
+  const SelectPlan({Key? key, required this.recommendedPlans,
   }) : super(key: key);
 
   @override
@@ -42,7 +44,7 @@ class _SelectPlanState extends State<SelectPlan> {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    RecommendedPlans()
+                    RecommendedPlans(recommendedPlans: widget.recommendedPlans,)
                   ],
                 ),
               ),

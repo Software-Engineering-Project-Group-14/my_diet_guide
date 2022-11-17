@@ -15,22 +15,15 @@ import '../../models/UserBiometrics.dart';
 class WebRecommendedPlans extends StatefulWidget {
 
   late String? currentPlanId;
+  final List<DietPlanModel> recommendedPlans;
 
-  WebRecommendedPlans({Key? key, this.currentPlanId }) : super(key: key);
+  WebRecommendedPlans({Key? key, this.currentPlanId, required this.recommendedPlans }) : super(key: key);
   @override
   State<WebRecommendedPlans> createState() => _WebRecommendedPlansState();
 }
 
 class _WebRecommendedPlansState extends State<WebRecommendedPlans> {
 
-  late Stream<UserBiometrics> userBiometricsStream;
-
-  @override
-  void initState() {
-    userBiometricsStream = UserBiometrics.getUserBiometrics(
-        user_id: Controller.auth!.currentUser!.uid).asStream();
-    super.initState();
-  }
 
   List<Widget> recommendedPlanArea(List<DietPlanModel> l){
     List<Widget> widgetList = [];
@@ -70,38 +63,29 @@ class _WebRecommendedPlansState extends State<WebRecommendedPlans> {
   
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<UserBiometrics>(
-        stream: userBiometricsStream,
-        builder: (context, snapshot) {
-          String? msg;
-          bool? success;
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (snapshot.hasError) {
-            success = false;
-            msg = MessageConstants.errorMessage;
-            return Text(
-              msg,
-              style: const TextStyle(
-                  color: Colors.white
+    Widget content;
+    if (widget.recommendedPlans.length == 0) {
+      content = Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
+            child: Text(
+              MessageConstants.noRecommendedPlan,
+              style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20
               ),
-            );
-          }
+            ),
+          )
+        ],
+      );
+    } else {
+      content = Column(
+        children: recommendedPlanArea(widget.recommendedPlans),
+      );
+    }
 
-          UserBiometrics userBiometrics = snapshot.data!;
-          Stream<QuerySnapshot> recommendedplanStream = DietPlanModel
-              .getPlanStream(
-              dietary_preference: userBiometrics.dietaryPreference,
-              age_group: DietPlanModel.getAgeGroup(userBiometrics.age),
-              gender: userBiometrics.gender,
-              intensity: userBiometrics.intensity,
-              activeness: userBiometrics.activeness
-          );
-          return Column(
+    return Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(30.0),
@@ -118,62 +102,10 @@ class _WebRecommendedPlansState extends State<WebRecommendedPlans> {
                   ],
                 ),
               ),
-              StreamBuilder<QuerySnapshot>(
-                stream: recommendedplanStream,
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-
-                  if (snapshot.hasError) {
-                    success = false;
-                    msg = MessageConstants.errorMessage;
-                    return Text(
-                      msg!,
-                      style: const TextStyle(
-                          color: Colors.white
-                      ),
-                    );
-                  }
-
-                  List<DietPlanModel> l = DietPlanModel.getMostReccomendedPlans(
-                      snapshot: snapshot,
-                      age_group: DietPlanModel.getAgeGroup(userBiometrics.age),
-                      activeness: userBiometrics.activeness,
-                      currentPlanId: widget.currentPlanId,
-                      intensity: userBiometrics.intensity
-                  );
-                  if (l.length == 0) {
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
-                          child: Text(
-                            MessageConstants.noRecommendedPlan,
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 20
-                            ),
-                          ),
-                        )
-                      ],
-                    );
-                  } else {
-                    
-                    return Column(
-                      children: recommendedPlanArea(l),
-                    );
-                  }
-                },
-
-              ),
-
+             content
             ],
           );
-        }
-    );
+
+
   }
 }

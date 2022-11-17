@@ -68,6 +68,11 @@ class CalorieCalculator extends Model{
     return calorie/7700;
   }
 
+  // Converts given kg to calorie
+  static double kgToClorie(double kg){
+    return kg*7700;
+  }
+
 
   // Updates calorie sum per given meal per week
   static void setCalorieSum({required meal,required id}) async{
