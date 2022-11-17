@@ -156,7 +156,7 @@ class _WebRateState extends State<WebRate> {
                                     'Submit',
                                     style: GoogleFonts.aBeeZee(
                                         fontSize: 30,
-                                        color: Colors.black
+                                        color: Colors.white
                                     )
                                 ),
                                 onPressed: () async {
@@ -189,6 +189,11 @@ class _WebRateState extends State<WebRate> {
                                                   if(Controller.auth!.currentUser != null || _formKey.currentState!.validate()){
                                                     RateModel rateObject = RateModel(
                                                       starValue, Controller.auth!.currentUser!.email, feedbackText,
+                                                    );
+                                                    AlertDialog(
+                                                      content: Center(
+                                                        child: CircularProgressIndicator(),
+                                                      ),
                                                     );
                                                     bool result = await rateObject.add();
                                                     if(result){

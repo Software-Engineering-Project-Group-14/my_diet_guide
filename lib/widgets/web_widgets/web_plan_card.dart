@@ -74,7 +74,7 @@ class WebPlanCard extends StatelessWidget {
                           child: Text(
                             "See More",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.grey,
                                 fontSize: 25
                             ),
                           ),
@@ -114,6 +114,11 @@ class WebPlanCard extends StatelessWidget {
                                           ),
                                         ),
                                           onPressed: ()async{
+                                            AlertDialog(
+                                              content: Center(
+                                                child: CircularProgressIndicator(),
+                                              ),
+                                            );
                                             bool success = await dietPlanModel.select(
                                                 user_id:   Controller.auth!.currentUser!.uid
                                             );
@@ -195,7 +200,7 @@ class WebPlanCard extends StatelessWidget {
                             child: Text(
                               "Select",
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 25),
                             ),
                           ),

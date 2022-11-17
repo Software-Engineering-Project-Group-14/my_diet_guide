@@ -209,6 +209,11 @@ class _RateState extends State<Rate> {
                                                 RateModel rateObject = RateModel(
                                                   starValue, Controller.auth!.currentUser!.email, feedbackText,
                                                 );
+                                                AlertDialog(
+                                                  content: Center(
+                                                    child: CircularProgressIndicator(),
+                                                  ),
+                                                );
                                                 bool result = await rateObject.add();
                                                 if(result){
                                                   setState(() {
