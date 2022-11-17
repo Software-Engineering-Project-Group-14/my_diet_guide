@@ -42,7 +42,7 @@ class BottomBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietPlan(user_id: user_id, firestore: firestore, auth: auth)));
+              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDietController(context: context,)));
               Navigator.pushNamed(context, RouteConstants.planViewRoute);
               },
           ),

@@ -13,6 +13,7 @@ import '../screens/change_plan.dart';
 import '../screens/select_plan.dart';
 import '../screens/view_diet.dart';
 import '../screens/web_screens/web_select_plan.dart';
+import '../screens/web_screens/web_view_diet.dart';
 
 
 class DietPlanController extends Controller {
@@ -77,7 +78,17 @@ class _DietPlanControllerState  extends State<DietPlanController>{
       break;
 
       case RouteConstants.planViewSubRoute:{
-        page = ViewDietPlan(user_id: auth!.currentUser!.uid);
+        page = LayoutBuilder(
+            builder: (context, constraints){
+              if(constraints.maxWidth < 600){
+                return ViewDietPlan(user_id: auth!.currentUser!.uid);
+              }else{
+                return WebViewDietPlan(user_id: auth!.currentUser!.uid);
+              }
+            }
+        );
+
+        // page = ViewDietPlan(user_id: auth!.currentUser!.uid);
       }
       break;
 

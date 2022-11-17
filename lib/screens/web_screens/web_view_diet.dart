@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/ViewDiet.dart';
 import '../../widgets/blurred_background_image.dart';
 import '../../widgets/bottom_bar.dart';
 import '../../widgets/view_diet_card.dart';
+import 'package:sizer/sizer.dart';
 
 class WebViewDietPlan extends StatefulWidget {
 
@@ -21,22 +23,6 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
   late String intensity;
   late String activeness;
 
-  Future<Map<String, dynamic>> getInfo() async {
-    final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(widget.user_id);
-    final bioSnapshot = await userBioDoc.get();
-
-    if(bioSnapshot.exists){
-      dietary_preference = bioSnapshot['dietary preference'];
-      intensity = bioSnapshot['intensity'];
-      activeness = bioSnapshot['activeness'];
-    }
-
-    return{
-      'dietary_preference':dietary_preference,
-      'intensity': intensity,
-      'activeness': activeness
-    };
-  }
 
   Widget viewBiometrics(Map<String, dynamic> map){
 
@@ -104,29 +90,51 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
 
 
         SizedBox(height: 20),
-        //monday
-        Container(
-          width: 200,
-            height: 200,
-            child: ViewDietCard(day: 'Monday', user_id: widget.user_id)),
 
-        //tuesday
-        ViewDietCard(day: 'Tuesday', user_id: widget.user_id,),
-
-        //wednesday
-        ViewDietCard(day: 'Wednesday', user_id: widget.user_id,),
-
-        //thursday
-        ViewDietCard(day: 'Thursday', user_id: widget.user_id,),
-
-        //Friday
-        ViewDietCard(day: 'Friday', user_id: widget.user_id, ),
-
-        //saturday
-        ViewDietCard(day: 'Saturday', user_id: widget.user_id,),
-
-        //sunday
-        ViewDietCard(day: 'Sunday' , user_id: widget.user_id,),
+        Row(
+          children: [
+            //monday
+            Container(
+                height: 30.h,
+                width: 25.w,
+                child: ViewDietCard(day: 'Monday', user_id: widget.user_id)),
+            //tuesday
+            Container(
+                height: 30.h,
+                width: 25.w,
+                child: ViewDietCard(day: 'Tuesday', user_id: widget.user_id,)),
+            //wednesday
+            Container(
+                height: 30.h,
+                width: 25.w,
+                child: ViewDietCard(day: 'Wednesday', user_id: widget.user_id,)),
+            //thursday
+            Container(
+                height: 30.h,
+                width: 25.w,
+                child: ViewDietCard(day: 'Thursday', user_id: widget.user_id,)),
+          ],
+        ),
+        Row(
+          children: [
+            SizedBox(width: 15.w,),
+            //Friday
+            Container(
+                height: 30.h,
+                width: 25.w,
+                child: ViewDietCard(day: 'Friday', user_id: widget.user_id, )),
+            //saturday
+            Container(
+                height: 30.h,
+                width: 25.w,
+                child: ViewDietCard(day: 'Saturday', user_id: widget.user_id,)),
+            //sunday
+            Container(
+                height: 30.h,
+                width: 25.w,
+                child: ViewDietCard(day: 'Sunday' , user_id: widget.user_id,)),
+          ],
+        ),
         SizedBox(height: 20,),
 
 
@@ -136,6 +144,7 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
 
   @override
   Widget build(BuildContext context) {
+    ViewDiet viewDiet = ViewDiet(user_id: widget.user_id);
     return Stack(
         children: [
 
@@ -154,7 +163,7 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
                   SafeArea(
                     child: SingleChildScrollView(
                       child: FutureBuilder<Map<String, dynamic>>(
-                          future: getInfo(),
+                          future: viewDiet.getInfo(),
                           builder: (context, snapshot){
                             if(snapshot.hasData){
                               final map = snapshot.data;
