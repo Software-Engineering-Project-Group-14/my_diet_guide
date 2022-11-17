@@ -67,14 +67,14 @@ class UserBiometrics extends Model{
     return UserBiometrics(
         user_id: user_id,
         gender: data["gender"],
-        weight: data["weight"],
-        height: data["height"],
-        targetWeight: data["target weight"],
+        weight: data["weight"].toDouble(),
+        height: data["height"].toDouble(),
+        targetWeight: data["target weight"].toDouble(),
         dietaryPreference: data["dietary preference"],
         activeness: data["activeness"],
         intensity: data["intensity"],
         age: data["age"],
-        calculated_current_weight: data['calculated_current_weight'],
+        calculated_current_weight: data['calculated_current_weight'].toDouble(),
         last_calorie_calculated_date: DateTime.parse(data['last_calorie_calculated_date'].toDate().toString())
     );
   }

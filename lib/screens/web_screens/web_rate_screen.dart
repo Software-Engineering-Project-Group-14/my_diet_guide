@@ -190,6 +190,11 @@ class _WebRateState extends State<WebRate> {
                                                     RateModel rateObject = RateModel(
                                                       starValue, Controller.auth!.currentUser!.email, feedbackText,
                                                     );
+                                                    AlertDialog(
+                                                      content: Center(
+                                                        child: CircularProgressIndicator(),
+                                                      ),
+                                                    );
                                                     bool result = await rateObject.add();
                                                     if(result){
                                                       setState(() {

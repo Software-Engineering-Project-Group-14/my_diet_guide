@@ -114,6 +114,11 @@ class WebPlanCard extends StatelessWidget {
                                           ),
                                         ),
                                           onPressed: ()async{
+                                            AlertDialog(
+                                              content: Center(
+                                                child: CircularProgressIndicator(),
+                                              ),
+                                            );
                                             bool success = await dietPlanModel.select(
                                                 user_id:   Controller.auth!.currentUser!.uid
                                             );

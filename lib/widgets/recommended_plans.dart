@@ -43,6 +43,7 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
           if (snapshot.hasError) {
             success=false;
             msg = MessageConstants.errorMessage;
+            msg = snapshot.error.toString();
             return Text(
               msg,
               style: const TextStyle(
@@ -86,7 +87,9 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
                   }
                   if (snapshot.hasError) {
                     success=false;
-                    msg = MessageConstants.errorMessage;
+
+                    //msg = MessageConstants.errorMessage;
+                    msg = snapshot.error.toString();
                     return Text(
                       msg!,
                       style: const TextStyle(
