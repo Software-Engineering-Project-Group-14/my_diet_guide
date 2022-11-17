@@ -74,7 +74,7 @@ class WebPlanCard extends StatelessWidget {
                           child: Text(
                             "See More",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.grey,
                                 fontSize: 25
                             ),
                           ),
@@ -195,7 +195,7 @@ class WebPlanCard extends StatelessWidget {
                             child: Text(
                               "Select",
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 25),
                             ),
                           ),
