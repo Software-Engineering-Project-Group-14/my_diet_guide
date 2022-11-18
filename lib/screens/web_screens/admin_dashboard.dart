@@ -107,7 +107,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                           GestureDetector(
                             onTap: (){
-                              Navigator.pushNamed(context, RouteConstants.planUpdateRoute);
+                              Navigator.pushNamed(context, RouteConstants.planViewAllUpdateRoute);
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 0),

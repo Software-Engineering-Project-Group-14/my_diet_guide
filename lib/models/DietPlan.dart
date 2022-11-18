@@ -82,8 +82,30 @@ class DietPlanModel extends Model{
   }
 
   // Get all the plans
-  static Stream<QuerySnapshot> getCurrentPlanStream(){
-    return Model.firestore!.collection('diet_plan').snapshots();
+  static Future<List<DietPlanModel>> getAllPlans()async{
+    //return Model.firestore!.collection('diet_plan').snapshots();
+    final qs = await Model.firestore!.collection('diet_plan').get();
+    final dsList = qs.docs;
+    List<DietPlanModel> allPlans = [];
+    for(int i=0;i<dsList.length;i++){
+      DocumentSnapshot ds = dsList[i];
+      if(ds.id=="details" || ds.id=="nextPlanId") continue;
+      DietPlanModel curPlan = DietPlanModel(
+          planId: ds['planId'],
+          dietary_preference: ds['dietary_preference'],
+          gender: ds['gender'],
+          intensity: ds['intensity'],
+          activeness: ds['activeness'],
+          age_group: ds['age_group'],
+          breakfast_id: ds['breakfast_id'],
+          lunch_id: ds['lunch_id'],
+          dinner_id: ds['dinner_id'],
+          calorie_gain_per_plan_per_week: ds['calorie_gain_per_plan_per_week'].toDouble(),
+          imgPath: ds["plan_image"]
+      );
+      allPlans.add(curPlan);
+    }
+    return allPlans;
   }
 
   // Get sorted recommeneded plans for given parametres
