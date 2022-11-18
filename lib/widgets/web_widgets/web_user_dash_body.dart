@@ -373,40 +373,25 @@ class WebUserDashBody extends StatelessWidget {
 
 
   Widget buildMeals(String dietplan_id){
-
-    String month = DateTime.now().month.toString().padLeft(2, '0');
-    String date = DateTime.now().day.toString().padLeft(2, '0');
-    String today = '${DateTime.now().year}/$month/$date';
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(28),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          width: 360,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.white24, Colors.white10],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(28),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [Colors.white24, Colors.white10],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight
+                  ),
+                  borderRadius: BorderRadius.circular(28),
+                  border: Border.all(width: 2, color: Colors.white10)
               ),
-              borderRadius: BorderRadius.circular(28),
-              border: Border.all(width: 2, color: Colors.white10)
-          ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 15, right: 125),
-                child: Text("$today - $today_day", style: TextStyle(fontSize: 19, color: Colors.white,),),
-              ),
-
-              Divider(color: Colors.white , thickness: 2, indent: 20, endIndent: 20,),
-
-
-              SizedBox(height: 20,),
-
-
-              FutureBuilder<Map<String,dynamic>>(
+              child: FutureBuilder<Map<String,dynamic>>(
                   future: getDietPlanInfo(dietplan_id),
                   builder: (context, snapshot){
                     if(snapshot.hasData){
@@ -421,60 +406,79 @@ class WebUserDashBody extends StatelessWidget {
                     }
                   }
               ),
-
-
-              SizedBox(height: 15,),
-
-              Divider(color: Colors.white , thickness: 2, indent: 20, endIndent: 20,),
-
-              SizedBox(height: 15,),
-
-
-              FutureBuilder<Map<String,dynamic>>(
-                  future: getDietPlanInfo(dietplan_id),
-                  builder: (context, snapshot){
-                    if(snapshot.hasData){
-                      final mealIDs = snapshot.data;
-                      return mealIDs==null ? Center(child: Text("No User!"),) : buildLunch(mealIDs!);
-                    } else if (snapshot.hasError){
-                      return Text('Something went wrong!');
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  }
-              ),
-
-
-              SizedBox(height: 15,),
-
-              Divider(color: Colors.white , thickness: 2, indent: 20, endIndent: 20,),
-
-              SizedBox(height: 15,),
-
-
-              FutureBuilder<Map<String,dynamic>>(
-                  future: getDietPlanInfo(dietplan_id),
-                  builder: (context, snapshot){
-                    if(snapshot.hasData){
-                      final mealIDs = snapshot.data;
-                      return mealIDs==null ? Center(child: Text("No User!"),) : buildDinner(mealIDs!);
-                    } else if (snapshot.hasError){
-                      return Text('Something went wrong!');
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  }
-              ),
-
-              SizedBox(height: 30,),
-            ],
-          ),
+            ),
+          )
         ),
-      ),
+
+
+        ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.white24, Colors.white10],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight
+                    ),
+                    borderRadius: BorderRadius.circular(28),
+                    border: Border.all(width: 2, color: Colors.white10)
+                ),
+                child: FutureBuilder<Map<String,dynamic>>(
+                    future: getDietPlanInfo(dietplan_id),
+                    builder: (context, snapshot){
+                      if(snapshot.hasData){
+                        final mealIDs = snapshot.data;
+                        return mealIDs==null ? Center(child: Text("No User!"),) : buildLunch(mealIDs!);
+                      } else if (snapshot.hasError){
+                        return Text('Something went wrong!');
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }
+                ),
+              ),
+            )
+        ),
+
+
+        ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.white24, Colors.white10],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight
+                    ),
+                    borderRadius: BorderRadius.circular(28),
+                    border: Border.all(width: 2, color: Colors.white10)
+                ),
+                child: FutureBuilder<Map<String,dynamic>>(
+                    future: getDietPlanInfo(dietplan_id),
+                    builder: (context, snapshot){
+                      if(snapshot.hasData){
+                        final mealIDs = snapshot.data;
+                        return mealIDs==null ? Center(child: Text("No User!"),) : buildDinner(mealIDs!);
+                      } else if (snapshot.hasError){
+                        return Text('Something went wrong!');
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }
+                ),
+              ),
+            )
+        ),
+
+      ],
     );
   }
 
@@ -502,7 +506,12 @@ class WebUserDashBody extends StatelessWidget {
       today_day='Sunday';
     }
 
+    String month = DateTime.now().month.toString().padLeft(2, '0');
+    String date = DateTime.now().day.toString().padLeft(2, '0');
+    String today = '${DateTime.now().year}/$month/$date';
+
     Size size = MediaQuery.of(context).size;   // total height and width of the screen
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -511,18 +520,15 @@ class WebUserDashBody extends StatelessWidget {
             child: Stack(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 5,),
+                  padding: EdgeInsets.only(top: 30, bottom: 30),
                   child: Text(
-                    "Today's Diet Plan",
-                    style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)),
+                    "Today's Diet Plan  :  $today - $today_day",
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)),
                   ),
                 ),
               ],
             ),
           ),
-
-
-          SizedBox(height: 15,),
 
 
           FutureBuilder<String>(
