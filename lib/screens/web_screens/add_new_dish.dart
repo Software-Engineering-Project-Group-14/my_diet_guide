@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/web_screens/admin_dashboard.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 
 class AddNewDish extends StatefulWidget {
@@ -42,6 +44,22 @@ class _AddNewDishState extends State<AddNewDish> {
       return false;
     }
     return double.tryParse(value) != null;
+  }
+  
+  
+  Future<void> addDish() async {
+    final dishDoc = FirebaseFirestore.instance.collection('dish').doc(name);
+
+    final json = {
+      'calorie_gain_per_meal': calorie_gain_per_meal,
+      'description': description,
+      'dietary_preference': dietaryPreference,
+      'dish_image': 'assets/Images/meals/$dietaryPreference.png',
+      'meal': meal,
+      'name': name,
+    };
+
+    await dishDoc.set(json);
   }
 
 
@@ -308,6 +326,40 @@ class _AddNewDishState extends State<AddNewDish> {
 
 
                     SizedBox(height: 30,),
+
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: GestureDetector(
+                        onTap: () async {
+                          if(_formKey.currentState!.validate()){
+                            addDish();
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AdminDashboard()));
+                          }
+                        },
+                        child: Container(
+                          width: 420,
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.teal.shade900,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Add Dish',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight:FontWeight.bold,
+                                fontSize: 25,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+
+                    SizedBox(height: 35,),
 
 
 
