@@ -23,11 +23,7 @@ class RecordProgressScreen extends StatefulWidget {
 
 class _RecordProgressScreenState extends State<RecordProgressScreen> {
 
-/*
-  Future recordProgress(String user_id, ) async {
-
-  }
-*/
+  bool isRecorded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +132,10 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
 
                         SizedBox(height: 20,),
 
+                        // if(isRecorded == false) Text('') else Text('Your progress already has been recorded. If you want to change, You can change below'),
+                        //
+                        // SizedBox(height: 20,),
+
                         Container(
                           child: Column(
                             children: [
@@ -153,6 +153,7 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                         children: [
                                           GestureDetector(
                                             onTap: ()async{
+                                              isRecorded = true;
                                               ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Did not complete");
                                             },
                                             child: Container(
@@ -174,6 +175,7 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                         children: [
                                           GestureDetector(
                                             onTap: (){
+                                              isRecorded = true;
                                               ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Partially Completed");
                                             },
                                             child: Container(
@@ -198,6 +200,7 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                         children: [
                                           GestureDetector(
                                             onTap: (){
+                                              isRecorded = true;
                                               ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Completed");
                                             },
                                             child: Container(
@@ -219,6 +222,7 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                         children: [
                                           GestureDetector(
                                             onTap: (){
+                                              isRecorded = true;
                                               ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Over ate");
                                             },
                                             child: Container(
