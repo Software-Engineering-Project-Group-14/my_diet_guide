@@ -147,7 +147,7 @@ class DietPlanModel extends Model{
     bool? success;
     DietPlanModel? dietPlanModel;
     String? msg;
-    // try{
+     try{
     DocumentSnapshot ds = await Model.firestore!.collection("user").doc(user_id).get();
     Map<String, dynamic> data = ds.data() as Map<String, dynamic>;
     if(!data.keys.contains("current_plan")){
@@ -178,11 +178,11 @@ class DietPlanModel extends Model{
       }
     }
 
-    // }catch(error){
-    //   return {
-    //    'success': false
-    //   };
-    //  }
+     }catch(error){
+       return {
+        'success': false
+       };
+      }
     return {
       'success': success,
       'dietPlan': dietPlanModel,

@@ -69,7 +69,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         children: [
 
                           GestureDetector(
-                            onTap: (){},
+                            onTap: (){
+                              Navigator.pushNamed(context, RouteConstants.dietAddRoute);
+                            },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 0),
                               child: ClipRRect(
@@ -108,7 +110,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
 
                           GestureDetector(
-                            onTap: (){},
+                            onTap: (){
+                              Navigator.pushNamed(context, RouteConstants.planUpdateRoute);
+                            },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 0),
                               child: ClipRRect(
@@ -151,7 +155,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         children: [
                           GestureDetector(
                             onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddDietPlan()));
+                              Navigator.pushNamed(context, RouteConstants.planAddRoute);
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 0),

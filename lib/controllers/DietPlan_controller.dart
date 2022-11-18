@@ -14,6 +14,7 @@ import '../models/Dish.dart';
 import '../models/Meal.dart';
 import '../models/UserBiometrics.dart';
 import '../screens/change_plan.dart';
+import '../screens/dashboard_change.dart';
 import '../screens/login.dart';
 import '../screens/select_plan.dart';
 import '../screens/view_diet.dart';
@@ -156,7 +157,9 @@ class _DietPlanControllerState  extends State<DietPlanController>{
             break;
 
             case RouteConstants.planViewSelectSubRoute:{
-
+              if(widget.arguments == null){
+                return DashboardChange();
+              }
               final dietPlanModel = widget.arguments as DietPlanModel;
               
               page = LayoutBuilder(builder: (context, constraints){

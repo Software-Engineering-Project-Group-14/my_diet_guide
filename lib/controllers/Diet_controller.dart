@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/controllers/Controller.dart';
+import 'package:my_diet_guide/screens/dashboard_change.dart';
 import 'package:my_diet_guide/screens/loading_page.dart';
 
 import '../common/route_constants.dart';
@@ -31,12 +32,18 @@ class _DietControllerState extends State<DietController> {
 
           switch(widget.subRoute){
             case RouteConstants.dietViewSubRoute:{
+              if(widget.arguments == null){
+                return DashboardChange();
+              }
               final args = widget.arguments as Map<String, dynamic>;
               page = DietDetails(user_id: args['user_id'], day: args['day']);
             }
             break;
             case RouteConstants.dietViewSelectSubRoute:{
               try{
+                if(widget.arguments == null){
+                  return DashboardChange();
+                }
                 final args = widget.arguments as Map<String, dynamic>;
                 page = StreamBuilder<Map<String, Dish>>(
                     stream: Dish.getByDay(
@@ -60,6 +67,11 @@ class _DietControllerState extends State<DietController> {
               }catch(error){
                 return ErrorScreen();
               }
+            }
+            break;
+
+            case RouteConstants.dietAddSubRoute:{
+
             }
           }
           return page;

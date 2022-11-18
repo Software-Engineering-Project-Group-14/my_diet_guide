@@ -80,6 +80,8 @@ class _MyAppState extends State<MyApp> {
               DietPlanController(context: context,),
           RouteConstants.planUpdateRoute: (context) =>
               DietPlanController(context: context,),
+          RouteConstants.planDeleteRoute: (context)=>
+              DietPlanController(context: context,),
 
           RouteConstants.userDetailsViewRoute: (context) =>
               UserDetailsController(context: context,),
@@ -100,6 +102,8 @@ class _MyAppState extends State<MyApp> {
               RateController(context: context),
 
           RouteConstants.dietViewRoute: (context) =>
+              DietController(context: context,),
+          RouteConstants.dietAddRoute: (context) =>
               DietController(context: context,),
           RouteConstants.dietViewSelectRoute: (context) =>
               DietController(context: context)

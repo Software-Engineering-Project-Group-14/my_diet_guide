@@ -41,8 +41,10 @@ class RouteConstants {
 
   static const String dietRoute = 'diet';
   static const String dietViewSubRoute = 'view';
+  static const String dietAddSubRoute = 'add';
   static const String dietViewSelectSubRoute = 'viewSelect';
   static const String dietViewRoute = '/$dietRoute/$dietViewSubRoute';
+  static const String dietAddRoute = '/$dietRoute/$dietAddSubRoute';
   static const String dietViewSelectRoute = '/$dietRoute/$dietViewSelectSubRoute';
 
   
