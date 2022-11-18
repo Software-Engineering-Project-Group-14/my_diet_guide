@@ -8,6 +8,7 @@ import 'package:my_diet_guide/screens/web_screens/add_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/web_login.dart';
 import 'package:my_diet_guide/widgets/side_bar.dart';
 
+import '../../common/route_constants.dart';
 import '../../widgets/blurred_background_image.dart';
 
 class AdminDashboard extends StatefulWidget {
@@ -66,6 +67,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
+
                           GestureDetector(
                             onTap: (){},
                             child: Padding(
