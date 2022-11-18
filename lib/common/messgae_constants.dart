@@ -14,6 +14,7 @@ class MessageConstants{
 
   static const String NoRegisteredPlan = "There is no registered plan for you yet. Select a plan.";
   static const String noRecommendedPlan = "There are no available diet plans for your biometrics.";
+  static const String noPlan = "There are no available plans";
 
   static const String errorMessage = "An error occurred";
 

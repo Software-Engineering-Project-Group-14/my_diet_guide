@@ -6,6 +6,7 @@ import 'package:my_diet_guide/screens/loading_page.dart';
 import 'package:my_diet_guide/screens/view_plan_when_select.dart';
 import 'package:my_diet_guide/screens/web_screens/add_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/update_diet_plan.dart';
+import 'package:my_diet_guide/screens/web_screens/view_all_plans.dart';
 import 'package:my_diet_guide/screens/web_screens/web_change_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/web_view_plan_select.dart';
 
@@ -187,6 +188,28 @@ class _DietPlanControllerState  extends State<DietPlanController>{
                   });
                 }
               });
+            }
+            break;
+
+            case RouteConstants.planViewAllUpdateSubRoute:{
+              page = StreamBuilder(
+                  stream: DietPlanModel.getAllPlans().asStream(),
+                  builder: (BuildContext context, AsyncSnapshot<List<DietPlanModel>> snapshot){
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const LoadingPage();
+                    }
+                    if (snapshot.hasError || snapshot.data==null) {
+                      return Text(
+                        snapshot.error.toString(),
+                        style: TextStyle(
+                            color: Colors.black
+                        ),
+                      );
+                    }
+                    List<DietPlanModel> l = snapshot.data!;
+                    return WebAllPlansView(allPlans: l);
+                  }
+              );
             }
             break;
 
