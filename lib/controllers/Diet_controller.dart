@@ -10,6 +10,7 @@ import '../screens/view_diet_day_when_select.dart';
 import '../screens/view_diet_details.dart';
 import '../screens/login.dart';
 import '../screens/web_screens/web_login.dart';
+import '../screens/web_screens/web_view_diet_details.dart';
 
 
 class DietController extends Controller {
@@ -36,7 +37,15 @@ class _DietControllerState extends State<DietController> {
                 return DashboardChange();
               }
               final args = widget.arguments as Map<String, dynamic>;
-              page = DietDetails(user_id: args['user_id'], day: args['day']);
+              page = LayoutBuilder(
+                  builder: (context, constraints){
+                    if(constraints.maxWidth < 600){
+                      return DietDetails(user_id: args['user_id'], day: args['day']);
+                    }else{
+                      return WebDietDetails(user_id: args['user_id'], day: args['day']);
+                    }
+                  }
+              );
             }
             break;
             case RouteConstants.dietViewSelectSubRoute:{
