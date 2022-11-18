@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/web_screens/add_meals.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 
 class AddDietPlan extends StatefulWidget {
@@ -44,7 +45,7 @@ class _AddDietPlanState extends State<AddDietPlan> {
 
 
   Future goToNext() async {
-
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddMeals(dietary_preference: dietaryPreference!, activeness: activeness!, intensity: intensity!, gender: gender!, ageGroup: ageGroup!)));
   }
 
 
@@ -63,13 +64,16 @@ class _AddDietPlanState extends State<AddDietPlan> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
-                    Text("Add a new diet plan",
-                        style: TextStyle(
-                            fontSize: 60,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                        ),
-                        textAlign: TextAlign.left
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Text("Add a new diet plan",
+                          style: TextStyle(
+                              fontSize: 60,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
+                          ),
+                          textAlign: TextAlign.left
+                      ),
                     ),
 
 
