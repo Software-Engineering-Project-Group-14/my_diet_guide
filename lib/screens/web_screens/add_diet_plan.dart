@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/web_screens/add_meals.dart';
-import 'package:my_diet_guide/widgets/background_image.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 
 class AddDietPlan extends StatefulWidget {
   const AddDietPlan({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class _AddDietPlanState extends State<AddDietPlan> {
       );
 
 
-  bool isNumeric(String value){
+  bool isNumeric(String? value){
     if(value == null){
       return false;
     }
@@ -53,9 +53,13 @@ class _AddDietPlanState extends State<AddDietPlan> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        BackgroundImage(),
+        WebBlurredBackground(),
         Scaffold(
           backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.teal.shade900,
+            elevation: 0,
+          ),
           body: SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -65,7 +69,7 @@ class _AddDietPlanState extends State<AddDietPlan> {
                   children: [
 
                     Padding(
-                      padding: const EdgeInsets.only(top: 50),
+                      padding: const EdgeInsets.only(top: 30),
                       child: Text("Add a new diet plan",
                           style: TextStyle(
                               fontSize: 60,
@@ -77,7 +81,7 @@ class _AddDietPlanState extends State<AddDietPlan> {
                     ),
 
 
-                    SizedBox(height: 55,),
+                    SizedBox(height: 35,),
 
 
 
@@ -342,6 +346,9 @@ class _AddDietPlanState extends State<AddDietPlan> {
                         ),
                       ),
                     ),
+
+
+                    SizedBox(height: 35,),
 
 
 

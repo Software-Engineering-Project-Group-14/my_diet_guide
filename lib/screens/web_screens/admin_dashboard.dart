@@ -1,15 +1,10 @@
 import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_diet_guide/screens/login.dart';
-import 'package:my_diet_guide/screens/web_screens/add_diet_plan.dart';
-import 'package:my_diet_guide/screens/web_screens/web_login.dart';
-import 'package:my_diet_guide/widgets/side_bar.dart';
-
+import 'package:my_diet_guide/screens/web_screens/add_new_dish.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 import '../../common/route_constants.dart';
-import '../../widgets/blurred_background_image.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
@@ -41,7 +36,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
       ),
       body: Stack(
         children: [
-          BlurredBackground(),
+          WebBlurredBackground(),
           Center(
             child: SingleChildScrollView(
               child: Column(
@@ -70,7 +65,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                           GestureDetector(
                             onTap: (){
-                              Navigator.pushNamed(context, RouteConstants.dietAddRoute);
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddNewDish()));
+                              //Navigator.pushNamed(context, RouteConstants.dietAddRoute);
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 0),

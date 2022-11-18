@@ -54,6 +54,7 @@ dependencies:
   syncfusion_flutter_calendar: ^20.3.57
   flutter_launcher_icons: ^0.10.0
   sizer: ^2.0.15
+  file_picker: ^5.2.2
 
 dev_dependencies:
   flutter_test:
@@ -111,6 +112,7 @@ flutter:
     - assets/images/dishes/Vegetarian/Breakfast/
     - assets/images/dishes/Vegetarian/Lunch/
     - assets/images/dishes/Vegetarian/Dinner/
+    - assets/images/meals/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
