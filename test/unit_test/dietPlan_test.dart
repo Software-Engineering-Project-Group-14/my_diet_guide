@@ -4,13 +4,14 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:my_diet_guide/common/messgae_constants.dart';
 import 'package:my_diet_guide/common/plan_constants.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
 import 'package:my_diet_guide/models/Dish.dart';
 import 'package:my_diet_guide/models/Meal.dart';
 import 'package:my_diet_guide/models/Model.dart';
-import 'package:test/test.dart';
+
 
 Future<List<double>> addSampleDishes() async {
   String name = "Dish 1";
@@ -155,6 +156,8 @@ Future<List<String>> addSamplePlans() async{
   ids.add(res['id'].toString());
   final res2 = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
   ids.add(res2['id'].toString());
+  final res3 = await DietPlanModel.add(activeness: activeness, age_group: age_group, dietary_preference: dietary_preference, gender: gender, intensity: intensity, breakfastMeal: breakfastMeal, lunchMeal: lunchMeal, dinnerMeal: dinnerMeal);
+  ids.add(res3['id'].toString());
   return ids;
 }
 
@@ -195,8 +198,12 @@ void main() async{
       double calorie_gain_per_meal = Random().nextInt(500)+600;
       await Dish.add(name: name, description: description, dietary_preference: dietary_preference, mealType: mealType, calorie_gain_per_meal: calorie_gain_per_meal);
       Dish? dish = await Dish.get(name);
-      bool val = dish!=null && dish.name==name && dish.description==description && dish.dietary_preference==dietary_preference && dish.mealType==mealType && dish.calorie_gain_per_meal==calorie_gain_per_meal;
-      expect(val, true);
+
+      expect(dish!.name,name);
+      expect(dish.description,description);
+      expect(dish.dietary_preference,dietary_preference);
+      expect(dish.mealType,mealType);
+      expect(dish.calorie_gain_per_meal,calorie_gain_per_meal);
     });
 
     test("Add Dish 2", ()async{
@@ -595,7 +602,7 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: uid);
       expect(val, true);
@@ -606,7 +613,7 @@ void main() async{
       final firestore = FakeFirebaseFirestore();
       Model.init(auth: MockFirebaseAuth(), firestore: firestore);
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: "adsasdds");
       expect(val, false);
@@ -639,7 +646,7 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: uid);
       expect(val, true);
@@ -675,7 +682,7 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: uid);
       expect(val, true);
@@ -715,13 +722,14 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
+      expect(ids.length, 3);
       DietPlanModel? dietPlanModel = await DietPlanModel.get(ids[0]);
       bool val = await dietPlanModel!.select(user_id: uid);
       expect(val, true);
       DocumentSnapshot ds = await firestore.collection('user').doc(uid).get();
       expect(ds['current_plan'], ids[0]);
-      DietPlanModel? dietPlanModel2 = await DietPlanModel.getDietPlanForUser(user_id: uid);
+      final ret = await DietPlanModel.getDietPlanForUser(user_id: uid);
+      DietPlanModel? dietPlanModel2 = ret['dietPlan'];
       expect(dietPlanModel.planId, dietPlanModel2!.planId);
     });
     test('User without diet plan', () async {
@@ -748,8 +756,9 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
-      DietPlanModel? dietPlanModel = await DietPlanModel.getDietPlanForUser(user_id: uid);
+      expect(ids.length, 3);
+      final ret =  await DietPlanModel.getDietPlanForUser(user_id: uid);
+      DietPlanModel? dietPlanModel = ret['dietPlan'];
       expect(dietPlanModel, null);
     });
     test('invalid inputs', ()
@@ -777,8 +786,9 @@ void main() async{
         'user_id':uid
       });
       List<String> ids = await addSamplePlans();
-      expect(ids.length, 2);
-      DietPlanModel? dietPlanModel = await DietPlanModel.getDietPlanForUser(user_id: uid);
+      expect(ids.length, 3);
+      final ret =  await DietPlanModel.getDietPlanForUser(user_id: uid);
+      DietPlanModel? dietPlanModel = ret['dietPlan'];
       expect(dietPlanModel, null);
     });
   });

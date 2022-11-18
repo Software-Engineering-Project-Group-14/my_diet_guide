@@ -47,7 +47,7 @@ class Dish extends Model{
         "name": name,
         "description": description,
         "dietary_preference": dietary_preference,
-        "mealType": mealType,
+        "meal": mealType,
         "calorie_gain_per_meal": calorie_gain_per_meal,
         "dish_image": Dish.getImagePath(name: name, dietary_preference: dietary_preference, mealType: mealType)
       });
@@ -71,7 +71,7 @@ class Dish extends Model{
             description: ds["description"],
             dietary_preference: ds["dietary_preference"],
             mealType: ds["meal"].toString().toLowerCase(),
-            calorie_gain_per_meal: ds["calorie_gain_per_meal"]
+            calorie_gain_per_meal: ds["calorie_gain_per_meal"].toDouble()
         );
     }catch(error){
       return null;

@@ -15,23 +15,15 @@ import '../../widgets/web_widgets/web_recommended_plans.dart';
 class WebChangePlan extends StatefulWidget {
 
   final DietPlanModel currentPlan;
+  final List<DietPlanModel> recommendedPlans;
 
-  const WebChangePlan({Key? key, required this.currentPlan, }) : super(key: key);
+  const WebChangePlan({Key? key, required this.currentPlan, required this.recommendedPlans, }) : super(key: key);
 
   @override
   State<WebChangePlan> createState() => _WebChangePlanState();
 }
 
 class _WebChangePlanState extends State<WebChangePlan> {
-
-  late Stream<UserBiometrics> userBiometricsStream;
-
-  @override
-  void initState() {
-    userBiometricsStream = UserBiometrics.getUserBiometrics(user_id:Controller.auth!.currentUser!.uid).asStream();
-    super.initState();
-  }
-
 
   @override
   Widget build(BuildContext context)  {
@@ -83,7 +75,7 @@ class _WebChangePlanState extends State<WebChangePlan> {
                             ],
                           ),
                         ),
-                        WebRecommendedPlans(currentPlanId: widget.currentPlan.planId,)
+                        WebRecommendedPlans(currentPlanId: widget.currentPlan.planId, recommendedPlans: widget.recommendedPlans,)
                       ],
                     ),
                   )

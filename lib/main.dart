@@ -12,6 +12,7 @@ import 'package:my_diet_guide/controllers/Home_controller.dart';
 import 'package:my_diet_guide/controllers/Rate_controller.dart';
 import 'package:my_diet_guide/controllers/user_controller.dart';
 import 'package:my_diet_guide/screens/forgot_password.dart';
+import 'package:sizer/sizer.dart';
 
 
 import 'controllers/Controller.dart';
@@ -48,43 +49,71 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Controller.init(auth: widget.auth, firestore: widget.firestore);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "My Diet Guide",
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
-      ),
-      initialRoute: RouteConstants.homeRoute,
-      routes: {
+    return Sizer(
+        builder: (context, orientation, deviceType)
+    {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "My Diet Guide",
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: GoogleFonts.josefinSansTextTheme(Theme
+              .of(context)
+              .textTheme),
+        ),
+        initialRoute: RouteConstants.homeRoute,
+        routes: {
 
-        RouteConstants.homeRoute: (context)=>HomeController(context: context,),
-        RouteConstants.forgotPasswordRoute: (context)=>ForgotPasswordController(context: context),
+          RouteConstants.homeRoute: (context) =>
+              HomeController(context: context,),
+          RouteConstants.forgotPasswordRoute: (context) =>
+              ForgotPasswordController(context: context),
 
-        RouteConstants.planViewRoute: (context) => DietPlanController(context: context,),
-        RouteConstants.planSelectRoute:(context) => DietPlanController(context: context,),
-        RouteConstants.planViewSelectRoute:(context) => DietPlanController(context: context,),
+          RouteConstants.planViewRoute: (context) =>
+              DietPlanController(context: context,),
+          RouteConstants.planSelectRoute: (context) =>
+              DietPlanController(context: context,),
+          RouteConstants.planViewSelectRoute: (context) =>
+              DietPlanController(context: context,),
+          RouteConstants.planAddRoute: (context) =>
+              DietPlanController(context: context,),
+          RouteConstants.planUpdateRoute: (context) =>
+              DietPlanController(context: context,),
 
-        RouteConstants.userDetailsViewRoute: (context)=>UserDetailsController(context: context,),
-        RouteConstants.userDetailsCreateRoute: (context)=>UserDetailsController(context: context,),
-        RouteConstants.userDetailsUpdateRoute: (context)=>UserDetailsController(context: context,),
+          RouteConstants.userDetailsViewRoute: (context) =>
+              UserDetailsController(context: context,),
+          RouteConstants.userDetailsCreateRoute: (context) =>
+              UserDetailsController(context: context,),
+          RouteConstants.userDetailsUpdateRoute: (context) =>
+              UserDetailsController(context: context,),
 
-        RouteConstants.bioCreateRoute: (context)=>UserBiometricsController(context: context,),
-        RouteConstants.bioUpdateRoute: (context)=>UserBiometricsController(context: context,),
+          RouteConstants.bioCreateRoute: (context) =>
+              UserBiometricsController(context: context,),
+          RouteConstants.bioUpdateRoute: (context) =>
+              UserBiometricsController(context: context,),
 
-        RouteConstants.bmiCheckRoute: (context)=>BMIController(context: context,),
+          RouteConstants.bmiCheckRoute: (context) =>
+              BMIController(context: context,),
 
-        RouteConstants.rateRoute: (context)=>RateController(context: context),
+          RouteConstants.rateRoute: (context) =>
+              RateController(context: context),
 
-        RouteConstants.dietViewRoute: (context)=>DietController(context: context,),
-        RouteConstants.dietViewSelectRoute: (context)=>DietController(context: context)
+          RouteConstants.dietViewRoute: (context) =>
+              DietController(context: context,),
+          RouteConstants.dietViewSelectRoute: (context) =>
+              DietController(context: context)
+        },
+        onUnknownRoute: (settings) {
+          throw Exception('Unknown route: ${ModalRoute
+              .of(context)!
+              .settings
+              .name}');
+        },
 
-      },
-      onUnknownRoute: (settings){
-        throw Exception('Unknown route: ${ModalRoute.of(context)!.settings.name}');
-      },
-
+      );
+    }
     );
+    }
   }
-}
+

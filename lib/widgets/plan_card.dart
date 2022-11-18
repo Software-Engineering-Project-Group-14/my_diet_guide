@@ -16,7 +16,14 @@ class PlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String keyVal="";
+    if(nonGesture){
+      keyVal = 'current-plan-${dietPlanModel.planId}';
+    }else{
+      keyVal = 'plan-${dietPlanModel.planId}';
+    }
     return Container(
+      key: Key(keyVal),
       decoration: BoxDecoration(
           gradient: LinearGradient(
               colors: [Colors.white24, Colors.white10],
