@@ -9,6 +9,7 @@ import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/side_bar.dart';
 import '../widgets/today_meal_card.dart';
+import 'diet_detailed_description.dart';
 
 class DietDetails extends StatefulWidget {
 
@@ -157,7 +158,7 @@ class _DietDetailsState extends State<DietDetails> {
         title: "Breakfast",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Breakfast', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription)
+        navigate: DietDetailsDescription(meal: 'Breakfast', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription)
     );
 
   }
@@ -233,7 +234,7 @@ class _DietDetailsState extends State<DietDetails> {
         title: "Lunch",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Lunch', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, )
+        navigate: DietDetailsDescription(meal: 'Lunch', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, )
     );
 
   }
@@ -309,7 +310,7 @@ class _DietDetailsState extends State<DietDetails> {
         title: "Dinner",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Dinner', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, )
+        navigate: DietDetailsDescription(meal: 'Dinner', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, )
     );
 
   }
