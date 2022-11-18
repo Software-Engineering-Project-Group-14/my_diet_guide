@@ -112,7 +112,7 @@ class WebPlanUpdateCard extends StatelessWidget {
                                           ),
                                         ),
                                         onPressed: ()async{
-                                          /////////
+                                          Navigator.pushNamed(context, RouteConstants.planUpdateRoute, arguments: dietPlanModel);
                                         },
                                       ),
                                       TextButton(

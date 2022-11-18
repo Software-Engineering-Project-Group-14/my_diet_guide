@@ -219,7 +219,11 @@ class _DietPlanControllerState  extends State<DietPlanController>{
             break;
 
             case RouteConstants.planUpdateSubRoute:{
-              page = UpdateDietPlan();
+              if(widget.arguments == null){
+                return DashboardChange();
+              }
+              final dietPlanModel = widget.arguments as DietPlanModel;
+              page = UpdateMeals(dietary_preference: dietPlanModel.dietary_preference, activeness: dietPlanModel.activeness, intensity: dietPlanModel.intensity, gender: dietPlanModel.gender, ageGroup: dietPlanModel.age_group, planId: dietPlanModel.planId);
             }
             break;
 
