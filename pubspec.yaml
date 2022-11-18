@@ -54,6 +54,7 @@ dependencies:
   syncfusion_flutter_calendar: ^20.3.57
   flutter_launcher_icons: ^0.10.0
   sizer: ^2.0.15
+  file_picker: ^5.2.2
 
 dev_dependencies:
   flutter_test:

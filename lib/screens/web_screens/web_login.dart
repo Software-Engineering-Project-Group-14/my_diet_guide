@@ -6,6 +6,7 @@ import 'package:my_diet_guide/screens/web_screens/web_signup.dart';
 import '../../common/route_constants.dart';
 import '../../controllers/Controller.dart';
 import '../../widgets/background_image.dart';
+import '../../widgets/web_widgets/web_background_image.dart';
 import '../signup.dart';
 
 class WebLogin extends StatefulWidget {
@@ -50,7 +51,7 @@ class _WebLoginState extends State<WebLogin> {
 
     return Stack(
         children: [
-          BackgroundImage(),
+          WebBackgroundImage(),
           Scaffold(
             backgroundColor: Colors.transparent,
             body: Center(

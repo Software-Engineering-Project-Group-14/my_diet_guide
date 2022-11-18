@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 
 import '../../common/route_constants.dart';
 import '../../models/Calorie_Calculator.dart';
 import '../../widgets/background_image.dart';
+import '../../widgets/web_widgets/web_background_image.dart';
 
 class WebUserBiometricsForm extends StatefulWidget {
 
@@ -145,7 +147,7 @@ class _WebUserBiometricsFormState extends State<WebUserBiometricsForm> {
   Widget build(BuildContext context) {
     return Stack(
         children: [
-          BackgroundImage(),
+          WebBlurredBackground(),
           Scaffold(
             backgroundColor: Colors.transparent,
             body: SingleChildScrollView(

@@ -5,6 +5,8 @@ import 'package:my_diet_guide/screens/web_screens/web_user_details_form.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/palatte.dart';
 
+import '../../widgets/web_widgets/web_background_image.dart';
+
 class WebSignUp extends StatefulWidget {
   const WebSignUp({Key? key}) : super(key: key);
 
@@ -66,7 +68,7 @@ class _WebSignUpState extends State<WebSignUp> {
   Widget build(BuildContext context) {
     return Stack(
         children: [
-          BackgroundImage(),
+          WebBackgroundImage(),
           Scaffold(
             backgroundColor: Colors.transparent,
 
