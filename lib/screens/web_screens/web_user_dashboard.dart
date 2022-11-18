@@ -1,10 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_user_dash_body.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_user_navigation_bar.dart';
 
 import '../../controllers/Controller.dart';
 import '../../widgets/blurred_background_image.dart';
 import '../../widgets/bottom_bar.dart';
 import '../../widgets/side_bar.dart';
 import '../../widgets/user_dash_body.dart';
+import '../../widgets/web_widgets/web_blurred_backgound.dart';
+import '../calenderScreen.dart';
 
 class WebUserDashboard extends StatefulWidget {
   const WebUserDashboard({Key? key}) : super(key: key);
@@ -20,27 +26,16 @@ class _WebUserDashboardState extends State<WebUserDashboard> {
     return Scaffold(
       key: Key('user-dashboard'),
       backgroundColor: Colors.teal.shade900,
-      appBar: AppBar(
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-        // leading: MaterialButton(
-        //   onPressed: () {
-        //     FirebaseAuth.instance.signOut();
-        //   },
-        //   color: Colors.deepPurple,
-        //   child: Text('sign out'),
-        // ),
-      ),
-      drawer: NavigationDrawer(),
+
+      appBar: WebUserNavBar(),
 
       body: Stack(
         children: [
-          BlurredBackground(),
-          UserDashBody(key: Key('user-dash-body'), user_id: user_id, ),
+          WebBlurredBackground(),
+
+          WebUserDashBody(user_id: user_id),
         ],
       ),
-
-      bottomNavigationBar: BottomBar(key: Key('bottom-bar'),user_id: user_id),
     );
   }
 }
