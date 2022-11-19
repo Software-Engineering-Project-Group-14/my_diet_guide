@@ -93,7 +93,7 @@ class _WebUpdateBiometricsFormState extends State<WebUpdateBiometricsForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
-      appBar: WebUserNavBar(),
+      //appBar: WebUserNavBar(),
 
       body: Stack(
         children: [

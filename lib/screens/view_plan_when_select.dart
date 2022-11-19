@@ -134,11 +134,10 @@ class _ViewPlanSelectState extends State<ViewPlanSelect> {
       child: Scaffold(
         // extendBodyBehindAppBar: true,
         backgroundColor: Colors.teal.shade900,
-        appBar: AppBar(
-          backgroundColor: Colors.teal.shade900,
-          title: Text('View Diet Plan'),
-          elevation: 0,
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.teal.shade900,
+        //   elevation: 0,
+        // ),
 
         body: Stack(
             children: [
