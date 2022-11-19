@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
-import 'package:my_diet_guide/models/UserBiometrics.dart';
-import 'package:my_diet_guide/widgets/plan_card.dart';
-import 'package:my_diet_guide/widgets/recommended_plans.dart';
 
-import '../../controllers/Controller.dart';
 import '../../widgets/blurred_background_image.dart';
 import '../../widgets/web_widgets/web_plan_card.dart';
 import '../../widgets/web_widgets/web_recommended_plans.dart';
@@ -59,7 +55,7 @@ class _WebChangePlanState extends State<WebChangePlan> {
                                     Text(
                                       "Current plan",
                                       style: GoogleFonts.poppins(
-                                          fontSize: 45,
+                                          fontSize: 32,
                                           color: Colors.white
                                       ),
                                     ),

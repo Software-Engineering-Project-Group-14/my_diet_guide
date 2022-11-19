@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/web_screens/admin_dashboard.dart';
-import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 
 class UpdateMeals extends StatefulWidget {

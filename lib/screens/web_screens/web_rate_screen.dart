@@ -4,7 +4,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/common/messgae_constants.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/widgets/rate_card.dart';
 
 import '../../controllers/Controller.dart';
 import '../../models/Rate.dart';
@@ -60,7 +59,7 @@ class _WebRateState extends State<WebRate> {
                                 Text(
                                   "How is your experience?",
                                   style: GoogleFonts.poppins(
-                                      fontSize: 30,
+                                      fontSize: 20,
                                       color: Colors.white
                                   ),
                                 ),
@@ -72,7 +71,7 @@ class _WebRateState extends State<WebRate> {
                                 Text(
                                   "Spend a little bit of your time and, rate your experience.",
                                   style: GoogleFonts.poppins(
-                                      fontSize: 30,
+                                      fontSize: 20,
                                       color: Colors.white
                                   ),
                                 )
@@ -124,7 +123,7 @@ class _WebRateState extends State<WebRate> {
                               showCursor: true,
                               maxLines: 10,
                               style: TextStyle(
-                                fontSize: 30
+                                fontSize: 20
                               ),
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -155,7 +154,7 @@ class _WebRateState extends State<WebRate> {
                                 child: Text(
                                     'Submit',
                                     style: GoogleFonts.aBeeZee(
-                                        fontSize: 30,
+                                        fontSize: 20,
                                         color: Colors.white
                                     )
                                 ),
@@ -168,13 +167,13 @@ class _WebRateState extends State<WebRate> {
                                           title: Text(
                                             "Confirmation",
                                             style: TextStyle(
-                                              fontSize: 45
+                                              fontSize: 32
                                             ),
                                           ),
                                           content: Text(
                                             "Do you wish to continue as ${Controller.auth!.currentUser!.email}?",
                                             style: TextStyle(
-                                                fontSize: 40
+                                                fontSize: 20
                                             ),
                                           ),
                                           actions: [
@@ -182,7 +181,7 @@ class _WebRateState extends State<WebRate> {
                                                 child: Text(
                                                   "Yes",
                                                   style: TextStyle(
-                                                      fontSize: 40
+                                                      fontSize: 20
                                                   ),
                                                 ),
                                                 onPressed: ()async{
@@ -209,7 +208,7 @@ class _WebRateState extends State<WebRate> {
                                                             content: Text(
                                                                 'Your review added.',
                                                               style: TextStyle(
-                                                                fontSize: 40
+                                                                fontSize: 20
                                                               ),
                                                             ),
                                                             actions: <Widget>[
@@ -243,7 +242,7 @@ class _WebRateState extends State<WebRate> {
                                               child: Text(
                                                 "No",
                                                 style: TextStyle(
-                                                    fontSize: 40
+                                                    fontSize: 20
                                                 ),
                                               ),
                                               onPressed: (){
@@ -262,7 +261,7 @@ class _WebRateState extends State<WebRate> {
                           SizedBox(height: 30.0),
                           Text(
                             error,
-                            style: TextStyle(color: Colors.red, fontSize: 25.0),
+                            style: TextStyle(color: Colors.red, fontSize: 20.0),
                           )
                         ],
                       ),

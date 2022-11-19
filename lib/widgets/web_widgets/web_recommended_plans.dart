@@ -68,7 +68,7 @@ class _WebRecommendedPlansState extends State<WebRecommendedPlans> {
       content = Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 25, 10, 10),
+            padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
             child: Text(
               MessageConstants.noRecommendedPlan,
               style: TextStyle(
@@ -95,7 +95,7 @@ class _WebRecommendedPlansState extends State<WebRecommendedPlans> {
               Text(
                 "Recommended plans",
                 style: GoogleFonts.poppins(
-                    fontSize: 45,
+                    fontSize: 32,
                     color: Colors.white
                 ),
               )

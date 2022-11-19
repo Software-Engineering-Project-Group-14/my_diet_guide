@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/Rate.dart';
-import 'package:my_diet_guide/widgets/star_rating_bar.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_star_rating_bar.dart';
-
-
 
 class WebRateCard extends StatefulWidget {
 
@@ -57,7 +53,7 @@ class _WebRateCardState extends State<WebRateCard> {
                     "${rateModel.email}",
                     style: TextStyle(
                         color: Colors.green,
-                        fontSize: 40
+                        fontSize: 32
                     )
                 ),
               ),
@@ -71,7 +67,7 @@ class _WebRateCardState extends State<WebRateCard> {
                         "${rateModel.review}",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 30,
+                          fontSize: 20,
 
                         ),
                         overflow: TextOverflow.visible,
