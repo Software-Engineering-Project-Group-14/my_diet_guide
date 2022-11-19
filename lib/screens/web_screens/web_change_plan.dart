@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_user_navigation_bar.dart';
 
 import '../../widgets/blurred_background_image.dart';
+import '../../widgets/web_widgets/web_blurred_backgound.dart';
 import '../../widgets/web_widgets/web_plan_card.dart';
 import '../../widgets/web_widgets/web_recommended_plans.dart';
 
@@ -26,15 +28,12 @@ class _WebChangePlanState extends State<WebChangePlan> {
     return Scaffold(
       key: const Key('change-diet-plan'),
       backgroundColor: Colors.teal.shade900,
-      appBar: AppBar(
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-        title: const Text('Change Diet Plan'),
-      ),
+      appBar: WebUserNavBar(),
       body: Stack(
           children: [
 
-            const BlurredBackground(),
+            WebBlurredBackground(),
+
             SingleChildScrollView(
               child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -43,19 +42,21 @@ class _WebChangePlanState extends State<WebChangePlan> {
                     child: Column(
                       //mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        //Text("Change Diet Plan", style: TextStyle(color: Colors.white, fontSize: 32),),
+
                         Padding(
                           padding: const EdgeInsets.all(25.0),
                           child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(30.0),
+                                padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       "Current plan",
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 32,
+                                      style: TextStyle(
+                                          fontSize: 24,
                                           color: Colors.white
                                       ),
                                     ),

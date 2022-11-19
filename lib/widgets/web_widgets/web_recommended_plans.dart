@@ -94,8 +94,8 @@ class _WebRecommendedPlansState extends State<WebRecommendedPlans> {
             children: [
               Text(
                 "Recommended plans",
-                style: GoogleFonts.poppins(
-                    fontSize: 32,
+                style: TextStyle(
+                    fontSize: 24,
                     color: Colors.white
                 ),
               )

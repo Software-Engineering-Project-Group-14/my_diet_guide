@@ -1,14 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/screens/calendar_screen.dart';
-import 'package:my_diet_guide/screens/change_plan.dart';
-import 'package:my_diet_guide/screens/check_bmi.dart';
 import 'package:my_diet_guide/screens/notifications.dart';
-import 'package:my_diet_guide/screens/rate.dart';
-import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 
 class NavigationDrawer extends StatelessWidget {

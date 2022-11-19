@@ -119,7 +119,7 @@ class _WebViewPlanSelectState extends State<WebViewPlanSelect> {
           Scaffold(
             // extendBodyBehindAppBar: true,
             backgroundColor: Colors.teal.shade900,
-            //appBar: WebUserNavBar(),
+            appBar: WebUserNavBar(),
 
             body: Stack(
                 children: [

@@ -34,7 +34,6 @@ class _ChangePlanState extends State<ChangePlan> {
         appBar: AppBar(
           backgroundColor: Colors.teal.shade900,
           elevation: 0,
-          title: const Text('Change Diet Plan'),
         ),
         drawer: const NavigationDrawer(),
         body: Stack(
@@ -48,6 +47,8 @@ class _ChangePlanState extends State<ChangePlan> {
                     Column(
                       //mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        //Text("Change Diet Plan", style: TextStyle(color: Colors.white, fontSize: 32),),
+
                         Padding(
                           padding: const EdgeInsets.all(25.0),
                           child: Column(

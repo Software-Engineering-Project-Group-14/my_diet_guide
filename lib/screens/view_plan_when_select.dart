@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/models/DietPlan.dart';
+import 'package:my_diet_guide/widgets/side_bar.dart';
 
 import '../common/route_constants.dart';
 import '../controllers/Controller.dart';
@@ -134,10 +135,12 @@ class _ViewPlanSelectState extends State<ViewPlanSelect> {
       child: Scaffold(
         // extendBodyBehindAppBar: true,
         backgroundColor: Colors.teal.shade900,
-        // appBar: AppBar(
-        //   backgroundColor: Colors.teal.shade900,
-        //   elevation: 0,
-        // ),
+        appBar: AppBar(
+          backgroundColor: Colors.teal.shade900,
+          elevation: 0,
+        ),
+
+        drawer: NavigationDrawer(),
 
         body: Stack(
             children: [
