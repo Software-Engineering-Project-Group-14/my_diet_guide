@@ -86,7 +86,7 @@ class _WebAllPlansState extends State<WebAllPlans> {
               Text(
                 "All plans",
                 style: GoogleFonts.poppins(
-                    fontSize: 45,
+                    fontSize: 32,
                     color: Colors.white
                 ),
               )

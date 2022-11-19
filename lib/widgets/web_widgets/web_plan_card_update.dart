@@ -34,7 +34,7 @@ class WebPlanUpdateCard extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Text('Plan ${dietPlanModel.planId}', style: const TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold), textAlign: TextAlign.left,),
+                    child: Text('Plan ${dietPlanModel.planId}', style: const TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold), textAlign: TextAlign.left,),
                   ),
 
                 ],
@@ -42,7 +42,7 @@ class WebPlanUpdateCard extends StatelessWidget {
               Row(
                   children:[
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Text(
                         dietPlanModel.dietary_preference,
                         style: TextStyle(
@@ -57,7 +57,7 @@ class WebPlanUpdateCard extends StatelessWidget {
               const SizedBox(height: 20,),
 
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Row(
                   children: [
                     GestureDetector(
@@ -68,12 +68,12 @@ class WebPlanUpdateCard extends StatelessWidget {
 
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Text(
                             "See More",
                             style: TextStyle(
                                 color: Colors.grey,
-                                fontSize: 25
+                                fontSize: 17
                             ),
                           ),
                         )
@@ -94,13 +94,13 @@ class WebPlanUpdateCard extends StatelessWidget {
                                     title: Text(
                                       "Confirmation",
                                       style: TextStyle(
-                                          fontSize: 45
+                                          fontSize: 32
                                       ),
                                     ),
                                     content: Text(
                                       "Do you want to update this diet plan?",
                                       style: TextStyle(
-                                          fontSize: 40
+                                          fontSize: 32
                                       ),
                                     ),
                                     actions: [
@@ -108,7 +108,7 @@ class WebPlanUpdateCard extends StatelessWidget {
                                         child: Text(
                                           "Yes",
                                           style: TextStyle(
-                                              fontSize: 45
+                                              fontSize: 32
                                           ),
                                         ),
                                         onPressed: ()async{
@@ -119,7 +119,7 @@ class WebPlanUpdateCard extends StatelessWidget {
                                         child: Text(
                                           "No",
                                           style: TextStyle(
-                                              fontSize: 45
+                                              fontSize: 32
                                           ),
                                         ),
                                         onPressed: (){
@@ -133,12 +133,12 @@ class WebPlanUpdateCard extends StatelessWidget {
 
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: Text(
                               "Update",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 25),
+                                  fontSize: 17),
                             ),
                           ),
                         ),
@@ -154,12 +154,12 @@ class WebPlanUpdateCard extends StatelessWidget {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Padding(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(20),
                 child: Image(
                   image: AssetImage(dietPlanModel.imgPath),
                   fit: BoxFit.cover,
-                  width: 200,
-                  height: 200,
+                  width: 150,
+                  height: 150,
                 ),
               ),
             ),
