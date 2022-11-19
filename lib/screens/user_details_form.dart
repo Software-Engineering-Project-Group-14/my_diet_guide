@@ -1,6 +1,7 @@
 import 'package:age_calculator/age_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
+import 'package:my_diet_guide/screens/user_biometrics_form.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 
 class UserDetailsForm extends StatefulWidget {
@@ -61,23 +62,21 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
     // String firstName = _firstNameController.text.trim();
     // String lastName = _lastNameController.text.trim();
 
-    Navigator.pushNamed(context, RouteConstants.bioCreateRoute,
-        arguments: <String, dynamic>{
-          'email': widget.email,
-          'password': widget.password,
-          'firstName': firstName,
-          'lastName': lastName,
-          'age': age,
-          'bday': bday,
-          'gender': gender!
-        }
-    );
-    /*
+    // Navigator.pushNamed(context, RouteConstants.bioCreateRoute,
+    //     arguments: <String, dynamic>{
+    //       'email': widget.email,
+    //       'password': widget.password,
+    //       'firstName': firstName,
+    //       'lastName': lastName,
+    //       'age': age,
+    //       'bday': bday,
+    //       'gender': gender!
+    //     }
+    // );
+
     Navigator.push(context, MaterialPageRoute(
         builder: (context) =>
             UserBiometricsForm(
-                firestore: FirebaseFirestore.instance,
-                auth: FirebaseAuth.instance,
                 email: widget.email,
                 password: widget.password,
                 firstName: firstName,
@@ -87,7 +86,7 @@ class _UserDetailsFormState extends State<UserDetailsForm> {
                 gender: gender!
             )
     ));
-*/
+
   }
 
 
