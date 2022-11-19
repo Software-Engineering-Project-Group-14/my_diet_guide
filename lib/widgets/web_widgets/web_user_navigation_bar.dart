@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/web_screens/web_user_profile.dart';
 import '../../common/route_constants.dart';
 import '../../screens/notifications.dart';
 import '../../screens/web_screens/web_calendar_screen.dart';
@@ -131,7 +132,8 @@ class _WebUserNavBarState extends State<WebUserNavBar> {
           child: GestureDetector(
             child: Text("User Profile", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
             onTap: (){
-              Navigator.pushNamed(context, RouteConstants.userDetailsViewRoute);
+              //Navigator.pushNamed(context, RouteConstants.userDetailsViewRoute);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>WebUserProfile()));
             },
           ),
           // child: IconButton(

@@ -65,6 +65,14 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
       );
 
 
+  bool isNumeric(String value){
+    if(value == null){
+      return false;
+    }
+    return double.tryParse(value) != null;
+  }
+
+
 
   // @override
   // void dispose(){
@@ -241,6 +249,8 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                               validator: (text){
                                 if(text == null || text.isEmpty){
                                   return 'Cannot be empty';
+                                } else if(isNumeric(text) == false){
+                                  return 'Value should be a number';
                                 }
                                 return null;
                               },
@@ -312,6 +322,8 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                               validator: (text){
                                 if(text == null || text.isEmpty){
                                   return 'Cannot be empty';
+                                } else if(isNumeric(text) == false){
+                                  return 'Value should be a number';
                                 }
                                 return null;
                               },
@@ -383,7 +395,9 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                               validator: (text){
                                 if(text == null || text.isEmpty){
                                   return 'Cannot be empty';
-                                } else if(double.parse(text) >= double.parse(weight)){
+                                } else if(isNumeric(text) == false){
+                                  return 'Value should be a number';
+                                }else if(double.parse(text) >= double.parse(weight)){
                                   return 'Target weight should be less than your current weight';
                                 }
                                 return null;

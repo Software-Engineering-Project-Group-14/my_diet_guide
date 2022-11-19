@@ -5,8 +5,6 @@ import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 
 import '../../common/route_constants.dart';
 import '../../models/Calorie_Calculator.dart';
-import '../../widgets/background_image.dart';
-import '../../widgets/web_widgets/web_background_image.dart';
 
 class WebUserBiometricsForm extends StatefulWidget {
 
@@ -207,7 +205,7 @@ class _WebUserBiometricsFormState extends State<WebUserBiometricsForm> {
                                 validator: (text){
                                   if(text == null || text.isEmpty){
                                     return 'Cannot be empty';
-                                  } if(isNumeric(text) == false){
+                                  } else if(isNumeric(text) == false){
                                     return 'Value should be a number';
                                   }
                                   return null;
@@ -257,7 +255,7 @@ class _WebUserBiometricsFormState extends State<WebUserBiometricsForm> {
                                 validator: (text){
                                   if(text == null || text.isEmpty){
                                     return 'Cannot be empty';
-                                  } if(isNumeric(text) == false){
+                                  } else if(isNumeric(text) == false){
                                     return 'Value should be a number';
                                   }
                                   return null;

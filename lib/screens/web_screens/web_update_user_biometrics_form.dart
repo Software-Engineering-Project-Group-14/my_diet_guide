@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/widgets/blurred_background_image.dart';
-import 'package:my_diet_guide/models/Calorie_Calculator.dart';
-import '../widgets/bottom_bar.dart';
-import '../widgets/side_bar.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_user_navigation_bar.dart';
+import 'package:sizer/sizer.dart';
 
-class UpdateBiometricsForm extends StatefulWidget {
+import '../../common/route_constants.dart';
+import '../../models/Calorie_Calculator.dart';
+import '../../widgets/web_widgets/web_blurred_backgound.dart';
+
+class WebUpdateBiometricsForm extends StatefulWidget {
 
   final String user_id;
   final String firstName;
@@ -16,27 +16,14 @@ class UpdateBiometricsForm extends StatefulWidget {
   final String gender;
   final int age;
 
-  const UpdateBiometricsForm({
-    Key? key,
-    required this.user_id,
-    required this.firstName,
-    required this.lastName,
-    required this.bday,
-    required this.gender,
-    required this.age,
-  }) : super(key: key);
+  const WebUpdateBiometricsForm({Key? key, required this.user_id, required this.firstName, required this.lastName, required this.bday, required this.gender, required this.age}) : super(key: key);
 
   @override
-  State<UpdateBiometricsForm> createState() => _UpdateBiometricsFormState();
+  State<WebUpdateBiometricsForm> createState() => _WebUpdateBiometricsFormState();
 }
 
-class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
-
+class _WebUpdateBiometricsFormState extends State<WebUpdateBiometricsForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  // final _weightController = TextEditingController();
-  // final _heightController = TextEditingController();
-  // final _targetWeightController = TextEditingController();
 
   String weight = '';
   String height = '';
@@ -53,12 +40,12 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
   String? intensity;
 
 
-
   DropdownMenuItem<String> buildMenuItem(String dp) =>
       DropdownMenuItem(
         value: dp,
-        child: Text(dp, style: TextStyle(fontSize: 19, color: Colors.white),),
+        child: Text(dp, style: TextStyle(fontSize: 20, color: Colors.white),),
       );
+
 
 
   bool isNumeric(String value){
@@ -68,15 +55,6 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
     return double.tryParse(value) != null;
   }
 
-
-
-  // @override
-  // void dispose(){
-  //   super.dispose();
-  //   _weightController.dispose();
-  //   _heightController.dispose();
-  //   _targetWeightController.dispose();
-  // }
 
 
   Future updateProfile() async {
@@ -115,16 +93,11 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
-      appBar: AppBar(
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-      ),
-
-      drawer: NavigationDrawer(),
+      appBar: WebUserNavBar(),
 
       body: Stack(
         children: [
-          BlurredBackground(),
+          WebBlurredBackground(),
 
           SingleChildScrollView(
             child: Form(
@@ -132,11 +105,24 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 40,),
+                  SizedBox(height: 30,),
 
-                  //TextBox02(hint: "Weight", keyboardType: TextInputType.number, value: weight,),
+                  Text(
+                      "Update User Details",
+                      style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                      ),
+                      textAlign: TextAlign.left
+                  ),
+
+
+                  SizedBox(height: 30,),
+
 
                   Container(
+                    width: 40.w,
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: [
@@ -147,7 +133,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                           ),
                           child: TextFormField(
                             style: TextStyle(
-                              fontSize: 19,
+                              fontSize: 20,
                               color: Colors.white,
                             ),
                             keyboardType: TextInputType.number,
@@ -156,7 +142,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                               border: InputBorder.none,
                               hintText: "Weight (kg)",
                               hintStyle: TextStyle(
-                                fontSize: 19,
+                                fontSize: 20,
                                 color: Colors.white,
                               ),
                               prefixIcon: Padding(
@@ -185,6 +171,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                   //TextBox02(hint: "Height", keyboardType: TextInputType.number, value: height,),
 
                   Container(
+                    width: 40.w,
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: [
@@ -195,7 +182,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                           ),
                           child: TextFormField(
                             style: TextStyle(
-                              fontSize: 19,
+                              fontSize: 20,
                               color: Colors.white,
                             ),
                             keyboardType: TextInputType.number,
@@ -204,7 +191,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                               border: InputBorder.none,
                               hintText: "Height (cm)",
                               hintStyle: TextStyle(
-                                fontSize: 19,
+                                fontSize: 20,
                                 color: Colors.white,
                               ),
                               prefixIcon: Padding(
@@ -233,6 +220,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                   //TextBox02(hint: "Target Weight", keyboardType: TextInputType.number, value: targetWeight,),
 
                   Container(
+                    width: 40.w,
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: [
@@ -243,7 +231,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                           ),
                           child: TextFormField(
                             style: TextStyle(
-                              fontSize: 19,
+                              fontSize: 20,
                               color: Colors.white,
                             ),
                             keyboardType: TextInputType.number,
@@ -252,7 +240,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                               border: InputBorder.none,
                               hintText: "Target Weight (kg)",
                               hintStyle: TextStyle(
-                                fontSize: 19,
+                                fontSize: 20,
                                 color: Colors.white,
                               ),
                               prefixIcon: Padding(
@@ -285,6 +273,8 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Container(
+                      height: 55,
+                      width: 35.w,
                       padding: EdgeInsets.symmetric(horizontal: 40),
                       decoration: BoxDecoration(color: Colors.grey.shade600.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
                       child: DropdownButtonHideUnderline(
@@ -295,7 +285,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                               "Dietary Preference",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 19,
+                                fontSize: 20,
                               ),
                             ),
                           ),
@@ -330,6 +320,8 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Container(
+                      height: 55,
+                      width: 35.w,
                       padding: EdgeInsets.symmetric(horizontal: 40),
                       decoration: BoxDecoration(color: Colors.grey.shade600.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
                       child: DropdownButtonHideUnderline(
@@ -340,7 +332,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                               "Activeness",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 19,
+                                fontSize: 20,
                               ),
                             ),
                           ),
@@ -376,6 +368,8 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Container(
+                      height: 55,
+                      width: 35.w,
                       padding: EdgeInsets.symmetric(horizontal: 40),
                       decoration: BoxDecoration(color: Colors.grey.shade600.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
                       child: DropdownButtonHideUnderline(
@@ -386,7 +380,7 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                               "Diet Plan Intensity",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 19,
+                                fontSize: 20,
                               ),
                             ),
                           ),
@@ -420,58 +414,54 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
 
                   //register button
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: GestureDetector(
-                          onTap: (){
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            width: 150,
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.teal.shade900,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Back',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight:FontWeight.bold,
-                                  fontSize: 20,
-                                ),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          width: 150,
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.teal.shade900,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Back',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight:FontWeight.bold,
+                                fontSize: 20,
                               ),
                             ),
                           ),
                         ),
                       ),
 
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: GestureDetector(
-                          onTap: () async{
-                            if(_formKey.currentState!.validate()){
-                              await updateProfile();
-                            }
-                          },
-                          child: Container(
-                            width: 150,
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.teal.shade900,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Update',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight:FontWeight.bold,
-                                  fontSize: 20,
-                                ),
+                      SizedBox(width: 15.w,),
+
+                      GestureDetector(
+                        onTap: () async{
+                          if(_formKey.currentState!.validate()){
+                            await updateProfile();
+                          }
+                        },
+                        child: Container(
+                          width: 150,
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.teal.shade900,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Update',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight:FontWeight.bold,
+                                fontSize: 20,
                               ),
                             ),
                           ),
@@ -489,8 +479,6 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
           )
         ],
       ),
-
-      bottomNavigationBar: BottomBar(user_id: widget.user_id),
     );
   }
 }

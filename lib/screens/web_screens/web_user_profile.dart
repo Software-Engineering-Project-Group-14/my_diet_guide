@@ -1,29 +1,25 @@
 import 'dart:ui';
+
 import 'package:age_calculator/age_calculator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../common/route_constants.dart';
-import '../controllers/Controller.dart';
-import '../widgets/blurred_background_image.dart';
-import '../widgets/bottom_bar.dart';
-import '../widgets/side_bar.dart';
+import 'package:my_diet_guide/screens/web_screens/web_update_user_details_form.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../common/route_constants.dart';
+import '../../controllers/Controller.dart';
+import '../../widgets/web_widgets/web_blurred_backgound.dart';
+import '../../widgets/web_widgets/web_user_navigation_bar.dart';
 
-class UserProfile extends StatefulWidget {
-
-
-  //final String user_id;
-
-  const UserProfile({Key? key}) : super(key: key);
+class WebUserProfile extends StatefulWidget {
+  const WebUserProfile({Key? key}) : super(key: key);
 
   @override
-  State<UserProfile> createState() => _UserProfileState();
+  State<WebUserProfile> createState() => _WebUserProfileState();
 }
 
-
-
-class _UserProfileState extends State<UserProfile> {
+class _WebUserProfileState extends State<WebUserProfile> {
   late String firstName;
   late String lastName;
   late String bday;
@@ -75,19 +71,19 @@ class _UserProfileState extends State<UserProfile> {
     age = AgeCalculator.age(dob).years;
 
     return FutureBuilder<Map<String, dynamic>>(
-      future: readUserBiometrics(firstName, lastName, bday, age),
-      builder: (context, snapshot){
-        if(snapshot.hasData){
-          final data = snapshot.data;
-          return data==null ? Center(child: Text("No User!"),) : buildUserBiometrics(data);
-        } else if (snapshot.hasError){
-          return Center(child: Text('Something went wrong!'));
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+        future: readUserBiometrics(firstName, lastName, bday, age),
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            final data = snapshot.data;
+            return data==null ? Center(child: Text("No User!"),) : buildUserBiometrics(data);
+          } else if (snapshot.hasError){
+            return Center(child: Text('Something went wrong!'));
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         }
-      }
     );
   }
 
@@ -243,16 +239,11 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
-      appBar: AppBar(
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-      ),
-
-      drawer: NavigationDrawer(),
+      appBar: WebUserNavBar(),
 
       body: Stack(
         children: [
-          BlurredBackground(),
+          WebBlurredBackground(),
 
           SingleChildScrollView(
             child: Column(
@@ -262,7 +253,7 @@ class _UserProfileState extends State<UserProfile> {
                 //   child: Text("User Id - ${widget.user_id}", style: TextStyle(color: Colors.white, fontSize: 28),),
                 // ),
                 Center(
-                  child: Text("User Profile", style: TextStyle(color: Colors.white, fontSize: 28),),
+                  child: Text("User Profile", style: TextStyle(color: Colors.white, fontSize: 40),),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
@@ -273,7 +264,7 @@ class _UserProfileState extends State<UserProfile> {
                       child: Column(
                         children: [
                           Container(
-                            width: 360,
+                            width: 400,
                             decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                     colors: [Colors.white24, Colors.white10],
@@ -308,20 +299,20 @@ class _UserProfileState extends State<UserProfile> {
 
                 Center(
                   child: TextButton(
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.all(15)),
-                      backgroundColor: MaterialStateProperty.all(Colors.teal.shade900),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ))
-                    ),
-                    onPressed: (){
-                  //    Navigator.of(context).push(MaterialPageRoute(builder: (context) => UpdateDetailsForm(user_id: widget.auth.currentUser!.uid, firestore: widget.firestore, auth: widget.auth)));
-                      Navigator.pushNamed(context, RouteConstants.userDetailsUpdateRoute);
-                    },
-                    child: Container(
-                      child: Text("Update My Details", style: TextStyle(color: Colors.white, fontSize: 18),),
-                    )
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all(EdgeInsets.all(25)),
+                          backgroundColor: MaterialStateProperty.all(Colors.teal.shade900),
+                          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ))
+                      ),
+                      onPressed: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>WebUpdateDetailsForm(user_id: FirebaseAuth.instance.currentUser!.uid)));
+                        //Navigator.pushNamed(context, RouteConstants.userDetailsUpdateRoute);
+                      },
+                      child: Container(
+                        child: Text("Update My Details", style: TextStyle(color: Colors.white, fontSize: 18),),
+                      )
                   ),
                 ),
 
@@ -332,9 +323,6 @@ class _UserProfileState extends State<UserProfile> {
         ],
       ),
 
-      bottomNavigationBar: BottomBar(user_id: Controller.auth!.currentUser!.uid),
-
     );
   }
-
 }

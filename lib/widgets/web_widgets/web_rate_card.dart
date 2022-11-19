@@ -53,7 +53,7 @@ class _WebRateCardState extends State<WebRateCard> {
                     "${rateModel.email}",
                     style: TextStyle(
                         color: Colors.green,
-                        fontSize: 32
+                        fontSize: 20
                     )
                 ),
               ),
