@@ -57,11 +57,11 @@ class _DietCalenderState extends State<DietCalender> {
 
 
   Future<Map<String, dynamic>> getUserBiometrics(String user_id) async {
-    print('user_id : '+ user_id);
+    //print('user_id : '+ user_id);
     final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(user_id);
     final userBioSnapshot = await userBioDoc.get();
 
-    print(userBioSnapshot.data()!);
+    //print(userBioSnapshot.data()!);
 
     String gender = userBioSnapshot.data()!['gender'];
     String activeness = userBioSnapshot.data()!['activeness'];
@@ -115,10 +115,10 @@ class _DietCalenderState extends State<DietCalender> {
 
     // check if this is a positive value
     double mean_weight_loss_per_day = weight_loss_per_day - weight_gain_per_day;
-    print('mean weight loss per day : '+ mean_weight_loss_per_day.toString());
+    //print('mean weight loss per day : '+ mean_weight_loss_per_day.toString());
 
     int no_of_days_to_diet = ((current_weight- target_weight)/mean_weight_loss_per_day).ceil();
-    print("no_of_days_to_diet : " + no_of_days_to_diet.toString());
+    //print("no_of_days_to_diet : " + no_of_days_to_diet.toString());
 
     return no_of_days_to_diet;
   }

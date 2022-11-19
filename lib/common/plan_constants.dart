@@ -11,6 +11,8 @@ class PlanConstants{
     "Active"
   ];
 
+  static const int maxDaysPerDiet = 200;
+
   static const List<String> intensityValues = [
     "Easy",
     "Standard",

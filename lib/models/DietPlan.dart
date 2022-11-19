@@ -148,7 +148,7 @@ class DietPlanModel extends Model{
     double p = 0;
     double compareVal=0;
     List<DietPlanModel> retPlans = [];
-    print("Calorie burn per day: $c");
+   // print("Calorie burn per day: $c");
     for(int j=0; j<recommendedPlans.length; j++){
       DietPlanModel cur = recommendedPlans[j];
       p = CalorieCalculator.calorieToKg (cur.calorie_gain_per_plan_per_week/7);
@@ -156,7 +156,10 @@ class DietPlanModel extends Model{
         continue;
       }
       compareVal = (y-x)/(c-p);
-      print(compareVal);
+      if(compareVal>PlanConstants.maxDaysPerDiet){
+        // print("Over   :  $compareVal");
+        continue;
+      }
       cur.diffValue = compareVal;
       retPlans.add(cur);
       //cur.diffValue = (cur.calorie_gain_per_plan_per_week-gainPerWeekInCalorie).abs();

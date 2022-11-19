@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/screens/web_screens/add_new_dish.dart';
 import 'package:my_diet_guide/screens/web_screens/delete_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
+import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 import '../../common/route_constants.dart';
 
