@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/web_screens/admin_dashboard.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 
+import '../../common/route_constants.dart';
+
 class UpdateMeals extends StatefulWidget {
 
   final String dietary_preference;
@@ -964,11 +966,11 @@ class _UpdateMealsState extends State<UpdateMeals> {
 
 
 
-  Future<int> getCalorieGains(String? dishName) async {
+  Future<double> getCalorieGains(String? dishName) async {
     final dishDoc = FirebaseFirestore.instance.collection('dish').doc(dishName);
     final dishDocSnapshot = await dishDoc.get();
 
-    int calorie_gain_per_meal = dishDocSnapshot.data()!['calorie_gain_per_meal'];
+    double calorie_gain_per_meal = dishDocSnapshot.data()!['calorie_gain_per_meal'];
     return calorie_gain_per_meal;
   }
 
@@ -987,14 +989,14 @@ class _UpdateMealsState extends State<UpdateMeals> {
   Future<Map<String,dynamic>> addBreakfast() async {
     final breakfastId = await getPlanId('breakfast', 'nextId');
 
-    int monday_cal = await getCalorieGains(monday_breakfast_dish);
-    int tuesday_cal = await getCalorieGains(tuesday_breakfast_dish);
-    int wednesday_cal = await getCalorieGains(wednesday_breakfast_dish);
-    int thursday_cal = await getCalorieGains(thursday_breakfast_dish);
-    int friday_cal = await getCalorieGains(friday_breakfast_dish);
-    int saturday_cal = await getCalorieGains(saturday_breakfast_dish);
-    int sunday_cal = await getCalorieGains(sunday_breakfast_dish);
-    final int calorie_gain_per_meal_per_week = monday_cal + tuesday_cal + wednesday_cal + thursday_cal + friday_cal + saturday_cal + sunday_cal;
+    double monday_cal = await getCalorieGains(monday_breakfast_dish);
+    double tuesday_cal = await getCalorieGains(tuesday_breakfast_dish);
+    double wednesday_cal = await getCalorieGains(wednesday_breakfast_dish);
+    double thursday_cal = await getCalorieGains(thursday_breakfast_dish);
+    double friday_cal = await getCalorieGains(friday_breakfast_dish);
+    double saturday_cal = await getCalorieGains(saturday_breakfast_dish);
+    double sunday_cal = await getCalorieGains(sunday_breakfast_dish);
+    final double calorie_gain_per_meal_per_week = monday_cal + tuesday_cal + wednesday_cal + thursday_cal + friday_cal + saturday_cal + sunday_cal;
 
     final breakfastDoc = FirebaseFirestore.instance.collection('breakfast').doc(breakfastId);
 
@@ -1029,14 +1031,14 @@ class _UpdateMealsState extends State<UpdateMeals> {
   Future<Map<String,dynamic>> addLunch() async {
     final lunchId = await getPlanId('lunch', 'nextId');
 
-    int monday_cal = await getCalorieGains(monday_lunch_dish);
-    int tuesday_cal = await getCalorieGains(tuesday_lunch_dish);
-    int wednesday_cal = await getCalorieGains(wednesday_lunch_dish);
-    int thursday_cal = await getCalorieGains(thursday_lunch_dish);
-    int friday_cal = await getCalorieGains(friday_lunch_dish);
-    int saturday_cal = await getCalorieGains(saturday_lunch_dish);
-    int sunday_cal = await getCalorieGains(sunday_lunch_dish);
-    final int calorie_gain_per_meal_per_week = monday_cal + tuesday_cal + wednesday_cal + thursday_cal + friday_cal + saturday_cal + sunday_cal;
+    double monday_cal = await getCalorieGains(monday_lunch_dish);
+    double tuesday_cal = await getCalorieGains(tuesday_lunch_dish);
+    double wednesday_cal = await getCalorieGains(wednesday_lunch_dish);
+    double thursday_cal = await getCalorieGains(thursday_lunch_dish);
+    double friday_cal = await getCalorieGains(friday_lunch_dish);
+    double saturday_cal = await getCalorieGains(saturday_lunch_dish);
+    double sunday_cal = await getCalorieGains(sunday_lunch_dish);
+    final double calorie_gain_per_meal_per_week = monday_cal + tuesday_cal + wednesday_cal + thursday_cal + friday_cal + saturday_cal + sunday_cal;
 
     final lunchDoc = FirebaseFirestore.instance.collection('lunch').doc(lunchId);
 
@@ -1071,14 +1073,14 @@ class _UpdateMealsState extends State<UpdateMeals> {
   Future<Map<String,dynamic>> addDinner() async {
     final dinnerId = await getPlanId('dinner', 'nextId');
 
-    int monday_cal = await getCalorieGains(monday_dinner_dish);
-    int tuesday_cal = await getCalorieGains(tuesday_dinner_dish);
-    int wednesday_cal = await getCalorieGains(wednesday_dinner_dish);
-    int thursday_cal = await getCalorieGains(thursday_dinner_dish);
-    int friday_cal = await getCalorieGains(friday_dinner_dish);
-    int saturday_cal = await getCalorieGains(saturday_dinner_dish);
-    int sunday_cal = await getCalorieGains(sunday_dinner_dish);
-    final int calorie_gain_per_meal_per_week = monday_cal + tuesday_cal + wednesday_cal + thursday_cal + friday_cal + saturday_cal + sunday_cal;
+    double monday_cal = await getCalorieGains(monday_dinner_dish);
+    double tuesday_cal = await getCalorieGains(tuesday_dinner_dish);
+    double wednesday_cal = await getCalorieGains(wednesday_dinner_dish);
+    double thursday_cal = await getCalorieGains(thursday_dinner_dish);
+    double friday_cal = await getCalorieGains(friday_dinner_dish);
+    double saturday_cal = await getCalorieGains(saturday_dinner_dish);
+    double sunday_cal = await getCalorieGains(sunday_dinner_dish);
+    final double calorie_gain_per_meal_per_week = monday_cal + tuesday_cal + wednesday_cal + thursday_cal + friday_cal + saturday_cal + sunday_cal;
 
     final dinnerDoc = FirebaseFirestore.instance.collection('dinner').doc(dinnerId);
 
@@ -1378,8 +1380,7 @@ class _UpdateMealsState extends State<UpdateMeals> {
                     onTap: () async {
                       if(_breakfastFormKey.currentState!.validate() && _lunchFormKey.currentState!.validate() && _dinnerFormKey.currentState!.validate()){
                         addDietPlan();
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AdminDashboard()));
-                      }
+                        Navigator.pushNamed(context, RouteConstants.homeRoute);                      }
                     },
                     child: Container(
                       width: 420,
