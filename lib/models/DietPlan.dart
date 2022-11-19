@@ -149,6 +149,9 @@ class DietPlanModel extends Model{
     double val = CalorieCalculator.calorieBurnInKg(userBiometrics.gender, userBiometrics.height, userBiometrics.weight, userBiometrics.age.toDouble(), userBiometrics.activeness, 7*numWeeks!);
     double reducedWeight = userBiometrics.calculated_current_weight - val;
     double weightDiff = userBiometrics.targetWeight - reducedWeight;
+    if(weightDiff<0){
+      return [];
+    }
     double gainPerWeekInCalorie = CalorieCalculator.kgToClorie(weightDiff/numWeeks) ;
     for(int j=0; j<recommendedPlans.length; j++){
       DietPlanModel cur = recommendedPlans[j];
