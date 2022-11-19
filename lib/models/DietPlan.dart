@@ -201,7 +201,6 @@ class DietPlanModel extends Model{
       });
       retPlans1 = retPlans.sublist(0,6);
     }
-    print(retPlans1);
     return retPlans1;
   }
 
