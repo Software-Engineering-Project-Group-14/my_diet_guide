@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/controllers/Controller.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
+import 'package:my_diet_guide/screens/web_screens/web_check_BMI.dart';
 
 import '../screens/login.dart';
 import '../screens/web_screens/web_login.dart';
@@ -19,7 +20,14 @@ class _BMIControllerState extends State<BMIController> {
       stream: Controller.auth!.authStateChanges(),
       builder: (context, snapshot){
         if(snapshot.hasData){
-          return CheckBMI();
+          return LayoutBuilder(builder: (context, constraints){
+            if(constraints.maxWidth < 600){
+              return CheckBMI();
+            } else {
+              return WebCheckBMI();
+            }
+          });
+          //return CheckBMI();
         }else{
           return LayoutBuilder(builder: (context, constraints){
             if(constraints.maxWidth < 600){

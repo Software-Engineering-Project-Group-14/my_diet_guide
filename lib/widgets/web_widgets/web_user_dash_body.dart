@@ -541,7 +541,7 @@ class WebUserDashBody extends StatelessWidget {
                   padding: EdgeInsets.only(top: 25, bottom: 30),
                   child: Text(
                     "Today's Diet Plan  :  $today - $today_day",
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)),
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, /*color: Colors.white.withOpacity(0.8)*/ color: Colors.white),
                   ),
                 ),
               ],

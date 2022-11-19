@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_diet_guide/common/messgae_constants.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/widgets/rate_card.dart';
+import 'package:sizer/sizer.dart';
 
 import '../controllers/Controller.dart';
 import '../models/Rate.dart';
@@ -46,9 +47,6 @@ class _RateState extends State<Rate> {
         appBar: AppBar(
           backgroundColor: Colors.teal.shade900,
           elevation: 0,
-          title: const Text(
-            'Rate MyDietGuide'
-          ),
         ),
         drawer: NavigationDrawer(),
         body: Stack(
@@ -63,30 +61,40 @@ class _RateState extends State<Rate> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "How is your experience?",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                      color: Colors.white
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: Text("Rate My Diet Guide", style: TextStyle(color: Colors.white, fontSize: 32),),
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(top: 30),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "How is your experience?",
+                                      style: TextStyle(
+                                        fontSize: 18, color: Colors.white
+                                      ),
+                                      // style: GoogleFonts.poppins(
+                                      //     fontSize: 15,
+                                      //   color: Colors.white
+                                      // ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     "Spend a little bit of your time and,",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                      color: Colors.white
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white
                                     ),
                                   )
                                 ],
@@ -96,39 +104,41 @@ class _RateState extends State<Rate> {
                                 children: [
                                   Text(
                                     "rate your experience.",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                      color: Colors.white
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white
                                     ),
                                   )
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  RatingBar(
-                                      initialRating: starValue,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      ratingWidget: RatingWidget(
-                                          full: const Icon(Icons.star, color: Colors.orange),
-                                          half: const Icon(
-                                            Icons.star_half,
-                                            color: Colors.orange,
-                                          ),
-                                          empty: const Icon(
-                                            Icons.star_outline,
-                                            color: Colors.orange,
-                                          )),
-                                      onRatingUpdate: (value) {
-                                        setState(() {
-                                          starValue = value;
-                                        });
-                                      }),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 30),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    RatingBar(
+                                        initialRating: starValue,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        ratingWidget: RatingWidget(
+                                            full: const Icon(Icons.star, color: Colors.orange),
+                                            half: const Icon(
+                                              Icons.star_half,
+                                              color: Colors.orange,
+                                            ),
+                                            empty: const Icon(
+                                              Icons.star_outline,
+                                              color: Colors.orange,
+                                            )),
+                                        onRatingUpdate: (value) {
+                                          setState(() {
+                                            starValue = value;
+                                          });
+                                        }),
 
-                              ],
-                            )
+                                ],
+                            ),
+                              )
                           ],
                         ),
                       ),
@@ -136,7 +146,7 @@ class _RateState extends State<Rate> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.only(left: 15, right: 15),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -144,18 +154,18 @@ class _RateState extends State<Rate> {
                         TextFormField(
                           key: Key("feedback-text"),
                           showCursor: true,
-                          maxLines: 10,
+                          maxLines: 5,
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(color: Colors.white)
                               ),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.deepPurple),
+                                  borderSide: BorderSide(color: Colors.teal.shade900),
                                   borderRadius: BorderRadius.circular(12)
                               ),
                               hintText: 'Your feedback here (optional)',
-                              fillColor: Colors.grey[200],
+                              fillColor: Colors.white.withOpacity(0.5),
                               filled: true
                           ),
                           onChanged: (val) {
@@ -168,13 +178,13 @@ class _RateState extends State<Rate> {
                               key: Key('review-add-button'),
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.teal.shade900,
-                                  fixedSize: Size(300, 50)
+                                  fixedSize: Size(200, 50),
                               ),
                               child: Text(
                                   'Submit',
-                                  style: GoogleFonts.aBeeZee(
-                                      fontSize: 20,
-                                      color: Colors.white
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20
                                   )
                               ),
                               onPressed: () async {

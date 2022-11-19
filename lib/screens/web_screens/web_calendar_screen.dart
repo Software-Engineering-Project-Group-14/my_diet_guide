@@ -5,17 +5,20 @@ import 'package:my_diet_guide/models/Calorie_Calculator.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import 'package:my_diet_guide/widgets/bottom_bar.dart';
 import 'package:my_diet_guide/widgets/side_bar.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_user_navigation_bar.dart';
+import 'package:sizer/sizer.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import '../controllers/Controller.dart';
+import '../../controllers/Controller.dart';
+import '../../widgets/web_widgets/web_blurred_backgound.dart';
 
-class DietCalender extends StatefulWidget {
-  const DietCalender({Key? key}) : super(key: key);
+class WebDietCalender extends StatefulWidget {
+  const WebDietCalender({Key? key}) : super(key: key);
 
   @override
-  State<DietCalender> createState() => _DietCalenderState();
+  State<WebDietCalender> createState() => _WebDietCalenderState();
 }
 
-class _DietCalenderState extends State<DietCalender> {
+class _WebDietCalenderState extends State<WebDietCalender> {
 
   String user_id = Controller.auth!.currentUser!.uid;
 
@@ -32,26 +35,26 @@ class _DietCalenderState extends State<DietCalender> {
 
   Widget goToUserBiometrics(String user_id, String plan_id){
     return FutureBuilder<Map<String, dynamic>>(
-      future: getUserBiometrics(user_id),
-      builder: (context, snapshot){
-        if (snapshot.hasData){
-          final json = snapshot.data;
-          if(json==null){
-            return Center(child: Text("No User!"),);
+        future: getUserBiometrics(user_id),
+        builder: (context, snapshot){
+          if (snapshot.hasData){
+            final json = snapshot.data;
+            if(json==null){
+              return Center(child: Text("No User!"),);
+            } else {
+              double target_weight = json['target_weight'];
+              double current_weight = json['current_weight'];
+              double weight_loss_per_day = json['weight_loss_per_day'];
+              return goToPlan(plan_id, target_weight, current_weight, weight_loss_per_day);
+            }
+          } else if(snapshot.hasError){
+            return Text("No User Biometrics!", style: TextStyle(color: Colors.white),);
           } else {
-            double target_weight = json['target_weight'];
-            double current_weight = json['current_weight'];
-            double weight_loss_per_day = json['weight_loss_per_day'];
-            return goToPlan(plan_id, target_weight, current_weight, weight_loss_per_day);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
-        } else if(snapshot.hasError){
-          return Text("No User Biometrics!", style: TextStyle(color: Colors.white),);
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
         }
-      }
     );
   }
 
@@ -85,23 +88,23 @@ class _DietCalenderState extends State<DietCalender> {
 
   Widget goToPlan(String plan_id, double target_weight, double current_weight, double weight_loss_per_day){
     return FutureBuilder<int>(
-      future: getPlanDetails(plan_id, target_weight, current_weight, weight_loss_per_day),
-      builder: (context, snapshot){
-        if (snapshot.hasData){
-          final no_of_days_to_diet = snapshot.data;
-          if(no_of_days_to_diet==null){
-            return Center(child: Text("No User!"),);
+        future: getPlanDetails(plan_id, target_weight, current_weight, weight_loss_per_day),
+        builder: (context, snapshot){
+          if (snapshot.hasData){
+            final no_of_days_to_diet = snapshot.data;
+            if(no_of_days_to_diet==null){
+              return Center(child: Text("No User!"),);
+            } else {
+              return createCalendar(no_of_days_to_diet);
+            }
+          } else if(snapshot.hasError){
+            return Text("No Plan details!", style: TextStyle(color: Colors.white));
           } else {
-            return createCalendar(no_of_days_to_diet);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
-        } else if(snapshot.hasError){
-          return Text("No Plan details!", style: TextStyle(color: Colors.white));
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
         }
-      }
     );
   }
 
@@ -129,27 +132,28 @@ class _DietCalenderState extends State<DietCalender> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 40, bottom: 20),
           child: Center(
-            child: Text(
-              'Diet Calendar',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 32
-              ),
-            )
+              child: Text(
+                'Diet Calendar',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32
+                ),
+              )
           ),
         ),
 
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 25),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(28),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
-                height: 400,
+                height: 50.h,
+                width: 70.w,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [Colors.white24, Colors.white10],
@@ -160,23 +164,21 @@ class _DietCalenderState extends State<DietCalender> {
                     border: Border.all(width: 2, color: Colors.white10)
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                   child: SfCalendar(
                     firstDayOfWeek: 1,
                     view: CalendarView.month,
                     dataSource: MeetingDataSource(getAppointments(no_of_days_to_diet)),
                     initialSelectedDate: DateTime.now(),
                     initialDisplayDate: DateTime.now(),
-                    appointmentBuilder: (context, calendarAppointmentDetails) {
-                      return Container();
-                    },
-                    appointmentTextStyle: TextStyle(color: Colors.white, fontSize: 5),
                     cellBorderColor: Colors.transparent,
-                    headerStyle: CalendarHeaderStyle(textStyle: TextStyle(color: Colors.white, fontSize: 16)),
+                    headerStyle: CalendarHeaderStyle(textStyle: TextStyle(color: Colors.white, fontSize: 20)),
                     monthViewSettings: MonthViewSettings(
                         showAgenda: false,
                         agendaStyle: AgendaStyle(
                             appointmentTextStyle: TextStyle(fontSize: 20, color: Colors.white),
+                            dateTextStyle: TextStyle(fontSize: 20),
+                            dayTextStyle: TextStyle(color: Colors.white),
                             backgroundColor: Colors.teal.shade900
                         ),
                         appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
@@ -202,7 +204,7 @@ class _DietCalenderState extends State<DietCalender> {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 22,
             ),
           ),
         ),
@@ -220,42 +222,33 @@ class _DietCalenderState extends State<DietCalender> {
 
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
-      appBar: AppBar(
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-      ),
-
-      drawer: NavigationDrawer(),
+      appBar: WebUserNavBar(),
 
       body: Stack(
         children: [
-          BlurredBackground(),
+          WebBlurredBackground(),
 
 
           SingleChildScrollView(
             child: FutureBuilder<String>(
-              future: getPlanId(user_id),
-              builder: (context, snapshot){
-                if (snapshot.hasData){
-                  final plan_id = snapshot.data;
-                  return plan_id==null ? Center(child: Text("No User!"),) : goToUserBiometrics(user_id, plan_id);
-                } else if(snapshot.hasError){
-                  return Text("No User Details", style: TextStyle(color: Colors.white));
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                future: getPlanId(user_id),
+                builder: (context, snapshot){
+                  if (snapshot.hasData){
+                    final plan_id = snapshot.data;
+                    return plan_id==null ? Center(child: Text("No User!"),) : goToUserBiometrics(user_id, plan_id);
+                  } else if(snapshot.hasError){
+                    return Text("No User Details", style: TextStyle(color: Colors.white));
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                 }
-              }
             ),
           ),
 
-
         ],
       ),
-
-      bottomNavigationBar: BottomBar(user_id: user_id),
-
     );
   }
 }
@@ -269,13 +262,13 @@ List<Appointment> getAppointments(int no_of_days_to_diet){
   final DateTime endTime = startTime.add(Duration(hours: 23, minutes: 59, seconds: 59));
 
   meetings.add(Appointment(
-    startTime: startTime,
-    endTime: endTime,
-    color: Colors.orange.shade400,
-    subject: 'Diet',
-    isAllDay: true,
-    recurrenceRule: "FREQ=DAILY;COUNT=$no_of_days_to_diet",
-    notes: 'bla bla bla'
+      startTime: startTime,
+      endTime: endTime,
+      color: Colors.orange.shade400,
+      subject: 'Diet',
+      isAllDay: true,
+      recurrenceRule: "FREQ=DAILY;COUNT=$no_of_days_to_diet",
+      notes: 'bla bla bla'
   )
   );
 

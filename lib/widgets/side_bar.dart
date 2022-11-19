@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
-import 'package:my_diet_guide/screens/calenderScreen.dart';
+import 'package:my_diet_guide/screens/calendar_screen.dart';
 import 'package:my_diet_guide/screens/change_plan.dart';
 import 'package:my_diet_guide/screens/check_bmi.dart';
 import 'package:my_diet_guide/screens/notifications.dart';

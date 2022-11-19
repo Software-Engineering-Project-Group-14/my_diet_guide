@@ -3,6 +3,7 @@ import 'package:my_diet_guide/screens/admin_mobile_error.dart';
 import 'package:my_diet_guide/screens/loading_page.dart';
 import 'package:my_diet_guide/screens/user_dashboard.dart';
 import 'package:my_diet_guide/screens/web_screens/admin_dashboard.dart';
+import 'package:my_diet_guide/screens/web_screens/web_loading_page.dart';
 import 'package:my_diet_guide/screens/web_screens/web_user_dashboard.dart';
 
 import '../controllers/Controller.dart';
@@ -59,7 +60,16 @@ class _DashboardChangeState extends State<DashboardChange> {
             );
           }
         } else {
-          return LoadingPage();
+          return LayoutBuilder(
+            builder: (context, constraints){
+              if(constraints.maxWidth < 600){
+                return LoadingPage();
+              }
+              else {
+                return WebLoadingPage();
+              }
+            }
+          );
         }
 
       }

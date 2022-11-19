@@ -10,7 +10,7 @@ import '../../widgets/bottom_bar.dart';
 import '../../widgets/side_bar.dart';
 import '../../widgets/user_dash_body.dart';
 import '../../widgets/web_widgets/web_blurred_backgound.dart';
-import '../calenderScreen.dart';
+import '../calendar_screen.dart';
 
 class WebUserDashboard extends StatefulWidget {
   const WebUserDashboard({Key? key}) : super(key: key);

@@ -56,7 +56,7 @@ class _RateCardState extends State<RateCard> {
                       "${rateModel.email}",
                       style: TextStyle(
                           color: Colors.green,
-                          fontSize: 20
+                          fontSize: 15
                       )
                   ),
                 ),
@@ -70,7 +70,7 @@ class _RateCardState extends State<RateCard> {
                           "${rateModel.review}",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 15,
 
                           ),
                           overflow: TextOverflow.visible,

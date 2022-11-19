@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/record_progress_screen.dart';
 import 'package:my_diet_guide/widgets/today_meal_card.dart';
 import 'package:my_diet_guide/widgets/user_dash_header.dart';
+import 'package:sizer/sizer.dart';
 
 class UserDashBody extends StatelessWidget {
 
@@ -384,7 +385,7 @@ class UserDashBody extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
-          width: 360,
+          width: 95.w,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   colors: [Colors.white24, Colors.white10],
@@ -515,7 +516,7 @@ class UserDashBody extends StatelessWidget {
             child: Stack(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 5,),
+                  padding: EdgeInsets.only(top: 35),
                   child: Text(
                     "Today's Diet Plan",
                     style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)),
