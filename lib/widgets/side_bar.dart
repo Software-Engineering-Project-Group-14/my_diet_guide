@@ -70,8 +70,8 @@ class NavigationDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.notifications, size: 30, color: Colors.white,),
-                title: Text("Notifications", style: TextStyle(fontSize: 19, color: Colors.white,),),
+                leading: Icon(Icons.alarm_on_outlined, size: 30, color: Colors.white,),
+                title: Text("Reminder Alarms", style: TextStyle(fontSize: 19, color: Colors.white,),),
                 onTap: (){
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Notifications()));
                 },

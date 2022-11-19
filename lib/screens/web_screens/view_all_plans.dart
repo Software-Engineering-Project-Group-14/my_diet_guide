@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
 import 'package:my_diet_guide/widgets/recommended_plans.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 
 import '../../models/DietPlan.dart';
 import '../../widgets/web_widgets/web_all_plans.dart';
@@ -26,14 +28,10 @@ class _WebAllPlansViewState extends State<WebAllPlansView> {
 
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
-      appBar: AppBar(
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-        title: const Text('Select Diet Plan to update'),
-      ),
+      appBar: WebAdminNavBar(),
       body: Stack(
         children: [
-          BackgroundImage(),
+          WebBlurredBackground(),
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(10.0),

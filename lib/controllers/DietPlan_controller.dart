@@ -8,6 +8,7 @@ import 'package:my_diet_guide/screens/web_screens/add_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/update_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/view_all_plans.dart';
 import 'package:my_diet_guide/screens/web_screens/web_change_plan.dart';
+import 'package:my_diet_guide/screens/web_screens/web_loading_page.dart';
 
 import '../models/DietPlan.dart';
 import '../models/Dish.dart';
@@ -108,7 +109,15 @@ class _DietPlanControllerState  extends State<DietPlanController>{
                   stream: getData().asStream(),
                   builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot){
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const LoadingPage();
+                      return LayoutBuilder(
+                          builder: (context, constraints){
+                            if(constraints.maxWidth < 600){
+                              return LoadingPage();
+                            }else{
+                              return WebLoadingPage();
+                            }
+                          }
+                      );
                     }
                     if (snapshot.hasError || snapshot.data==null) {
                       return Text(
@@ -179,7 +188,15 @@ class _DietPlanControllerState  extends State<DietPlanController>{
                   stream: DietPlanModel.getAllPlans().asStream(),
                   builder: (BuildContext context, AsyncSnapshot<List<DietPlanModel>> snapshot){
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const LoadingPage();
+                      return LayoutBuilder(
+                          builder: (context, constraints){
+                            if(constraints.maxWidth < 600){
+                              return LoadingPage();
+                            }else{
+                              return WebLoadingPage();
+                            }
+                          }
+                      );
                     }
                     if (snapshot.hasError || snapshot.data==null) {
                       return Text(

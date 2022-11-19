@@ -165,7 +165,11 @@ class _WebUserNavBarState extends State<WebUserNavBar> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: GestureDetector(
-            child: Text("Log out", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
+            child: Text(
+              "Log out",
+              style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold,
+              ),
+            ),
             onTap: (){
               FirebaseAuth.instance.signOut();
             },

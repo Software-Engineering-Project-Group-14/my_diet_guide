@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/web_screens/add_meals.dart';
+import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 
 class AddDietPlan extends StatefulWidget {
@@ -51,16 +52,13 @@ class _AddDietPlanState extends State<AddDietPlan> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        WebBlurredBackground(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.teal.shade900,
-            elevation: 0,
-          ),
-          body: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: Colors.teal.shade900,
+      appBar: WebAdminNavBar(),
+      body: Stack(
+        children: [
+          WebBlurredBackground(),
+          SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Center(
@@ -357,8 +355,8 @@ class _AddDietPlanState extends State<AddDietPlan> {
               ),
             ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }

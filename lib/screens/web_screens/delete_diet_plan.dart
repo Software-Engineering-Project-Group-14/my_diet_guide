@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_delete_diet_card.dart';
 
 import '../../widgets/web_widgets/web_blurred_backgound.dart';
@@ -163,35 +164,28 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
   Widget build(BuildContext context) {
 
 
-    return Stack(
-      children: [
-        WebBlurredBackground(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.teal.shade900,
-            elevation: 0,
-          ),
-          body:
-             Stack(
-               children: [
-                 FutureBuilder(
-                  future: getDocId(),
-                  builder: (context, snapshot){
-                      return ListView.builder(
-                        itemCount: docIds.length,
-                        itemBuilder: (context, index){
-                          return ListTile(
-                            title: isNumeric(docIds[index]) ? getCollections(context, docIds[index]): Text(''),
-                          );
-                        },
+    return Scaffold(
+      backgroundColor: Colors.teal.shade900,
+      appBar: WebAdminNavBar(),
+      body:
+         Stack(
+           children: [
+             WebBlurredBackground(),
+             FutureBuilder(
+              future: getDocId(),
+              builder: (context, snapshot){
+                  return ListView.builder(
+                    itemCount: docIds.length,
+                    itemBuilder: (context, index){
+                      return ListTile(
+                        title: isNumeric(docIds[index]) ? getCollections(context, docIds[index]): Text(''),
                       );
-                  },
-            ),
-               ],
-             ),
+                    },
+                  );
+              },
         ),
-      ],
+           ],
+         ),
     );
   }
 }

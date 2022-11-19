@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/screens/web_screens/add_new_dish.dart';
 import 'package:my_diet_guide/screens/web_screens/delete_diet_plan.dart';
+import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 import '../../common/route_constants.dart';
 
@@ -19,22 +20,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
-      appBar: AppBar(
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: IconButton(
-              onPressed: (){
-                FirebaseAuth.instance.signOut();
-              },
-              icon: Icon(FontAwesomeIcons.arrowRightFromBracket, color: Colors.white),
-              tooltip: 'Log out',
-            ),
-          )
-        ],
-      ),
+      appBar: WebAdminNavBar(),
       body: Stack(
         children: [
           WebBlurredBackground(),

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/web_screens/admin_dashboard.dart';
+import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 
 class AddNewDish extends StatefulWidget {
@@ -66,17 +67,15 @@ class _AddNewDishState extends State<AddNewDish> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        WebBlurredBackground(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.teal.shade900,
-            elevation: 0,
-          ),
+    return Scaffold(
+      backgroundColor: Colors.teal.shade900,
+      appBar: WebAdminNavBar(),
 
-          body: SingleChildScrollView(
+      body: Stack(
+        children: [
+          WebBlurredBackground(),
+
+          SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Center(
@@ -368,9 +367,8 @@ class _AddNewDishState extends State<AddNewDish> {
               ),
             )
           ),
-        ),
-
-      ],
+        ],
+      ),
     );
   }
 }
