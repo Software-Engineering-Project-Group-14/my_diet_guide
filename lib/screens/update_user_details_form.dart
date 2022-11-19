@@ -107,7 +107,13 @@ class _UpdateDetailsFormState extends State<UpdateDetailsForm> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 40,),
+
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Text("Update User Details", style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
+                  ),
+
+                  SizedBox(height: 60,),
 
                   //TextBox02(hint: "First Name", keyboardType: TextInputType.name, value: firstName,),
 

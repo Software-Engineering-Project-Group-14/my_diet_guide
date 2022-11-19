@@ -113,7 +113,7 @@ class _DietDetailsDescriptionState extends State<DietDetailsDescription> {
 
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(widget.dishName, style: TextStyle(color: Colors.white, fontSize: 19,),),
+                            child: Text(widget.dishName, style: TextStyle(color: Colors.white, fontSize: 19,), textAlign: TextAlign.center,),
                           ),
 
                           SizedBox(height: 20,),

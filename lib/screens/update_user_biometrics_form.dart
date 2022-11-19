@@ -423,13 +423,13 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: GestureDetector(
                           onTap: (){
                             Navigator.pop(context);
                           },
                           child: Container(
-                            width: 150,
+                            width: 100,
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
                               color: Colors.teal.shade900,
@@ -458,8 +458,8 @@ class _UpdateBiometricsFormState extends State<UpdateBiometricsForm> {
                             }
                           },
                           child: Container(
-                            width: 150,
-                            padding: const EdgeInsets.all(20),
+                            width: 100,
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: Colors.teal.shade900,
                               borderRadius: BorderRadius.circular(12),

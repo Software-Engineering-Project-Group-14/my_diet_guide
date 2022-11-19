@@ -155,10 +155,10 @@ class _WebUserBiometricsFormState extends State<WebUserBiometricsForm> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 60,),
+                      SizedBox(height: 20,),
 
 
-                      Text("User Details",
+                      Text("User Biometrics",
                           style: TextStyle(
                               fontSize: 60,
                               fontWeight: FontWeight.bold,
@@ -167,7 +167,7 @@ class _WebUserBiometricsFormState extends State<WebUserBiometricsForm> {
                           textAlign: TextAlign.left),
 
 
-                      SizedBox(height: 55,),
+                      SizedBox(height: 30,),
 
 
 
