@@ -7,6 +7,8 @@ import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import 'package:my_diet_guide/widgets/bottom_bar.dart';
 import 'package:my_diet_guide/widgets/side_bar.dart';
 
+import '../common/route_constants.dart';
+
 class RecordProgressScreen extends StatefulWidget {
 
   final String user_id;
@@ -155,7 +157,8 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                             onTap: ()async{
                                               isRecorded = true;
                                               ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Did not complete");
-                                            },
+                                              Navigator.pushNamed(context, RouteConstants.homeRoute);
+                                              },
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 5),
                                               decoration: BoxDecoration(
@@ -177,7 +180,8 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                             onTap: (){
                                               isRecorded = true;
                                               ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Partially Completed");
-                                            },
+                                              Navigator.pushNamed(context, RouteConstants.homeRoute);
+                                              },
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 5),
                                               width: 25,
@@ -202,7 +206,8 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                             onTap: (){
                                               isRecorded = true;
                                               ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Completed");
-                                            },
+                                              Navigator.pushNamed(context, RouteConstants.homeRoute);
+                                              },
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 5),
                                               width: 25,
@@ -224,6 +229,7 @@ class _RecordProgressScreenState extends State<RecordProgressScreen> {
                                             onTap: (){
                                               isRecorded = true;
                                               ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Over ate");
+                                              Navigator.pushNamed(context, RouteConstants.homeRoute);
                                             },
                                             child: Container(
                                               padding: EdgeInsets.only(bottom: 5),

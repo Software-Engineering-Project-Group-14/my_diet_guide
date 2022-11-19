@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../common/route_constants.dart';
 import '../../models/ProgressRecorder.dart';
 import '../../widgets/web_widgets/web_blurred_backgound.dart';
 import '../../widgets/web_widgets/web_user_navigation_bar.dart';
@@ -154,6 +155,7 @@ class _WebRecordProgressState extends State<WebRecordProgress> {
                                                     GestureDetector(
                                                       onTap: ()async{
                                                         ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Did not complete");
+                                                        Navigator.pushNamed(context, RouteConstants.homeRoute);
                                                       },
                                                       child: Container(
                                                         padding: EdgeInsets.only(bottom: 5),
@@ -177,6 +179,7 @@ class _WebRecordProgressState extends State<WebRecordProgress> {
                                                     GestureDetector(
                                                       onTap: (){
                                                         ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Partially Completed");
+                                                        Navigator.pushNamed(context, RouteConstants.homeRoute);
                                                       },
                                                       child: Container(
                                                         padding: EdgeInsets.only(bottom: 5),
@@ -204,6 +207,7 @@ class _WebRecordProgressState extends State<WebRecordProgress> {
                                                     GestureDetector(
                                                       onTap: (){
                                                         ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Completed");
+                                                        Navigator.pushNamed(context, RouteConstants.homeRoute);
                                                       },
                                                       child: Container(
                                                         padding: EdgeInsets.only(bottom: 5),
@@ -228,6 +232,7 @@ class _WebRecordProgressState extends State<WebRecordProgress> {
                                                     GestureDetector(
                                                       onTap: (){
                                                         ProgressRecorder.recordProgress(widget.user_id, DateTime.now(), widget.meal, widget.dishName, "Over ate");
+                                                        Navigator.pushNamed(context, RouteConstants.homeRoute);
                                                       },
                                                       child: Container(
                                                         padding: EdgeInsets.only(bottom: 5),
