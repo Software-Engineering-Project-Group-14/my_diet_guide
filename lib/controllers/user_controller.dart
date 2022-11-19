@@ -9,6 +9,7 @@ import '../screens/update_user_details_form.dart';
 import '../screens/user_details_form.dart';
 import '../screens/user_profile.dart';
 import '../screens/web_screens/web_login.dart';
+import '../screens/web_screens/web_user_profile.dart';
 
 
 class UserDetailsController extends Controller {
@@ -34,7 +35,13 @@ class _UserDetailsControllerState  extends State<UserDetailsController>{
           switch(widget.subRoute){
 
             case RouteConstants.userDetailsViewSubRoute:{
-              page = UserProfile();
+              page = LayoutBuilder(builder: (context, constraints){
+                if(constraints.maxWidth < 600){
+                  return UserProfile();
+                } else {
+                  return WebUserProfile();
+                }
+              });
             }
             break;
 

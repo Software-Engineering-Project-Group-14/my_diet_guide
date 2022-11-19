@@ -64,7 +64,7 @@ class _WebUserNavBarState extends State<WebUserNavBar> {
           child: GestureDetector(
             child: Text("Calendar", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
             onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>WebDietCalender()));
+              Navigator.pushNamed(context, RouteConstants.calendarRoute);
             },
           ),
           // child: IconButton(
@@ -133,7 +133,7 @@ class _WebUserNavBarState extends State<WebUserNavBar> {
             child: Text("User Profile", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
             onTap: (){
               //Navigator.pushNamed(context, RouteConstants.userDetailsViewRoute);
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>WebUserProfile()));
+              Navigator.pushNamed(context, RouteConstants.userDetailsViewRoute);
             },
           ),
           // child: IconButton(

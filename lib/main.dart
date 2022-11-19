@@ -13,9 +13,10 @@ import 'package:my_diet_guide/controllers/Rate_controller.dart';
 import 'package:my_diet_guide/controllers/user_controller.dart';
 import 'package:my_diet_guide/screens/forgot_password.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:my_diet_guide/controllers/Calendar_controller.dart';
 
 import 'controllers/Controller.dart';
+import 'controllers/Dish_controller.dart';
 import 'controllers/Forgot_Password_controller.dart';
 import 'controllers/UserBiometrics_controller.dart';
 
@@ -30,7 +31,7 @@ Future<void> main() async {
         projectId: "my-diet-guide-14",
       )
   );
- // runApp(DevicePreview(builder: (context)=>MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance)));
+ //runApp(DevicePreview(builder: (context)=>MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance)));
   runApp(MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance));
 }
 
@@ -108,7 +109,13 @@ class _MyAppState extends State<MyApp> {
           RouteConstants.dietAddRoute: (context) =>
               DietController(context: context,),
           RouteConstants.dietViewSelectRoute: (context) =>
-              DietController(context: context)
+              DietController(context: context),
+
+          RouteConstants.calendarRoute: (context) =>
+              CalendarController(context: context),
+
+          RouteConstants.dishRoute: (context) =>
+              DishController(context: context),
         },
         onUnknownRoute: (settings) {
           throw Exception('Unknown route: ${ModalRoute

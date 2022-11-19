@@ -53,7 +53,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                           GestureDetector(
                             onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddNewDish()));
+                              Navigator.pushNamed(context, RouteConstants.dishRoute);
                               //Navigator.pushNamed(context, RouteConstants.dietAddRoute);
                             },
                             child: Padding(
@@ -180,7 +180,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                           GestureDetector(
                             onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DeleteDietPlan()));
+                              Navigator.pushNamed(context, RouteConstants.planDeleteRoute);
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 0),
