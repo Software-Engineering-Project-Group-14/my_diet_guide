@@ -10,6 +10,7 @@ import '../controllers/Controller.dart';
 import '../models/ViewDiet.dart';
 import '../widgets/blurred_background_image.dart';
 import '../widgets/bottom_bar.dart';
+import '../widgets/side_bar.dart';
 
 class ViewDietPlan extends StatefulWidget {
 
@@ -39,13 +40,14 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 10,),
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
               child: Center(
                 child: Text('Weekly Diet Plan',
-                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
             ),
@@ -55,10 +57,10 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
         Row(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(50, 5, 0, 0),
               child: Text('Dietary preference : $dietary_preference',
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)
 
                 ),
@@ -69,10 +71,10 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
         Row(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(50, 5, 0, 0),
               child: Text('Intensity : $intensity',
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)
                 ),
               ),
@@ -82,10 +84,10 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
         Row(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(50, 5, 0, 0),
               child: Text('Activeness : $activeness',
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)
 
                 ),
@@ -95,7 +97,7 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
         ),
 
 
-        SizedBox(height: 20),
+        SizedBox(height: 10),
         //monday
         ViewDietCard(day: 'Monday', user_id: widget.user_id),
 
@@ -116,7 +118,7 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
 
         //sunday
         ViewDietCard(day: 'Sunday' , user_id: widget.user_id,),
-        SizedBox(height: 20,),
+        SizedBox(height: 30,),
 
 
       ],
@@ -129,17 +131,15 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
   @override
   Widget build(BuildContext context) {
     ViewDiet viewDiet = ViewDiet(user_id: widget.user_id);
-    return Stack(
-      children: [
-
-        Scaffold(
-          // extendBodyBehindAppBar: true,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.teal.shade900,
+        appBar: AppBar(
           backgroundColor: Colors.teal.shade900,
-          appBar: AppBar(
-            backgroundColor: Colors.teal.shade900,
-            title: Text('View Diet Plan'),
-            elevation: 0,
-          ),
+          elevation: 0,
+        ),
+
+        drawer: NavigationDrawer(),
 
         body: Stack(
           children: [
@@ -165,8 +165,7 @@ class _ViewDietPlanState extends State<ViewDietPlan> {
           ),]
         ),
         bottomNavigationBar: BottomBar(user_id: widget.user_id,),
-      ),
-    ]
+        ),
     );
   }
 }

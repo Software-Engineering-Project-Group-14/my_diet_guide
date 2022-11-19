@@ -5,33 +5,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/common/route_constants.dart';
 import 'package:my_diet_guide/screens/view_diet_details.dart';
-import 'package:sizer/sizer.dart';
 
-class ViewDietCard extends StatelessWidget {
+class WebViewDietCard extends StatelessWidget {
 
   final String day;
   final String user_id;
-  const ViewDietCard({Key? key, required this.day, required this.user_id}) : super(key: key);
+  const WebViewDietCard({Key? key, required this.day, required this.user_id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(45.0),
       child: GestureDetector(
           onTap: (){
             //Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDetails(user_id: user_id, day: day, firestore: firestore, auth: auth)));
             Navigator.pushNamed(context, RouteConstants.dietViewRoute,
-            arguments: <String, String>{
-              'day':day,
-              'user_id':user_id
-            }
+                arguments: <String, String>{
+                  'day':day,
+                  'user_id':user_id
+                }
             );
           },
           child: ClipRRect(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
-                width: 75.w,
                   padding: EdgeInsets.all(25),
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -48,7 +46,7 @@ class ViewDietCard extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          fontSize: 24
                       ),
                     ),
                   )

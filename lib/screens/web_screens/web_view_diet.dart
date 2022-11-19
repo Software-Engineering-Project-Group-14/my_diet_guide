@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_user_navigation_bar.dart';
 
 import '../../models/ViewDiet.dart';
 import '../../widgets/blurred_background_image.dart';
 import '../../widgets/bottom_bar.dart';
 import '../../widgets/view_diet_card.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../widgets/web_widgets/web_blurred_backgound.dart';
+import '../../widgets/web_widgets/web_view_diet_card.dart';
 
 class WebViewDietPlan extends StatefulWidget {
 
@@ -31,15 +35,16 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
     intensity = map['intensity'];
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 10,),
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 40, 0, 10),
               child: Center(
                 child: Text('Weekly Diet Plan',
-                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)),
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
             ),
@@ -47,9 +52,10 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
         ),
         SizedBox(height: 20,),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Text('Dietary preference : $dietary_preference',
                 style: TextStyle(
                     fontSize: 20,
@@ -61,9 +67,10 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Text('Intensity : $intensity',
                 style: TextStyle(
                     fontSize: 20,
@@ -74,9 +81,10 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Text('Activeness : $activeness',
                 style: TextStyle(
                     fontSize: 20,
@@ -89,7 +97,7 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
         ),
 
 
-        SizedBox(height: 20),
+        SizedBox(height: 5),
 
         Row(
           children: [
@@ -97,22 +105,22 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
             Container(
                 height: 30.h,
                 width: 25.w,
-                child: ViewDietCard(day: 'Monday', user_id: widget.user_id)),
+                child: WebViewDietCard(day: 'Monday', user_id: widget.user_id)),
             //tuesday
             Container(
                 height: 30.h,
                 width: 25.w,
-                child: ViewDietCard(day: 'Tuesday', user_id: widget.user_id,)),
+                child: WebViewDietCard(day: 'Tuesday', user_id: widget.user_id,)),
             //wednesday
             Container(
                 height: 30.h,
                 width: 25.w,
-                child: ViewDietCard(day: 'Wednesday', user_id: widget.user_id,)),
+                child: WebViewDietCard(day: 'Wednesday', user_id: widget.user_id,)),
             //thursday
             Container(
                 height: 30.h,
                 width: 25.w,
-                child: ViewDietCard(day: 'Thursday', user_id: widget.user_id,)),
+                child: WebViewDietCard(day: 'Thursday', user_id: widget.user_id,)),
           ],
         ),
         Row(
@@ -122,20 +130,20 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
             Container(
                 height: 30.h,
                 width: 25.w,
-                child: ViewDietCard(day: 'Friday', user_id: widget.user_id, )),
+                child: WebViewDietCard(day: 'Friday', user_id: widget.user_id, )),
             //saturday
             Container(
                 height: 30.h,
                 width: 25.w,
-                child: ViewDietCard(day: 'Saturday', user_id: widget.user_id,)),
+                child: WebViewDietCard(day: 'Saturday', user_id: widget.user_id,)),
             //sunday
             Container(
                 height: 30.h,
                 width: 25.w,
-                child: ViewDietCard(day: 'Sunday' , user_id: widget.user_id,)),
+                child: WebViewDietCard(day: 'Sunday' , user_id: widget.user_id,)),
           ],
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 50,),
 
 
       ],
@@ -151,15 +159,11 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
           Scaffold(
             // extendBodyBehindAppBar: true,
             backgroundColor: Colors.teal.shade900,
-            appBar: AppBar(
-              backgroundColor: Colors.teal.shade900,
-              title: Text('View Diet Plan'),
-              elevation: 0,
-            ),
+            appBar: WebUserNavBar(),
 
             body: Stack(
                 children: [
-                  BlurredBackground(),
+                  WebBlurredBackground(),
                   SafeArea(
                     child: SingleChildScrollView(
                       child: FutureBuilder<Map<String, dynamic>>(
@@ -180,7 +184,6 @@ class _WebViewDietPlanState extends State<WebViewDietPlan> {
                     ),
                   ),]
             ),
-            bottomNavigationBar: BottomBar(user_id: widget.user_id,),
           ),
         ]
     );
