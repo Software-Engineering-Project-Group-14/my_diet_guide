@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_guide/screens/web_screens/add_new_dish.dart';
+import 'package:my_diet_guide/screens/web_screens/delete_diet_plan.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
 import '../../common/route_constants.dart';
 
@@ -191,7 +192,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
 
                           GestureDetector(
-                            onTap: (){},
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DeleteDietPlan()));
+                            },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 0),
                               child: ClipRRect(
