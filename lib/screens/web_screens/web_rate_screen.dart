@@ -11,6 +11,7 @@ import '../../models/Rate.dart';
 import '../../widgets/blurred_background_image.dart';
 import '../../widgets/web_widgets/web_blurred_backgound.dart';
 import '../../widgets/web_widgets/web_rate_card.dart';
+import '../../widgets/web_widgets/web_user_navigation_bar.dart';
 
 
 

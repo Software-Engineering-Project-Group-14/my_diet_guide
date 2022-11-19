@@ -16,11 +16,6 @@ class PlanConstants{
     "Standard",
     "Difficult"
   ];
-  static const Map<String, int> numWeeksForIntensity = {
-    "Easy":20,
-    "Standard":15,
-    "Difficult":10
-  };
 
   static const List<String> age_groupValues = [
     "0-12",
