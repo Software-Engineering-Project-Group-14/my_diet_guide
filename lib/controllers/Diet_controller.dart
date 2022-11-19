@@ -11,6 +11,7 @@ import '../screens/view_diet_details.dart';
 import '../screens/login.dart';
 import '../screens/web_screens/web_login.dart';
 import '../screens/web_screens/web_view_diet_details.dart';
+import '../screens/web_screens/web_view_select_diet_details.dart';
 
 
 class DietController extends Controller {
@@ -65,12 +66,26 @@ class _DietControllerState extends State<DietController> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const LoadingPage();
                       }
-                      return ViewDietWhenSelect(
-                        dishBreakfast: snapshot.data!['dishBreakfast']!,
-                        dishLunch: snapshot.data!['dishLunch']!,
-                        dishDinner: snapshot.data!['dishDinner']!,
-                        day: args['day'],
+                      return LayoutBuilder(
+                          builder: (context, constraints){
+                            if(constraints.maxWidth < 600){
+                              return ViewDietWhenSelect(
+                                dishBreakfast: snapshot.data!['dishBreakfast']!,
+                                dishLunch: snapshot.data!['dishLunch']!,
+                                dishDinner: snapshot.data!['dishDinner']!,
+                                day: args['day'],
+                              );
+                            }else{
+                              return WebViewDietWhenSelect(
+                                dishBreakfast: snapshot.data!['dishBreakfast']!,
+                                dishLunch: snapshot.data!['dishLunch']!,
+                                dishDinner: snapshot.data!['dishDinner']!,
+                                day: args['day'],
+                              );
+                            }
+                          }
                       );
+
                     }
                 );
               }catch(error){

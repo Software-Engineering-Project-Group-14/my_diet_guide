@@ -8,7 +8,6 @@ import 'package:my_diet_guide/screens/web_screens/add_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/update_diet_plan.dart';
 import 'package:my_diet_guide/screens/web_screens/view_all_plans.dart';
 import 'package:my_diet_guide/screens/web_screens/web_change_plan.dart';
-import 'package:my_diet_guide/screens/web_screens/web_view_plan_select.dart';
 
 import '../models/DietPlan.dart';
 import '../models/Dish.dart';
@@ -22,6 +21,7 @@ import '../screens/view_diet.dart';
 import '../screens/web_screens/web_login.dart';
 import '../screens/web_screens/web_select_plan.dart';
 import '../screens/web_screens/web_view_diet.dart';
+import '../screens/web_screens/web_view_select_diet.dart';
 
 
 class DietPlanController extends Controller {
@@ -168,24 +168,7 @@ class _DietPlanControllerState  extends State<DietPlanController>{
                   return  ViewPlanSelect(dietPlanModel: dietPlanModel);
                 } else {
 
-                  return StreamBuilder(
-                      stream: getAllDish(dietPlanModel).asStream(),
-                      builder: (BuildContext context,AsyncSnapshot<Map<String, Map<String, Dish?>>> snapshot){
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const LoadingPage();
-                        }
-                        if (snapshot.hasError || snapshot.data==null) {
-                          return Text(
-                            snapshot.error.toString(),
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                          );
-                        }
-                        final dietDetails = snapshot.data;
-                        return WebViewPlanWhenSelect(dietDetails: dietDetails!);
-
-                  });
+                  return WebViewPlanSelect(dietPlanModel: dietPlanModel);
                 }
               });
             }
