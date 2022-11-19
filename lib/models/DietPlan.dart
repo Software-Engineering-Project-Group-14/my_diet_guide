@@ -148,15 +148,21 @@ class DietPlanModel extends Model{
     double p = 0;
     double compareVal=0;
     List<DietPlanModel> retPlans = [];
-    print("Calorie burn per day: $c");
+   // print("Calorie burn per day: $c");
     for(int j=0; j<recommendedPlans.length; j++){
       DietPlanModel cur = recommendedPlans[j];
       p = CalorieCalculator.calorieToKg (cur.calorie_gain_per_plan_per_week/7);
+     // print("Plan weekly gain: $p");
       if(p>=c){
         continue;
       }
       compareVal = (y-x)/(c-p);
       print(compareVal);
+      if(compareVal>PlanConstants.maxDaysPerDiet){
+       // print("Over   :  $compareVal");
+        continue;
+      }
+
       cur.diffValue = compareVal;
       retPlans.add(cur);
       //cur.diffValue = (cur.calorie_gain_per_plan_per_week-gainPerWeekInCalorie).abs();
@@ -373,5 +379,77 @@ class DietPlanModel extends Model{
 
   }
 
+
+  static void updateDish()async {
+    final qs = await Model.firestore!.collection('dish').get();
+    final dsList = qs.docs;
+    for (int i = 0; i < dsList.length; i++) {
+      DocumentSnapshot ds = dsList[i];
+      final doc = Model.firestore!.collection('dish').doc(ds.id);
+      doc.update({
+        'calorie_gain_per_meal': 100 + Random().nextInt(300)
+      });
+     // print(i);
+    }
+  }
+
+  static void updateMeals()async {
+    QuerySnapshot<Map<String, dynamic>> qs = await Model.firestore!.collection('breakfast').get();
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> dsList = qs.docs;
+    for (int i = 0; i < dsList.length; i++) {
+      DocumentSnapshot ds = dsList[i];
+      if(ds.id=="nextId" || ds.id=="details"){
+        continue;
+      }
+      CalorieCalculator.setCalorieSum(meal: 'breakfast', id: ds.id);
+      print(i);
+    }
+    qs = await Model.firestore!.collection('lunch').get();
+    dsList = qs.docs;
+    for (int i = 0; i < dsList.length; i++) {
+      DocumentSnapshot ds = dsList[i];
+      if(ds.id=="nextId" || ds.id=="details"){
+        continue;
+      }
+      CalorieCalculator.setCalorieSum(meal: 'lunch', id: ds.id);
+      print(i);
+    }
+    qs = await Model.firestore!.collection('dinner').get();
+    dsList = qs.docs;
+    for (int i = 0; i < dsList.length; i++) {
+      DocumentSnapshot ds = dsList[i];
+      if(ds.id=="nextId" || ds.id=="details"){
+        continue;
+      }
+      CalorieCalculator.setCalorieSum(meal: 'dinner', id: ds.id);
+      print(i);
+    }
+  }
+
+  static void updatePlans()async {
+    final qs = await Model.firestore!.collection('diet_plan').get();
+    final dsList = qs.docs;
+    for (int i = 0; i < dsList.length; i++) {
+      DocumentSnapshot ds = dsList[i];
+      if(ds.id=="nextPlanId" || ds.id=="details"){
+        continue;
+      }
+      double Sum = 0;
+      double x,y,z = 0;
+      print(ds.data());
+      DocumentSnapshot ds1 = await Model.firestore!.collection('breakfast').doc(ds['breakfast_id']).get();
+      x = ds1['calorie_gain_per_meal_per_week'].toDouble();
+      ds1 = await Model.firestore!.collection('lunch').doc(ds['lunch_id']).get();
+      y = ds1['calorie_gain_per_meal_per_week'].toDouble();
+      ds1 = await Model.firestore!.collection('dinner').doc(ds['dinner_id']).get();
+      z = ds1['calorie_gain_per_meal_per_week'].toDouble();
+      Sum += x.toDouble() + y.toDouble() + z.toDouble();
+      print("$i $Sum");
+      final doc = Model.firestore!.collection('diet_plan').doc(ds.id);
+      doc.update({
+        'calorie_gain_per_plan_per_week': Sum
+      });
+    }
+  }
 
 }

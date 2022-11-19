@@ -17,6 +17,8 @@ class PlanConstants{
     "Difficult"
   ];
 
+  static const int maxDaysPerDiet = 200;
+
   static const List<String> age_groupValues = [
     "0-12",
     "13-18",

@@ -11,6 +11,7 @@ import 'package:my_diet_guide/controllers/Diet_controller.dart';
 import 'package:my_diet_guide/controllers/Home_controller.dart';
 import 'package:my_diet_guide/controllers/Rate_controller.dart';
 import 'package:my_diet_guide/controllers/user_controller.dart';
+import 'package:my_diet_guide/models/DietPlan.dart';
 import 'package:my_diet_guide/screens/forgot_password.dart';
 import 'package:sizer/sizer.dart';
 
@@ -31,6 +32,10 @@ Future<void> main() async {
       )
   );
   runApp(DevicePreview(builder: (context)=>MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance)));
+  Controller.init(auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance);
+ // DietPlanModel.updateDish();
+ // DietPlanModel.updateMeals();
+ // DietPlanModel.updatePlans();
   //runApp(const MyApp());
 }
 
