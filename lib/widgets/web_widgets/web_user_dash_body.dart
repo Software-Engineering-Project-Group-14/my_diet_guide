@@ -1,7 +1,10 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/widgets/web_widgets/web_meal_card.dart';
+import 'package:sizer/sizer.dart';
 import '../../screens/record_progress_screen.dart';
+import '../../screens/web_screens/web_record_progress.dart';
 import '../today_meal_card.dart';
 
 class WebUserDashBody extends StatelessWidget {
@@ -240,11 +243,12 @@ class WebUserDashBody extends StatelessWidget {
     String dishImage = map['dishImage'];
     String dishDescription = map['dishDescription'];
 
-    return MealCard(
+    return WebMealCard(
         title: "Breakfast",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Breakfast', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription)
+        description: dishDescription,
+        navigate: WebRecordProgress(meal: 'Breakfast', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription)
     );
 
   }
@@ -257,11 +261,12 @@ class WebUserDashBody extends StatelessWidget {
     String dishImage = map['dishImage'];
     String dishDescription = map['dishDescription'];
 
-    return MealCard(
+    return WebMealCard(
         title: "Lunch",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Lunch', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription,)
+        description: dishDescription,
+        navigate: WebRecordProgress(meal: 'Lunch', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription,)
     );
 
   }
@@ -274,11 +279,12 @@ class WebUserDashBody extends StatelessWidget {
     String dishImage = map['dishImage'];
     String dishDescription = map['dishDescription'];
 
-    return MealCard(
+    return WebMealCard(
         title: "Dinner",
         mealName: dishName,
         imageLocation: dishImage,
-        navigate: RecordProgressScreen(meal: 'Dinner', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, )
+        description: dishDescription,
+        navigate: WebRecordProgress(meal: 'Dinner', dishImage: dishImage, dishName: dishName, user_id: user_id, description: dishDescription, ),
     );
 
   }
@@ -377,105 +383,117 @@ class WebUserDashBody extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(28),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Colors.white24, Colors.white10],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight
+        SingleChildScrollView(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                width: 25.w,
+                height: 80.h,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.white24, Colors.white10],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight
+                    ),
+                    borderRadius: BorderRadius.circular(28),
+                    border: Border.all(width: 2, color: Colors.white10)
+                ),
+                child: FutureBuilder<Map<String,dynamic>>(
+                    future: getDietPlanInfo(dietplan_id),
+                    builder: (context, snapshot){
+                      if(snapshot.hasData){
+                        final mealIDs = snapshot.data;
+                        return mealIDs==null ? Center(child: Text("No User!"),) : buildBreakfast(mealIDs!);
+                      } else if (snapshot.hasError){
+                        return Text('Something went wrong!');
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }
+                ),
+              ),
+            )
+          ),
+        ),
+
+        
+        SingleChildScrollView(
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(28),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  width: 25.w,
+                  height: 80.h,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [Colors.white24, Colors.white10],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight
+                      ),
+                      borderRadius: BorderRadius.circular(28),
+                      border: Border.all(width: 2, color: Colors.white10)
                   ),
-                  borderRadius: BorderRadius.circular(28),
-                  border: Border.all(width: 2, color: Colors.white10)
-              ),
-              child: FutureBuilder<Map<String,dynamic>>(
-                  future: getDietPlanInfo(dietplan_id),
-                  builder: (context, snapshot){
-                    if(snapshot.hasData){
-                      final mealIDs = snapshot.data;
-                      return mealIDs==null ? Center(child: Text("No User!"),) : buildBreakfast(mealIDs!);
-                    } else if (snapshot.hasError){
-                      return Text('Something went wrong!');
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  }
-              ),
-            ),
-          )
+                  child: FutureBuilder<Map<String,dynamic>>(
+                      future: getDietPlanInfo(dietplan_id),
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                          final mealIDs = snapshot.data;
+                          return mealIDs==null ? Center(child: Text("No User!"),) : buildLunch(mealIDs!);
+                        } else if (snapshot.hasError){
+                          return Text('Something went wrong!');
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }
+                  ),
+                ),
+              )
+          ),
         ),
 
 
-        ClipRRect(
-            borderRadius: BorderRadius.circular(28),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.white24, Colors.white10],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight
-                    ),
-                    borderRadius: BorderRadius.circular(28),
-                    border: Border.all(width: 2, color: Colors.white10)
-                ),
-                child: FutureBuilder<Map<String,dynamic>>(
-                    future: getDietPlanInfo(dietplan_id),
-                    builder: (context, snapshot){
-                      if(snapshot.hasData){
-                        final mealIDs = snapshot.data;
-                        return mealIDs==null ? Center(child: Text("No User!"),) : buildLunch(mealIDs!);
-                      } else if (snapshot.hasError){
-                        return Text('Something went wrong!');
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
+        SingleChildScrollView(
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(28),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  width: 25.w,
+                  height: 80.h,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [Colors.white24, Colors.white10],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight
+                      ),
+                      borderRadius: BorderRadius.circular(28),
+                      border: Border.all(width: 2, color: Colors.white10)
+                  ),
+                  child: FutureBuilder<Map<String,dynamic>>(
+                      future: getDietPlanInfo(dietplan_id),
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                          final mealIDs = snapshot.data;
+                          return mealIDs==null ? Center(child: Text("No User!"),) : buildDinner(mealIDs!);
+                        } else if (snapshot.hasError){
+                          return Text('Something went wrong!');
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
                       }
-                    }
+                  ),
                 ),
-              ),
-            )
-        ),
-
-
-        ClipRRect(
-            borderRadius: BorderRadius.circular(28),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.white24, Colors.white10],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight
-                    ),
-                    borderRadius: BorderRadius.circular(28),
-                    border: Border.all(width: 2, color: Colors.white10)
-                ),
-                child: FutureBuilder<Map<String,dynamic>>(
-                    future: getDietPlanInfo(dietplan_id),
-                    builder: (context, snapshot){
-                      if(snapshot.hasData){
-                        final mealIDs = snapshot.data;
-                        return mealIDs==null ? Center(child: Text("No User!"),) : buildDinner(mealIDs!);
-                      } else if (snapshot.hasError){
-                        return Text('Something went wrong!');
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    }
-                ),
-              ),
-            )
+              )
+          ),
         ),
 
       ],
@@ -520,7 +538,7 @@ class WebUserDashBody extends StatelessWidget {
             child: Stack(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 30, bottom: 30),
+                  padding: EdgeInsets.only(top: 25, bottom: 30),
                   child: Text(
                     "Today's Diet Plan  :  $today - $today_day",
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)),
