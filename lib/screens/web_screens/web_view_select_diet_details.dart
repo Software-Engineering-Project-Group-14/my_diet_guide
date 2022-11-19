@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
 import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_select_diet_details_card.dart';
 import 'package:sizer/sizer.dart';
@@ -142,14 +143,7 @@ class _WebViewDietWhenSelectState extends State<WebViewDietWhenSelect> {
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
 
-      appBar: AppBar(
-        title: Text(
-          'Diet details for selected day',
-          style: TextStyle(
-              color: Colors.white
-          ),
-        ),
-      ),
+      appBar: WebAdminNavBar(),
 
       body: Stack(
         children: [

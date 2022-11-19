@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/route_constants.dart';
+
 class WebAdminNavBar extends StatefulWidget implements PreferredSizeWidget{
   const WebAdminNavBar({Key? key}) : super(key: key);
 
@@ -17,6 +19,18 @@ class _WebAdminNavBarState extends State<WebAdminNavBar> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 20, right: 60),
+          child: GestureDetector(
+            child: Text(
+              "Home",
+              style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold,),
+            ),
+            onTap: (){
+              Navigator.pushNamed(context, RouteConstants.homeRoute);
+            },
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.only(top: 20, bottom: 20, right: 60),
           child: GestureDetector(
