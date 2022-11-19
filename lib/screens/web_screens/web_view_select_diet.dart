@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_user_navigation_bar.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_view_select_diet_card.dart';
 
@@ -119,7 +120,7 @@ class _WebViewPlanSelectState extends State<WebViewPlanSelect> {
           Scaffold(
             // extendBodyBehindAppBar: true,
             backgroundColor: Colors.teal.shade900,
-            appBar: WebUserNavBar(),
+            appBar: WebAdminNavBar(),
 
             body: Stack(
                 children: [

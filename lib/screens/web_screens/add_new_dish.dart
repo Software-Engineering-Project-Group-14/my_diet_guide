@@ -85,7 +85,7 @@ class _AddNewDishState extends State<AddNewDish> {
 
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
-                      child: Text("Add a new diet plan",
+                      child: Text("Add a new Dish",
                           style: TextStyle(
                               fontSize: 60,
                               fontWeight: FontWeight.bold,

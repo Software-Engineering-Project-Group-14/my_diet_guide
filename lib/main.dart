@@ -30,8 +30,8 @@ Future<void> main() async {
         projectId: "my-diet-guide-14",
       )
   );
-  runApp(DevicePreview(builder: (context)=>MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance)));
-  //runApp(const MyApp());
+ // runApp(DevicePreview(builder: (context)=>MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance)));
+  runApp(MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance));
 }
 
 class MyApp extends StatefulWidget {
