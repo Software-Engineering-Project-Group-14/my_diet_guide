@@ -145,22 +145,22 @@ class _WebUserNavBarState extends State<WebUserNavBar> {
           // ),
         ),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: GestureDetector(
-            child: Text("Notifications", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
-            onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Notifications()));
-            },
-          ),
-          // child: IconButton(
-          //   onPressed: (){
-          //     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Notifications()));
-          //   },
-          //   icon: Icon(Icons.notifications, color: Colors.white),
-          //   tooltip: 'Notifications',
-          // ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 20),
+        //   child: GestureDetector(
+        //     child: Text("Notifications", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),),
+        //     onTap: (){
+        //       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Notifications()));
+        //     },
+        //   ),
+        //   // child: IconButton(
+        //   //   onPressed: (){
+        //   //     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Notifications()));
+        //   //   },
+        //   //   icon: Icon(Icons.notifications, color: Colors.white),
+        //   //   tooltip: 'Notifications',
+        //   // ),
+        // ),
 
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),

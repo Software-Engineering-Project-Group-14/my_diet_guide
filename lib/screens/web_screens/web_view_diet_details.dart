@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import '../../widgets/bottom_bar.dart';
 import '../../widgets/side_bar.dart';
 import '../../widgets/web_widgets/web_diet_details_card.dart';
+import '../../widgets/web_widgets/web_user_navigation_bar.dart';
 
 class WebDietDetails extends StatefulWidget {
   final String user_id;
@@ -469,12 +470,7 @@ class _WebDietDetailsState extends State<WebDietDetails> {
     return Scaffold(
       backgroundColor: Colors.teal.shade900,
 
-      appBar: AppBar(
-        backgroundColor: Colors.teal.shade900,
-        elevation: 0,
-      ),
-
-      drawer: NavigationDrawer(),
+      appBar: WebUserNavBar(),
 
       body: Stack(
         children: [
@@ -493,10 +489,10 @@ class _WebDietDetailsState extends State<WebDietDetails> {
                     child: Stack(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: 5,),
+                          padding: EdgeInsets.only(bottom: 10, top: 10),
                           child: Text(
                             day+"'s Diet Plan",
-                            style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.8)),
+                            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                         ),
                       ],
@@ -523,7 +519,7 @@ class _WebDietDetailsState extends State<WebDietDetails> {
                   ),
 
 
-                  SizedBox(height: 50,),
+                  SizedBox(height: 20,),
 
 
 
@@ -536,8 +532,6 @@ class _WebDietDetailsState extends State<WebDietDetails> {
 
         ],
       ),
-
-      bottomNavigationBar: BottomBar(user_id: user_id),
     );
   }
 }
