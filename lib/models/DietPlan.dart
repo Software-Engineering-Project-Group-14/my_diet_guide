@@ -44,7 +44,7 @@ class DietPlanModel extends Model{
 
   @override
   String toString(){
-    return "Dietary Preference: $dietary_preference\nGender: $gender\nIntensity: $intensity\nActiveness: $activeness\nAge group: $age_group\n";
+    return "Dietary Preference: $dietary_preference\nGender: $gender\nIntensity: $intensity\nActiveness: $activeness\nAge group: $age_group\n Diff Value: $diffValue\n Calorie gain per week: $calorie_gain_per_plan_per_week \n";
   }
 
   // Getting agr group corresponding to given age
@@ -138,33 +138,71 @@ class DietPlanModel extends Model{
       //print(curPlan);
       recommendedPlans.add(curPlan);
     }
-    int? numWeeks = 0;
-    if(userBiometrics.intensity=="Easy"){
-      numWeeks = PlanConstants.numWeeksForIntensity["Easy"];
-    }else if(userBiometrics.intensity=="Standard"){
-      numWeeks = PlanConstants.numWeeksForIntensity["Standard"];
-    }else if(userBiometrics.intensity=="Difficult"){
-      numWeeks = PlanConstants.numWeeksForIntensity["Difficult"];
-    }
-    double val = CalorieCalculator.calorieBurnInKg(userBiometrics.gender, userBiometrics.height, userBiometrics.weight, userBiometrics.age.toDouble(), userBiometrics.activeness, 7*numWeeks!);
-    double reducedWeight = userBiometrics.calculated_current_weight - val;
-    double weightDiff = userBiometrics.targetWeight - reducedWeight;
-    if(weightDiff<0){
+
+    double y = userBiometrics.calculated_current_weight;
+    double x = userBiometrics.targetWeight;
+    if(x>=y){
       return [];
     }
-    double gainPerWeekInCalorie = CalorieCalculator.kgToClorie(weightDiff/numWeeks) ;
+    double c = CalorieCalculator.calorieBurnPerDayInKg(userBiometrics.gender, userBiometrics.height, userBiometrics.weight, userBiometrics.age.toDouble(), userBiometrics.activeness);
+    double p = 0;
+    double compareVal=0;
+    List<DietPlanModel> retPlans = [];
+    print("Calorie burn per day: $c");
     for(int j=0; j<recommendedPlans.length; j++){
       DietPlanModel cur = recommendedPlans[j];
-      cur.diffValue = (cur.calorie_gain_per_plan_per_week-gainPerWeekInCalorie).abs();
+      p = CalorieCalculator.calorieToKg (cur.calorie_gain_per_plan_per_week/7);
+      if(p>=c){
+        continue;
+      }
+      compareVal = (y-x)/(c-p);
+      print(compareVal);
+      cur.diffValue = compareVal;
+      retPlans.add(cur);
+      //cur.diffValue = (cur.calorie_gain_per_plan_per_week-gainPerWeekInCalorie).abs();
     }
-    recommendedPlans.sort((DietPlanModel a, DietPlanModel b){
-      return (a.diffValue-b.diffValue).toInt();
-    });
-    if(recommendedPlans.length<=6){
-      return recommendedPlans;
+    List<DietPlanModel> retPlans1 = [];
+    if(userBiometrics.intensity=="Easy"){
+      retPlans.sort((DietPlanModel a, DietPlanModel b){
+        return (b.diffValue*1000-a.diffValue*1000).toInt();
+      });
+      retPlans1 = retPlans.sublist(0,6);
+    }else if(userBiometrics.intensity=="Standard"){
+      retPlans.sort((DietPlanModel a, DietPlanModel b){
+        return (b.diffValue*1000-a.diffValue*1000).toInt();
+      });
+      if(retPlans.length%2==1){
+        retPlans1.add(retPlans[retPlans.length~/2]);
+        if(retPlans.length>=3){
+          retPlans1.add(retPlans[retPlans.length~/2+1]);
+          retPlans1.add(retPlans[retPlans.length~/2-1]);
+        }
+        if(retPlans.length>=5){
+          retPlans1.add(retPlans[retPlans.length~/2+2]);
+          retPlans1.add(retPlans[retPlans.length~/2-2]);
+        }
+      }else{
+        if(retPlans.length>=2){
+          retPlans1.add(retPlans[retPlans.length~/2-1]);
+          retPlans1.add(retPlans[retPlans.length~/2]);
+        }
+        if(retPlans.length>=4){
+          retPlans1.add(retPlans[retPlans.length~/2-2]);
+          retPlans1.add(retPlans[retPlans.length~/2+1]);
+        }
+        if(retPlans.length>=6){
+          retPlans1.add(retPlans[retPlans.length~/2-3]);
+          retPlans1.add(retPlans[retPlans.length~/2+2]);
+        }
+      }
+    }else if(userBiometrics.intensity=="Difficult"){
+      retPlans.sort((DietPlanModel a, DietPlanModel b){
+        return (a.diffValue*1000-b.diffValue*1000).toInt();
+      });
+      retPlans1 = retPlans.sublist(0,6);
     }
-    List<DietPlanModel> retPlans = recommendedPlans.sublist(0,6);
-    return retPlans;
+    print(retPlans1);
+    return retPlans1;
   }
 
   // Get the subscribed diet plan for given user
