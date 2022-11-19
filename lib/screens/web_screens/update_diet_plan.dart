@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/screens/web_screens/admin_dashboard.dart';
 import 'package:my_diet_guide/widgets/web_widgets/web_blurred_backgound.dart';
+import 'package:my_diet_guide/screens/web_screens/web_admin_nav_bar.dart';
 
 import '../../common/route_constants.dart';
 
@@ -1165,10 +1166,7 @@ class _UpdateMealsState extends State<UpdateMeals> {
         WebBlurredBackground(),
         Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.teal.shade900,
-            elevation: 0,
-          ),
+          appBar: WebAdminNavBar(),
           body: SingleChildScrollView(
             child: Column(
               children: [

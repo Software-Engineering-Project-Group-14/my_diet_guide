@@ -187,7 +187,6 @@ class _WebViewDietWhenSelectState extends State<WebViewDietWhenSelect> {
         ],
       ),
 
-      bottomNavigationBar: BottomBar(user_id: Controller.auth!.currentUser!.uid),
     );
   }
 }
