@@ -27,21 +27,6 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
     return double.tryParse(s) != null;
   }
 
-  // Future getBreakfastId(String id) async{
-  //    final dietPlanDoc = FirebaseFirestore.instance.collection('breakfast').doc(id);
-  //     // final breakfastId = await dietPlanDoc.get();
-  //     // return breakfastId['breakfast_id'];
-  //   dietPlanDoc.get().then((DocumentSnapshot documentSnapshot) {
-  //     if (documentSnapshot.exists) {
-  //       final data = documentSnapshot.data() as Map<String, dynamic>;
-  //       print(data['monday_dish_id']);
-  //       return data;
-  //     } else {
-  //       print('Document does not exist on the database');
-  //     }
-  //   });
-  // }
-
   Widget buildBreakfastDiet(Map<String, dynamic> map){
     CollectionReference collectionReference = FirebaseFirestore.instance.collection('breakfast');
     return
@@ -50,7 +35,6 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
             builder: ((context, snapshot){
               if((snapshot.connectionState == ConnectionState.done)){
                 Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                print(data['monday_dish_id']);
                 return WebDeleteDietCard(details: data, meal: "Breakfast",); //data is a map
               }
               return Text('loading');
@@ -65,7 +49,6 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
           builder: ((context, snapshot){
             if((snapshot.connectionState == ConnectionState.done)){
               Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-              print(data['monday_dish_id']);
               return WebDeleteDietCard(details: data, meal: 'Lunch',); //data is a map
             }
             return Text('loading');
@@ -80,7 +63,6 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
           builder: ((context, snapshot){
             if((snapshot.connectionState == ConnectionState.done)){
               Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-              print(data['monday_dish_id']);
               return WebDeleteDietCard(details: data, meal: 'Dinner',); //data is a map
             }
             return Text('loading');
@@ -177,19 +159,6 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
       ],
     );
   }
-  // Widget getBLD(BuildContext context, String docId){
-  //   CollectionReference collectionReference = FirebaseFirestore.instance.collection('diet_plan');
-  //   return FutureBuilder(
-  //       future: getBreakfastId(docId),
-  //       builder: ((context, snapshot){
-  //         if((snapshot.connectionState == ConnectionState.done) && isNumeric(docId)){
-  //           Map<String, dynamic> data = snapshot.data as Map<String, dynamic>;
-  //           return Text(data['breakfast_id']+ " " + data['lunch_id'] + " " + data['dinner_id'], style: TextStyle(color: Colors.white),);
-  //         }
-  //         return Text('loading');
-  //       })
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
