@@ -18,7 +18,6 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
   Future getDocId() async{
     await FirebaseFirestore.instance.collection('diet_plan').get().then((QuerySnapshot querySnapshot) => {
       querySnapshot.docs.forEach((doc) {
-        print(doc.id);
         docIds.add(doc.id);
       })
     });
@@ -37,7 +36,7 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
                 Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                 return WebDeleteDietCard(details: data, meal: "Breakfast",); //data is a map
               }
-              return Text('loading');
+              return CircularProgressIndicator();
             })
         );
   }
@@ -51,7 +50,7 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
               Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
               return WebDeleteDietCard(details: data, meal: 'Lunch',); //data is a map
             }
-            return Text('loading');
+            return CircularProgressIndicator();
           })
       );
   }
@@ -65,7 +64,7 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
               Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
               return WebDeleteDietCard(details: data, meal: 'Dinner',); //data is a map
             }
-            return Text('loading');
+            return CircularProgressIndicator();
           })
       );
   }
@@ -103,7 +102,7 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
                           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                           return buildBreakfastDiet(data); //data is a map
                         }
-                        return Text('loading');
+                        return CircularProgressIndicator();
                       })
                   ),
                   SizedBox(width: 20,),
@@ -115,7 +114,7 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
                           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                           return buildLunchDiet(data); //data is a map
                         }
-                        return Text('loading');
+                        return CircularProgressIndicator();
                       })
                   ),
                   SizedBox(width: 20,),
@@ -127,7 +126,7 @@ class _DeleteDietPlanState extends State<DeleteDietPlan> {
                           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                           return buildDinnerDiet(data); //data is a map
                         }
-                        return Text('loading');
+                        return CircularProgressIndicator();
                       })
                   ),
 
