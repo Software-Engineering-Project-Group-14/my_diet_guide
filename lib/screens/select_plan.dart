@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_diet_guide/widgets/background_image.dart';
+import 'package:my_diet_guide/widgets/blurred_background_image.dart';
 import 'package:my_diet_guide/widgets/recommended_plans.dart';
 
 import '../controllers/Controller.dart';
@@ -29,15 +30,9 @@ class _SelectPlanState extends State<SelectPlan> {
       minimum: EdgeInsets.only(top: 20),
       child: Scaffold(
         backgroundColor: Colors.teal.shade900,
-        appBar: AppBar(
-          backgroundColor: Colors.teal.shade900,
-          elevation: 0,
-          title: const Text('Select Diet Plan'),
-        ),
-        drawer: const NavigationDrawer(),
         body: Stack(
           children: [
-            BackgroundImage(),
+            BlurredBackground(),
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -50,7 +45,6 @@ class _SelectPlanState extends State<SelectPlan> {
             )
           ],
         ),
-        bottomNavigationBar: BottomBar(key: Key('bottom-bar'),user_id: Controller.auth!.currentUser!.uid),
 
       ),
     );

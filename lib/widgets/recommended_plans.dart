@@ -55,7 +55,7 @@ class _RecommendedPlansState extends State<RecommendedPlans> {
             children: [
               Text(
                 "Recommended plans",
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                     fontSize: 22,
                     color: Colors.white
                 ),

@@ -18,7 +18,7 @@ class NavigationDrawer extends StatelessWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                buildHeader(context),
+                //buildHeader(context),
                 buildMenuItems(context),
               ],
             ),
@@ -32,7 +32,7 @@ class NavigationDrawer extends StatelessWidget {
 
   Widget buildHeader(BuildContext context){
     return Material(
-      color: Colors.teal.shade900,
+      color: Colors.transparent,
       child: InkWell(
         child: Container(
           padding: EdgeInsets.only(
@@ -64,7 +64,7 @@ class NavigationDrawer extends StatelessWidget {
             children: [
               ListTile(
                 leading: Icon(Icons.calendar_month, size: 30, color: Colors.white,),
-                title: Text("Calender", style: TextStyle(fontSize: 19, color: Colors.white),),
+                title: Text("Calendar", style: TextStyle(fontSize: 19, color: Colors.white),),
                 onTap: (){
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DietCalender()));
                 },

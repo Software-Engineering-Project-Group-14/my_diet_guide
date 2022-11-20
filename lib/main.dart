@@ -31,7 +31,7 @@ Future<void> main() async {
         projectId: "my-diet-guide-14",
       )
   );
- //runApp(DevicePreview(builder: (context)=>MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance)));
+  //runApp(DevicePreview(builder: (context)=>MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance)));
   runApp(MyApp(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance));
 }
 
