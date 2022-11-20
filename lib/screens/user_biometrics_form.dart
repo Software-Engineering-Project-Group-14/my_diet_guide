@@ -179,7 +179,7 @@ class _UserBiometricsFormState extends State<UserBiometricsForm> {
                     SizedBox(height: 40,),
 
 
-                    Text("User Details",
+                    Text("User Biometrics",
                         style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
