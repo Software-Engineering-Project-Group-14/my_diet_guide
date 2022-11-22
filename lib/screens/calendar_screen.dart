@@ -39,9 +39,9 @@ class _DietCalenderState extends State<DietCalender> {
           if(json==null){
             return Center(child: Text("No User!"),);
           } else {
-            double target_weight = json['target_weight'];
-            double current_weight = json['current_weight'];
-            double weight_loss_per_day = json['weight_loss_per_day'];
+            num target_weight = json['target_weight'];
+            num current_weight = json['current_weight'];
+            num weight_loss_per_day = json['weight_loss_per_day'];
             return goToPlan(plan_id, target_weight, current_weight, weight_loss_per_day);
           }
         } else if(snapshot.hasError){
@@ -65,14 +65,14 @@ class _DietCalenderState extends State<DietCalender> {
 
     String gender = userBioSnapshot.data()!['gender'];
     String activeness = userBioSnapshot.data()!['activeness'];
-    double weight = userBioSnapshot.data()!['weight'];
-    double height = userBioSnapshot.data()!['height'];
+    num weight = userBioSnapshot.data()!['weight'];
+    num height = userBioSnapshot.data()!['height'];
     int age = userBioSnapshot.data()!['age'];
-    double target_weight = userBioSnapshot.data()!['target weight'];
-    double current_weight = userBioSnapshot.data()!['calculated_current_weight'];
+    num target_weight = userBioSnapshot.data()!['target weight'];
+    num current_weight = userBioSnapshot.data()!['calculated_current_weight'];
 
 
-    double weight_loss_per_day = CalorieCalculator.calorieBurnPerDayInKg(gender, height, weight, age.toDouble(), activeness);
+    double weight_loss_per_day = CalorieCalculator.calorieBurnPerDayInKg(gender, height.toDouble(), weight.toDouble(), age.toDouble(), activeness);
 
     return{
       'target_weight': target_weight,
@@ -83,7 +83,7 @@ class _DietCalenderState extends State<DietCalender> {
 
 
 
-  Widget goToPlan(String plan_id, double target_weight, double current_weight, double weight_loss_per_day){
+  Widget goToPlan(String plan_id, num target_weight, num current_weight, num weight_loss_per_day){
     return FutureBuilder<int>(
       future: getPlanDetails(plan_id, target_weight, current_weight, weight_loss_per_day),
       builder: (context, snapshot){
@@ -106,7 +106,7 @@ class _DietCalenderState extends State<DietCalender> {
   }
 
 
-  Future<int> getPlanDetails(String plan_id, double target_weight, double current_weight, double weight_loss_per_day) async {
+  Future<int> getPlanDetails(String plan_id, num target_weight, num current_weight, num weight_loss_per_day) async {
     final planDoc = FirebaseFirestore.instance.collection('diet_plan').doc(plan_id);
     final planSnapshot = await planDoc.get();
 
