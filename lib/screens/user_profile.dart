@@ -29,10 +29,10 @@ class _UserProfileState extends State<UserProfile> {
   late String bday;
   late int age;
   late String gender;
-  late double weight;
-  late double height;
-  late double targetWeight;
-  late double currentWeight;
+  late num weight;
+  late num height;
+  late num targetWeight;
+  late num currentWeight;
   late String dietaryPreference;
   late String activeness;
   late String intensity;
@@ -66,6 +66,9 @@ class _UserProfileState extends State<UserProfile> {
     firstName = map['first name'];
     lastName = map['last name'];
     bday = map['birthday'];
+    print(firstName);
+    print(lastName);
+    print(bday);
 
     int byear = int.parse(bday.substring(0,4));
     int bmonth = int.parse(bday.substring(5,7));
@@ -73,6 +76,7 @@ class _UserProfileState extends State<UserProfile> {
 
     DateTime dob = DateTime(byear, bmonth, bdate);
     age = AgeCalculator.age(dob).years;
+    print(age);
 
     return FutureBuilder<Map<String, dynamic>>(
       future: readUserBiometrics(firstName, lastName, bday, age),
@@ -81,6 +85,7 @@ class _UserProfileState extends State<UserProfile> {
           final data = snapshot.data;
           return data==null ? Center(child: Text("No User!"),) : buildUserBiometrics(data);
         } else if (snapshot.hasError){
+          print(snapshot.error.toString());
           return Center(child: Text('Something went wrong!'));
         } else {
           return Center(
@@ -96,6 +101,7 @@ class _UserProfileState extends State<UserProfile> {
   Future<Map<String, dynamic>> readUserBiometrics(String firstName, String lastName, String bday, int age) async{
     final userBioDoc = FirebaseFirestore.instance.collection('user biometrics').doc(Controller.auth!.currentUser!.uid);
     final snapshot2 = await userBioDoc.get();
+    print(snapshot2.data()!.toString());
 
     if(snapshot2.exists){
       gender = snapshot2.data()!['gender'];
@@ -107,6 +113,8 @@ class _UserProfileState extends State<UserProfile> {
       activeness = snapshot2.data()!['activeness'];
       intensity = snapshot2.data()!['intensity'];
     }
+
+    print(firstName + lastName + bday + age.toString() + gender + weight.toString() + height.toString() + targetWeight.toString() + currentWeight.toString() + dietaryPreference + activeness + activeness);
 
     return {
       'first name': firstName,
